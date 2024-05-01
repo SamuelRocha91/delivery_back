@@ -5,13 +5,17 @@ RSpec.describe "/stores", type: :request do
   let(:user) {
     create(:user)
   }
-  
+
   let(:valid_attributes) {
-    {name: "Great Restaurant"}
+    {name: "Great Restaurant", user: user}
   }
 
   let(:invalid_attributes) {
     {name: nil}
+  }
+
+  before {
+    sign_in(user)
   }
 
   describe "GET /index" do
