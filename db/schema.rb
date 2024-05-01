@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_01_143843) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_01_151027) do
   create_table "products", force: :cascade do |t|
     t.integer "store_id", null: false
     t.string "title"
-    t.string "price"
+    t.decimal "price", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["store_id"], name: "index_products_on_store_id"
@@ -24,6 +24,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_143843) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_stores_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -39,4 +41,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_143843) do
   end
 
   add_foreign_key "products", "stores"
+  add_foreign_key "stores", "users"
 end
