@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :product do
-    store { nil }
+    association :store 
     title { "MyString" }
-    price { "MyString" }
+    price { 20.99 }
   end
 end

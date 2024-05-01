@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe "/stores", type: :request do
   
+  let(:user) {
+    create(:user)
+  }
+  
   let(:valid_attributes) {
     {name: "Great Restaurant"}
   }
