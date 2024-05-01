@@ -1,0 +1,27 @@
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/io-console-0.7.2/ext/io/console
+/home/samuel/.rbenv/versions/3.2.2/bin/ruby extconf.rb
+checking for rb_io_path()... no
+checking for rb_io_descriptor()... yes
+checking for rb_io_get_write_io()... yes
+checking for rb_io_closed_p()... no
+checking for rb_io_open_descriptor()... no
+checking for termios.h... yes
+checking for cfmakeraw() in termios.h... yes
+checking for sys/ioctl.h... yes
+checking for HAVE_RUBY_FIBER_SCHEDULER_H... yes
+creating Makefile
+
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/io-console-0.7.2/ext/io/console
+make DESTDIR\= sitearchdir\=./.gem.20240430-1582988-73zbyd sitelibdir\=./.gem.20240430-1582988-73zbyd clean
+
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/io-console-0.7.2/ext/io/console
+make DESTDIR\= sitearchdir\=./.gem.20240430-1582988-73zbyd sitelibdir\=./.gem.20240430-1582988-73zbyd
+compiling console.c
+linking shared-object io/console.so
+
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/io-console-0.7.2/ext/io/console
+make DESTDIR\= sitearchdir\=./.gem.20240430-1582988-73zbyd sitelibdir\=./.gem.20240430-1582988-73zbyd install
+/usr/bin/install -c -m 0755 console.so ./.gem.20240430-1582988-73zbyd/io
+
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/io-console-0.7.2/ext/io/console
+make DESTDIR\= sitearchdir\=./.gem.20240430-1582988-73zbyd sitelibdir\=./.gem.20240430-1582988-73zbyd clean
