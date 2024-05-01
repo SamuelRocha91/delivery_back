@@ -1,5 +1,8 @@
 class StoresController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_store, only: %i[ show edit update destroy ]
+  skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
+
 
   # GET /stores or /stores.json
   def index
@@ -22,6 +25,7 @@ class StoresController < ApplicationController
   # POST /stores or /stores.json
   def create
     @store = Store.new(store_params)
+    @store.user = current_user
 
     respond_to do |format|
       if @store.save
