@@ -23,7 +23,8 @@ class StoresController < ApplicationController
   # POST /stores or /stores.json
   def create
     @store = Store.new(store_params)
-
+    @store.user = current_user
+    
     respond_to do |format|
       if @store.save
         format.html { redirect_to store_url(@store), notice: "Store was successfully created." }
