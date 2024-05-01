@@ -1,4 +1,5 @@
 class StoresController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_store, only: %i[ show edit update destroy ]
 
   # GET /stores or /stores.json
