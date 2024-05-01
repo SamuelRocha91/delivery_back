@@ -1,0 +1,19 @@
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/debug-1.9.2/ext/debug
+/home/samuel/.rbenv/versions/3.2.2/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20240430-1582988-36sdfo sitelibdir\=./.gem.20240430-1582988-36sdfo clean
+
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20240430-1582988-36sdfo sitelibdir\=./.gem.20240430-1582988-36sdfo
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.so
+
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20240430-1582988-36sdfo sitelibdir\=./.gem.20240430-1582988-36sdfo install
+/usr/bin/install -c -m 0755 debug.so ./.gem.20240430-1582988-36sdfo/debug
+
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20240430-1582988-36sdfo sitelibdir\=./.gem.20240430-1582988-36sdfo clean
