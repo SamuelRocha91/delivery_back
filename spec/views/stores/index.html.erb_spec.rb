@@ -4,10 +4,12 @@ RSpec.describe "stores/index", type: :view do
   before(:each) do
     assign(:stores, [
       Store.create!(
-        name: "Name"
+        name: "Name",
+        user: create(:user)
       ),
       Store.create!(
-        name: "Name"
+        name: "Name",
+        user: create(:user_two)
       )
     ])
   end
