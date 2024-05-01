@@ -17,5 +17,6 @@ RSpec.describe Store, type: :model do
     end
 
     it { should validate_length_of(:name).is_at_least(3) }
+    it { should belong_to(:user) }
   end
 end
