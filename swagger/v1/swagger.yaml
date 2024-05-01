@@ -1,0 +1,45 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  /stores:
+    get:
+      summary: Retorna todas as lojas
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Cria uma nova loja
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Store'
+      responses:
+        '201':
+          description: Criado
+    delete:
+      summary: Remove uma loja existente
+      responses:
+        '204':
+          description: Sem conteúdo
+servers:
+  - url: https://{defaultHost}
+    variables:
+      defaultHost:
+        default: http://127.0.0.1:3000/
+components:
+  schemas:
+    Store:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        location:
+          type: string
