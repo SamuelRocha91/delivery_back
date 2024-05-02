@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :stores
-  
+
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
 
@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get "listing" => "products#listing"
   get "me" => "registrations#me"
   post "new" => "registrations#create", as: :create_registration
+  post "sign_in" => "registrations#sign_in"
+  
   get "up" => "rails/health#show", as: :rails_health_check
 
 end
