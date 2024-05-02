@@ -6,7 +6,7 @@ class RegistrationsController < ApplicationController
 
 
   def me
-    render json: {"email": @user[:email], "id": @user[:id] }
+    render json:  {"email": current_user[:email], "id": current_user[:id] }
   end
 
   def sign_in
@@ -39,5 +39,9 @@ class RegistrationsController < ApplicationController
     params
       .required(:login)
       .permit(:email, :password)
+  end
+
+  def not_authorized(e)
+    render json: {message: "Nope!"}, status: 401
   end
 end
