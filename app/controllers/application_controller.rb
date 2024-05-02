@@ -1,4 +1,13 @@
 class ApplicationController < ActionController::Base
+    
+  def current_user
+    if request.format == Mime[:json]
+      @user
+    else
+      super
+    end
+  end
+
   def authenticate!
     if request.format == Mime[:json]
       check_token!
@@ -11,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   def check_token!
     if user = authenticate_with_http_token { |t, _| User.from_token(t) }
-        @user = user
+      @user = user
     else
       render json: {message: "Not authorized"}, status: 401
     end
