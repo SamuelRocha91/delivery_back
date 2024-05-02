@@ -32,7 +32,7 @@ class RegistrationsController < ApplicationController
   def user_params
     params
       .required(:user)
-      .permit(:email, :password, :password_confirmation, :role)
+      .permit(:email, :password, :password_confirmation)
   end
 
   def sign_in_params
