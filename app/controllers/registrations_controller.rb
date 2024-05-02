@@ -2,8 +2,11 @@ class RegistrationsController < ApplicationController
     
   skip_forgery_protection only: [:create, :sign_in, :me]
   before_action :authenticate!, only: [:me]
+  rescue_from User::InvalidToken, with: :not_authorized
+
 
   def me
+    render json: {"email": current_user[:email], "id": current_user[:id] }
   end
 
   def sign_in
@@ -28,8 +31,8 @@ class RegistrationsController < ApplicationController
 
   def user_params
     params
-    .required(:user)
-    .permit(:email, :password, :password_confirmation, :role)
+      .required(:user)
+      .permit(:email, :password, :password_confirmation, :role)
   end
 
   def sign_in_params
