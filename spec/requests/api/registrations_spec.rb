@@ -1,6 +1,6 @@
 RSpec.describe "registrations", type: :request do
   describe "POST /new" do
-
+    
     it "creates a buyer user" do
       post(
         create_registration_url,
