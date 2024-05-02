@@ -5,4 +5,8 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  def self.from_token(token)
+    nil
+  end
 end
