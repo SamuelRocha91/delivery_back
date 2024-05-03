@@ -71,3 +71,5 @@ gem "devise", "~> 4.9"
 gem "jwt", "~> 2.8"
 
 gem "rack-cors", "~> 2.0"
+
+gem "state_machines-activerecord", "~> 0.9.0"
