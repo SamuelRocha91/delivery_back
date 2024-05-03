@@ -5,6 +5,14 @@ class Order < ApplicationRecord
   has_many :products, through: :order_items
   validate :buyer_role
 
+  def accept
+    if self.state == :created
+      update! state: :accepted
+    else
+      raise "Can't change to `:accepted` from #{self.state}"
+    end
+  end
+
   private
 
   def buyer_role
