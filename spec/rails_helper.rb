@@ -69,6 +69,27 @@ RSpec.configure do |config|
     end
   end 
   
+  module APIRequestHelpers
+    def api_sign_in(user, credential)
+      post(
+        "/sign_in",
+        headers: {
+          "Accept" => "application/json",
+          "X-API-KEY" => credential.key
+        },
+        params: {
+          login: {
+            email: user.email,
+            password: user.password
+          }
+        }
+      )
+
+      JSON.parse(response.body)
+    end
+  end
+  
+  config.include APIRequestHelpers, type: :request
   config.include Devise::Test::IntegrationHelpers, type: :request
 
   RSpec.configure do |config|
