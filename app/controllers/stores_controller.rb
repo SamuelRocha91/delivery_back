@@ -2,6 +2,7 @@ class StoresController < ApplicationController
   before_action :authenticate!
   before_action :set_store, only: %i[ show edit update destroy ]
   skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
+  rescue_from User::InvalidToken, with: :not_authorized
 
 
   # GET /stores or /stores.json
@@ -83,5 +84,9 @@ class StoresController < ApplicationController
       else
         required.permit(:name)
       end
+    end
+
+    def not_authorized(e)
+      render json: {message: "Nope!"}, status: 401
     end
 end
