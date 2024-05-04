@@ -84,6 +84,50 @@
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "user_id": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "user_id"
+                    ],
+                    "example": {
+                      "name": "Burguer King",
+                      "user_id": 1
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ],
+                    "example": {
+                      "name": "McDonald's"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "Store created with succesfull",
@@ -107,13 +151,228 @@
                       "format": "datetime"
                     }
                   }
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Store 1",
+                  "created_at": "2024-04-28T12:00:00Z",
+                  "updated_at": "2024-04-28T12:00:00Z"
                 }
-              },
-              "example": {
-                "id": 1,
-                "name": "Store 1",
-                "created_at": "2024-04-28T12:00:00Z",
-                "updated_at": "2024-04-28T12:00:00Z"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Nope!"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stores/{id}": {
+      "put": {
+        "summary": "Store update",
+        "tags": [
+          "Stores"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID Store",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "User authentication key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "user_id": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "user_id"
+                    ],
+                    "example": {
+                      "name": "Burguer King",
+                      "user_id": 1
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ],
+                    "example": {
+                      "name": "McDonald's"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "datetime"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "datetime"
+                    }
+                  }
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Store 1",
+                  "created_at": "2024-04-28T12:00:00Z",
+                  "updated_at": "2024-04-28T12:00:00Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Nope!"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {}
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Store",
+        "tags":[
+          "Stores"
+        ],
+         "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID Store",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "User authentication key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses":{
+          "204": {
+            "description": "No content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Nope!"
+                }
               }
             }
           }
