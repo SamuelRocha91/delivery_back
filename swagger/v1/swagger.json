@@ -5,9 +5,9 @@
     "version": "v1"
   },
   "schemes": [
-      "http",
-      "https"
-    ],
+    "http",
+    "https"
+  ],
   "paths": {
     "/stores": {
       "get": {
@@ -22,7 +22,71 @@
         ],
         "responses": {
           "200": {
-            "description": "Get store list",
+            "description": "Returns a list of stores according to the user's role",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "datetime"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "datetime"
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Store 1",
+                    "created_at": "2024-04-28T12:00:00Z",
+                    "updated_at": "2024-04-28T12:00:00Z"
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new store",
+        "tags": [
+          "Stores"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "User authentication key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Store created with succesfull",
             "content": {
               "application/json": {
                 "schema": {
@@ -43,18 +107,15 @@
                       "format": "datetime"
                     }
                   }
-                },
-                "example": {
-                  "id": 1,
-                  "name": "Store 1",
-                  "created_at": "2024-04-28T12:00:00Z",
-                  "updated_at": "2024-04-28T12:00:00Z"
                 }
+              },
+              "example": {
+                "id": 1,
+                "name": "Store 1",
+                "created_at": "2024-04-28T12:00:00Z",
+                "updated_at": "2024-04-28T12:00:00Z"
               }
             }
-          },
-          "401": {
-            "description": "Unauthorized"
           }
         }
       }
@@ -316,57 +377,6 @@
                 },
                 "example": {
                   "message": "Nope!"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/listing": {
-      "get": {
-        "summary": "Listing products",
-        "tags": [
-          "Products"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "User authentication key",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Product list",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer"
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "price": {
-                        "type": "number",
-                        "format": "float"
-                      }
-                    }
-                  }
                 }
               }
             }
