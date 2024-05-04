@@ -334,6 +334,17 @@
             "bearerAuth": []
           }
         ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "User authentication key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Product list",
