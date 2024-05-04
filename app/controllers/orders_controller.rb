@@ -6,11 +6,17 @@ class OrdersController < ApplicationController
     @order = order.new(order_params)
     @order.buyer = current_user
     if @order.save
-      render json: {order: @order}
+      render json: {order: @order, status: created}
     else
       remder json: {errors: @order.errors, status: unprocessable_entity}
     end
   end
+
+  def index
+    @orders = Order.where(buyer: current_user)
+    render json: {orders: @orders}
+  end
+
 
   private
 
