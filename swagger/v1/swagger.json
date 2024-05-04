@@ -11,7 +11,7 @@
   "paths": {
     "/stores": {
       "get": {
-        "summary": "Lista de lojas",
+        "summary": "List stores",
         "tags": [
           "Stores"
         ],
@@ -22,7 +22,7 @@
         ],
         "responses": {
           "200": {
-            "description": "retorna uma lista de lojas",
+            "description": "Get store list",
             "content": {
               "application/json": {
                 "schema": {
@@ -61,7 +61,7 @@
     },
     "/new": {
       "post": {
-        "summary": "Registra um usuário",
+        "summary": "Register a user",
         "tags": [
           "Users"
         ],
@@ -206,7 +206,7 @@
           {
             "name": "X-API-KEY",
             "in": "header",
-            "description": "Chave de autenticação da API",
+            "description": "API Authentication Key",
             "required": true,
             "schema": {
               "type": "string"
