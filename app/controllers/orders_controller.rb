@@ -14,7 +14,6 @@ class OrdersController < ApplicationController
 
   def index
     @orders = Order.where(buyer: current_user)
-    render json: {orders: @orders}
   end
 
 
