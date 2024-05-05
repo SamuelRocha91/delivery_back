@@ -199,6 +199,11 @@
         "tags": [
           "Stores"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -330,10 +335,15 @@
       },
       "delete": {
         "summary": "Delete Store",
-        "tags":[
+        "tags": [
           "Stores"
         ],
-         "parameters": [
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
           {
             "name": "id",
             "in": "path",
@@ -354,7 +364,7 @@
             }
           }
         ],
-        "responses":{
+        "responses": {
           "204": {
             "description": "No content"
           },
@@ -372,6 +382,232 @@
                 },
                 "example": {
                   "message": "Nope!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/buyers/orders": {
+      "get": {
+        "summary": "A buyer's order list",
+        "tags": [
+          "Orders"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "description": "Chave de autenticação da API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "User authentication key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "datetime"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "id": 1,
+                      "state": "created",
+                      "created_at": "2024-04-28T12:00:00Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Nope!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create a buyer's order",
+        "tags": [
+          "Orders"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "description": "Chave de autenticação da API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "User authentication key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "order": {
+                    "type": "object",
+                    "properties": {
+                      "store_id": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "example": {
+                "order": {
+                  "store_id": 1
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "order": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "buyer_id": {
+                          "type": "integer"
+                        },
+                        "store_id": {
+                          "type": "integer"
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "datetime"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "datetime"
+                        },
+                        "state": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "order": {
+                    "id": 5,
+                    "buyer_id": 6,
+                    "store_id": 2,
+                    "created_at": "2024-05-05T11:53:09.709Z",
+                    "updated_at": "2024-05-05T11:53:09.709Z",
+                    "state": "created"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Nope!"
+                }
+              }
+            }
+          },
+          "422":{
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "errors": {
+                      "type":"string"
+                    }
+                  }
                 }
               }
             }
