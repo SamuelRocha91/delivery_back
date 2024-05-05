@@ -25,7 +25,6 @@ class ApplicationController < ActionController::Base
 
   def check_token!
     if user = authenticate_with_http_token { |t, _| User.from_token(t) }
-      puts user.inspect
       @user = User.new(id: user[:id], role: user[:role], email: user[:email])
     else
       render json: {message: "Not authorized"}, status: 401
