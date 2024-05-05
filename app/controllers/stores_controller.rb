@@ -14,13 +14,14 @@ class StoresController < ApplicationController
     end
   end
 
-  # GET /stores/1 or /stores/1.json
-  def show
-  end
-
-  # GET /stores/new
   def new
     @store = Store.new
+    if current_user.admin?
+      @sellers = User.where(role: :seller)
+    end
+  end
+  # GET /stores/1 or /stores/1.json
+  def show
   end
 
   # GET /stores/1/edit

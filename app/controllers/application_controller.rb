@@ -30,4 +30,11 @@ class ApplicationController < ActionController::Base
       render json: {message: "Not authorized"}, status: 401
     end
   end
+
+  def only_buyers!
+    is_buyer = (current_user && current_user.buyer?) && current_credential.buyer?
+    if !is_buyer
+      render json: {message: "Not authorized"}, status: 401
+    end
+  end
 end
