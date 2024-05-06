@@ -14,5 +14,11 @@ RSpec.describe Credential, type: :model do
       expect(credential).to be_buyer
       expect(credential.key).to_not be_empty
     end
+    it { should allow_value("seller").for(:access) }
+    it { should have_db_column(:key) }
+    it { should have_db_column(:access) }
+    it { should_not have_db_column(:enum) }
+    it { should define_enum_for(:access).with_values([:seller, :buyer])}
+
   end
 end

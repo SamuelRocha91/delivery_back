@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "stores/edit", type: :view do
-  include Devise::Test::ControllerHelpers # Inclua Devise::Test::ControllerHelpers
-
   let(:store) {
     Store.create!(
       name: "MyString",
@@ -12,12 +10,10 @@ RSpec.describe "stores/edit", type: :view do
 
   let(:sellers) do
     [
-      create(:user, email: "seller1@example.com", role: 'seller'),
-      create(:user, email: "seller2@example.com", role: 'seller'),
-      create(:user, email: "seller3@example.com", role: 'seller')
+      create(:user_two),
+      create(:user_three)
     ]
   end
-
   before(:each) do
     assign(:store, store)
     assign(:sellers, sellers)
