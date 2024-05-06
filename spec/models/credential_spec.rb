@@ -1,7 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Credential, type: :model do
-  describe ".create_access" do
+
+  describe "attribute presence check" do
+    it { should have_db_column(:key) }
+    it { should have_db_column(:access) }
+    it { should_not have_db_column(:enum) }
+    it { should define_enum_for(:access).with_values([:seller, :buyer])}
+  end
+
+  describe "checking field validations" do
     it "raises if the given access role is invalid" do
       expect {
         Credential.create_access(:non_existent)
@@ -14,11 +22,8 @@ RSpec.describe Credential, type: :model do
       expect(credential).to be_buyer
       expect(credential.key).to_not be_empty
     end
-    it { should allow_value("seller").for(:access) }
-    it { should have_db_column(:key) }
-    it { should have_db_column(:access) }
-    it { should_not have_db_column(:enum) }
-    it { should define_enum_for(:access).with_values([:seller, :buyer])}
 
+    it { should allow_value("seller").for(:access) }
   end
+
 end
