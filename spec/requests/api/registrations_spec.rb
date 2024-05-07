@@ -1,3 +1,5 @@
+require "rails_helper"
+
 RSpec.describe "registrations", type: :request do
   let(:credential) { Credential.create_access(:buyer) }
 
@@ -6,7 +8,7 @@ RSpec.describe "registrations", type: :request do
     it "creates a buyer user" do
 
       post(
-        create_registration_url,
+        "/new",
         headers: {"Accept" => "application/json", "X-API-KEY" => credential.key},
         params: {
           user: {
@@ -23,7 +25,7 @@ RSpec.describe "registrations", type: :request do
 
       it "fail to create user without credentials" do
       post(
-        create_registration_url,
+        "/new",
         headers: {"Accept" => "application/json"},
         params: {
           user: {
@@ -33,7 +35,6 @@ RSpec.describe "registrations", type: :request do
           }
         }
       )
-      puts response.inspect
       expect(response).to be_unprocessable
     end
 

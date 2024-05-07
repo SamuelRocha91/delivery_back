@@ -1,36 +1,36 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-    describe "presence and validation of columns" do
-      it "checks if the table contains the correct attributes" do
-        user = User.create(email: "macarrao@hotmail.com", password: '123456', password_confirmation: '123456', role: :admin)
-        expect(user).to be_valid
-        expect(user.email).to eq "macarrao@hotmail.com"
-        expect(user.role).to eq "admin"
-    end
 
-    it "check if the user is invalid when the role atributte is missing" do
-        user = User.create(email: "macarrao@hotmail.com", password: '123456', password_confirmation: '123456')
-        expect(user).not_to be_valid
-        expect(user.errors[:role]).to include "can't be blank" 
-    end
+  describe "attribute presence check" do
+    it { should have_db_column(:email) }
+    it { should have_db_column(:role) }
+    it { should define_enum_for(:role) }
+    it { should_not define_enum_for(:elefante) }
+  end
 
-     it "checks if passwords match" do
-        user = User.create(email: "macarrao@hotmail.com", password: '123456', password_confirmation: '123457', role: :admin)
-        expect(user).not_to be_valid
-        expect(user.errors[:password_confirmation]).to include "doesn't match Password" 
-     end
+  describe "checking relationships between tables" do
+    it { should have_many(:stores) }
+  end
 
-      it "checks if email is valid" do
-        user = User.create(email: "@hotmail.com", password: '123456', password_confirmation: '123457', role: :admin)
-        expect(user).not_to be_valid
-        expect(user.errors[:email]).to include "is invalid" 
-     end
+  describe "checking field validations" do
+    it { should validate_presence_of(:role) }
+    it { should define_enum_for(:role).with_values([:admin, :seller, :buyer]) }
+    it { should_not allow_value('sam').for(:email) }
+    it { should allow_value('sam@hotmail.com').for(:email) }
 
-     it "checks if role is valid" do
+    it "is expected to validate that :role should raise an exception in case of invalid role" do
       expect {
-        User.create(email: "example@hotmail.com", password: '123456', password_confirmation: '123457', role: :elefante)
+      User.new(role: 'elefante')
       }.to raise_error(ArgumentError, "'elefante' is not a valid role")
     end
+
+
+    it "is expected to validate that :password_confirmation cannot be different of password" do
+      user = User.create(email: "elefante@hotmail.com", password: '123456', password_confirmation: '123457', role: :admin)
+      expect(user).not_to be_valid
+      expect(user.errors[:password_confirmation]).to include "doesn't match Password" 
+    end
+
   end
 end

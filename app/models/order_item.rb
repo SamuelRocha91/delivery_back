@@ -4,7 +4,6 @@ class OrderItem < ApplicationRecord
 
   validate :store_product
 
-  
   private
   
   def store_product

@@ -24,7 +24,7 @@ class RegistrationsController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.role = current_credential.access
-
+    puts @user.inspect
     if @user.save
       render json: {"email": @user.email}
     else

@@ -4,10 +4,6 @@ RSpec.describe "/stores", type: :request do
   let(:user) {
     create(:user)
   }
-  before {
-    sign_in(user)
-  }
-  
   let(:credential) { Credential.create_access(:seller) }
 
   let(:signed_in) { api_sign_in(user, credential) }

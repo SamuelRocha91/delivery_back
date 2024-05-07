@@ -20,6 +20,12 @@ FactoryBot.define do
     role {:seller}
   end
 
+  factory :user_buyer, class: User do
+    email { "johnfour@example.com" }
+    password { "kosjksjd123235@" }
+    password_confirmation { "kosjksjd123235@" }
+    role {:buyer}
+  end
   factory :user_admin, class: User do
     email { "johnfour@example.com" }
     password { "kosjksjd123235@" }
