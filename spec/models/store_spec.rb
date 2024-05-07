@@ -1,38 +1,31 @@
 require 'rails_helper'
 
 RSpec.describe Store, type: :model do
-  describe "validations" do
-    it "should be valid when name is filled" do
-      store = Store.new name: "Greatest store ever!", user: create(:user)
-      expect(store.valid?).to eq true
-    end
+  let(:admin) {
+    create(:user_admin)
+  }
 
-    it "should validate presence of name" do
-      store = Store.new
-      expect(store).to_not be_valid
-    end
+  let(:store) { create(:store)}
 
-    it "should validate presence of name" do
-      should validate_presence_of :name
-    end
+  describe "attribute presence check" do
+    it { should have_db_column(:name) }
+    it { should have_db_column(:user_id) }
+  end
 
-    describe "belongs_to" do
-      let(:admin) {
-        User.create!(
-          email: "admin@example.com",
-          password: "123456",
-          password_confirmation: "123456",
-          role: :admin
-        )
-      }
-      
-      it "should not belong to admin users" do
-        store = Store.create(name: "store", user: admin)
-        expect(store.errors.full_messages).to eq ["User must exist"]
-      end
-    end
-    
-    it { should validate_length_of(:name).is_at_least(3) }
+  describe "checking relationships between tables" do
     it { should belong_to(:user) }
+  end
+
+  describe "checking field validations" do
+    it { should validate_presence_of(:name) }
+    it { should validate_length_of(:name).is_at_least(3) }
+    it "should not belong to admin users" do
+      store = Store.create(name: "store", user: admin)
+      expect(store.errors.full_messages).to eq ["User must exist"]
+    end
+    it "calls ensure_seller before validation" do
+      store = Store.create(name: "Mc Donalds", user: admin)
+      expect(store.user).to eq(nil)
+    end
   end
 end

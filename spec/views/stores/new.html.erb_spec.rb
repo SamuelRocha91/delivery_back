@@ -1,20 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe "stores/new", type: :view do
+
   let(:sellers) do
     [
-      create(:user, email: "seller1@example.com", role: 'seller'),
-      create(:user, email: "seller2@example.com", role: 'seller'),
-      create(:user, email: "seller3@example.com", role: 'seller')
+      create(:user_two),
+      create(:user_three)
     ]
-  end
-  
-  
+  end  
   before(:each) do
     assign(:store, Store.new(
       name: "MyString"
     ))
-
     assign(:sellers, sellers)
     allow(view).to receive(:current_user).and_return(create(:user_admin))
   end
