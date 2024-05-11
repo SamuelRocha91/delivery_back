@@ -78,12 +78,14 @@ class StoresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def store_params
+      puts "Params received: #{params.inspect}"
+
       required = params.require(:store)
 
       if current_user.admin?
-        required.permit(:name, :user_id)
+        required.permit(:name, :user_id, :avatar)
       else
-        required.permit(:name)
+        required.permit(:name, :avatar)
       end
     end
 

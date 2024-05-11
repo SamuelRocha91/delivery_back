@@ -6,6 +6,8 @@ RSpec.describe Order, type: :model do
     it { should have_db_column(:state) }
     it { should have_db_column(:buyer_id)}
     it { should have_db_column(:store_id)}
+    it { should belong_to(:buyer) }
+    it { should belong_to(:store) }
   end
 
   describe "checking relationships between tables" do
