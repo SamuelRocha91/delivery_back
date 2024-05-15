@@ -1,5 +1,4 @@
 class RegistrationsController < ApplicationController
-    
   skip_forgery_protection only: [:create, :sign_in, :me]
   before_action :authenticate!, only: [:me]
   rescue_from User::InvalidToken, with: :not_authorized
@@ -24,7 +23,6 @@ class RegistrationsController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.role = current_credential.access
-    puts @user.inspect
     if @user.save
       render json: {"email": @user.email}
     else
