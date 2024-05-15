@@ -87,43 +87,33 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "oneOf": [
-                  {
+                "type": "object",
+                "properties": {
+                  "store": {
                     "type": "object",
                     "properties": {
                       "name": {
                         "type": "string"
                       },
-                      "user_id": {
-                        "type": "integer"
+                      "avatar": {
+                        "type": "string",
+                        "format": "binary"
                       }
                     },
                     "required": [
                       "name",
-                      "user_id"
-                    ],
-                    "example": {
-                      "name": "Burguer King",
-                      "user_id": 1
-                    }
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "name"
-                    ],
-                    "example": {
-                      "name": "McDonald's"
-                    }
+                      "avatar"
+                    ]
                   }
-                ]
+                }
+              },
+              "example": {
+                "store": {
+                  "name": "McDonald's",
+                  "avatar": "Insira aqui o conteúdo da imagem em base64 ou um link para uma imagem externa"
+                }
               }
             }
           }
@@ -597,15 +587,15 @@
               }
             }
           },
-          "422":{
+          "422": {
             "description": "Unprocessable Content",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties":{
+                  "properties": {
                     "errors": {
-                      "type":"string"
+                      "type": "string"
                     }
                   }
                 }
