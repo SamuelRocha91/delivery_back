@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController  
   before_action :authenticate!
+  before_action :set_product, only: %i[ show edit update destroy ]
 
   def listing
     if request.format == Mime[:json]
@@ -19,6 +20,10 @@ class ProductsController < ApplicationController
   end
 
   private
+
+  def set_product
+    @product = Product.find(params[:id])
+  end
 
   def product_params
     required = params.require(:product).permit(:tile, :price, :description, :image, :category)
