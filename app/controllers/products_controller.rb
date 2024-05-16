@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController  
   before_action :authenticate!
   before_action :set_product, only: %i[ show edit update destroy ]
+  skip_forgery_protection 
+  rescue_from User::InvalidToken, with: :not_authorized
 
   def listing
     if request.format == Mime[:json]
@@ -27,6 +29,10 @@ class ProductsController < ApplicationController
 
   def product_params
     required = params.require(:product).permit(:tile, :price, :description, :image, :category)
+  end
+
+  def not_authorized(e)
+    render json: {message: "Nope!"}, status: 401
   end
 end
 
