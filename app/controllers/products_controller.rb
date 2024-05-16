@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController  
   before_action :authenticate!
-  before_action :set_product, only: %i[ show edit update destroy ]
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
 
@@ -21,18 +20,21 @@ class ProductsController < ApplicationController
     end   
   end
 
-  def create
-    @product = Product.new(product_params)
+ def create
+    @store = Store.find(params[:store_id])
+    @product = @store.products.new(product_params)
+
     respond_to do |format|
       if @product.save
         format.html { redirect_to store_url(@store), notice: "Product was successfully created." }
-        format.json { render :show, status: :created, location: @store }
+        format.json { render :show, status: :created, location: store_products_url(@store, @product) }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @store.errors, status: :unprocessable_entity }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
+
 
   private
 
@@ -41,7 +43,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    required = params.require(:product).permit(:tile, :price, :description, :image, :category)
+    required = params.require(:product).permit(:title, :price, :description, :image, :category)
   end
 
   def not_authorized(e)
