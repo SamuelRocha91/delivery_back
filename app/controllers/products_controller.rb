@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController  
   before_action :authenticate!
-  before_action :set_store, only: %i[ update]
+  before_action :set_store, only: %i[ update destroy ]
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
 
@@ -47,6 +47,15 @@ class ProductsController < ApplicationController
         format.json { render json: @store.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+   def destroy
+     @product = @store.products.find(params[:id])
+     @product.destroy
+     respond_to do |format|
+       format.html { redirect_to store_products_url, notice: "Product was successfully destroyed." }
+       format.json { head :no_content}
+     end
   end
 
   private
