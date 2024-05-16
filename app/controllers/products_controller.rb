@@ -21,6 +21,19 @@ class ProductsController < ApplicationController
     end   
   end
 
+  def create
+    @product = Product.new(product_params)
+    respond_to do |format|
+      if @product.save
+        format.html { redirect_to store_url(@store), notice: "Product was successfully created." }
+        format.json { render :show, status: :created, location: @store }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @store.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   def set_product
