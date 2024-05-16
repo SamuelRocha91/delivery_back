@@ -1,8 +1,12 @@
 class ProductsController < ApplicationController  
   before_action :authenticate!
-  before_action :set_store, only: %i[ update destroy ]
+  before_action :set_store, only: %i[update destroy index]
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
+
+  def index
+    render json: { data: @store.products.all }, status: :ok
+  end
 
   def listing
     if request.format == Mime[:json]
