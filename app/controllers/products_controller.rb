@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController  
   before_action :authenticate!
+  before_action :set_store, only: %i[ update]
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
 
@@ -35,11 +36,23 @@ class ProductsController < ApplicationController
     end
   end
 
+  def update
+    @product = @store.products.find(params[:id])
+    respond_to do |format|
+      if @product.update(product_params)
+        format.html { redirect_to store_url(@store), notice: "Product was successfully updated." }
+        format.json { render :show, status: :ok, location: store_product_url(@store, @product) }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @store.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   private
 
-  def set_product
-    @product = Product.find(params[:id])
+  def set_store
+      @store = Store.find(params[:store_id])
   end
 
   def product_params
