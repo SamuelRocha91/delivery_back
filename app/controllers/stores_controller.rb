@@ -1,7 +1,7 @@
 class StoresController < ApplicationController
   before_action :authenticate!
   before_action :set_store, only: %i[ show edit update destroy ]
-  skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
+  skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
 
 
@@ -78,14 +78,13 @@ class StoresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def store_params
-      puts "Params received: #{params.inspect}"
 
       required = params.require(:store)
 
       if current_user.admin?
-        required.permit(:name, :user_id, :avatar)
+        required.permit(:name, :user_id, :avatar, :price_minimum, :description, :phone_number, :category, :address)
       else
-        required.permit(:name, :avatar)
+        required.permit(:name, :avatar, :price_minimum, :description, :phone_number, :category, :address)
       end
     end
 
