@@ -1,7 +1,7 @@
 class Store < ApplicationRecord
   has_one_attached :avatar
   belongs_to :user
-  has_many :products
+  has_many :products, dependent: :destroy
   validates :name, presence: true, length: {minimum: 3}
   before_validation :ensure_seller
   

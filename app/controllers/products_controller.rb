@@ -69,7 +69,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    required = params.require(:product).permit(:title, :price, :description, :image, :category)
+    params.require(:product).permit(:title, :price, :description, :image, :category)
   end
 
   def not_authorized(e)
