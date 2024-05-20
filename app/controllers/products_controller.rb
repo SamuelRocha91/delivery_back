@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController  
   before_action :authenticate!
-  before_action :set_store, only: %i[show update destroy index]
-  before_action :set_product, only: [:show]
+  before_action :set_store, only: %i[show update destroy index edit]
+  before_action :set_product, only: %i[show edit]
 
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
@@ -43,6 +43,9 @@ class ProductsController < ApplicationController
   end
 
   def show
+  end
+
+  def edit
   end
 
   def update

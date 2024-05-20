@@ -1,0 +1,12 @@
+<div class="card-two">
+  <h1>Editing product</h1>
+  
+  <%= render "form",product: @product %>
+  
+  <br>
+  
+  <div>
+    <%= link_to "Show this product",  store_product_path(@store, @product) %> |
+    <%= link_to "Back to products", listing_path %>
+  </div>
+</div>
