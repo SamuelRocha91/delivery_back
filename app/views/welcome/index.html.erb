@@ -3,7 +3,10 @@
   <p style="color: green;"><%= notice %></p>
   <% if current_user %>
     <p class="user-info">Logged in as <strong><%= current_user.email %></strong></p>
-    <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+     <div class="container-links">
+       <%= link_to "Listar produtos", listing_path %>
+       <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+     </div>
   <% else %>
     <div class="auth-links">
       <%= link_to "Sign in", new_user_session_path %>

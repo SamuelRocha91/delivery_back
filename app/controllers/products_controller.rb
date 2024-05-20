@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController  
   before_action :authenticate!
-  before_action :set_store, only: %i[update destroy index]
+  before_action :set_store, only: %i[show update destroy index edit]
+  before_action :set_product, only: %i[show edit]
+
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
 
@@ -20,7 +22,7 @@ class ProductsController < ApplicationController
       if !current_user.admin?
         redirect_to root_path, notice: "No permision for you"
       else
-        @products = Product.includes(:store)
+        @products = Product.includes(:store, :image_attachment)
       end
     end   
   end
@@ -38,6 +40,12 @@ class ProductsController < ApplicationController
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def show
+  end
+
+  def edit
   end
 
   def update
@@ -70,6 +78,10 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:title, :price, :description, :image, :category)
+  end
+
+  def set_product
+    @product = @store.products.find(params[:id])
   end
 
   def not_authorized(e)
