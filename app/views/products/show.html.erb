@@ -1,0 +1,13 @@
+<div class="card-two">
+    <p style="color: green"><%= notice %></p>
+    
+    <%= render 'product', product: @product %>
+    
+    <div class="btn-links">
+      <div>
+          <%= link_to "Edit this product", edit_store_product_path(@product.store, @product) %> |
+          <%= link_to "Back to listing", listing_path %>
+      </div>
+      <%= button_to "Destroy this product",  store_product_path(@product.store, @product), method: :delete %>
+    </div>
+</div>

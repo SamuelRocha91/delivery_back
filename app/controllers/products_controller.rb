@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController  
   before_action :authenticate!
-  before_action :set_store, only: %i[update destroy index]
+  before_action :set_store, only: %i[show update destroy index]
+  before_action :set_product, only: [:show]
+
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
 
@@ -40,6 +42,9 @@ class ProductsController < ApplicationController
     end
   end
 
+  def show
+  end
+
   def update
     @product = @store.products.find(params[:id])
     respond_to do |format|
@@ -70,6 +75,10 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:title, :price, :description, :image, :category)
+  end
+
+  def set_product
+    @product = @store.products.find(params[:id])
   end
 
   def not_authorized(e)

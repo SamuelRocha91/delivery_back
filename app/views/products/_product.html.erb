@@ -1,0 +1,8 @@
+<div class="product-details">
+  <h2><%= product.title %></h2>
+  <% if product.image.attached? %>
+    <%= image_tag product.image, alt: product.title, class: "product-image" %>
+  <% end %>
+  <p><strong>Store:</strong> <%= product.store.name %></p>
+  <p><strong>Description:</strong> <%= product.description %></p>
+</div>
