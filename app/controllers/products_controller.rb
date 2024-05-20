@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
       if !current_user.admin?
         redirect_to root_path, notice: "No permision for you"
       else
-        @products = Product.includes(:store)
+        @products = Product.includes(:store, :image_attachment)
       end
     end   
   end

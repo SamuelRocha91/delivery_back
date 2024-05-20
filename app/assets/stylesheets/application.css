@@ -113,3 +113,60 @@ label {
   flex-direction: column;
   gap: 10px;
 }
+
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.2s;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card p {
+  margin: 10px 0;
+}
+
+.card a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+#product-title {
+  text-align: center;
+}
+
+.product-image {
+  width: 200px;
+  height: 150px;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
