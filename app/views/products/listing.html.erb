@@ -4,7 +4,9 @@
   <% @products.each do |product| %>
   <div>
     <h3><%= product.title %></h3>
+    <%= link_to "Show this product", store_product_path(product.store, product) %> |
     <p>Store: <%= product.store.name %></p>
+    <%= link_to "Show this store", store_path(product.store)%> |
   </div>
   <hr />
 <% end %>
