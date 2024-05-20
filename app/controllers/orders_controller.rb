@@ -7,6 +7,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.buyer = current_user
     if @order.save
+      ActionCable.server.broadcast 'orders_chanel', order: @order
       render json: {order: @order}, status: :created
     else
       render json: {errors: @order.errors}, status: :unprocessable_entity

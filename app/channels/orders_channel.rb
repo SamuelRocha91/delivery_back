@@ -1,9 +1,9 @@
 class OrdersChannel < ApplicationCable::Channel
   def subscribed
-    # stream_from "some_channel"
+    stream_from "orders_chanel" 
   end
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
+    ActionCable.server.broadcast "orders_chanel", message: data['message'] 
   end
 end
