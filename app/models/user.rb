@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Discard::Model
+
   has_many :stores
   
   validates :role, presence: true
