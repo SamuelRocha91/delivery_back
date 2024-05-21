@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   end
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
+  mount ActionCable.server => '/cable '
 
   root to: "welcome#index"
 
