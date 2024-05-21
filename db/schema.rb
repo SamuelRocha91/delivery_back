@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_21_194208) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_21_194447) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -88,6 +88,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_21_194208) do
     t.text "description"
     t.string "category"
     t.text "address"
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_stores_on_discarded_at"
     t.index ["user_id"], name: "index_stores_on_user_id"
   end
 
