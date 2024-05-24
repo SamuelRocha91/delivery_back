@@ -1,0 +1,49 @@
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/prism-0.29.0/ext/prism
+/home/samuel/.rbenv/versions/3.2.2/bin/ruby extconf.rb
+/home/samuel/.rbenv/versions/3.2.2/bin/ruby: warning: Ruby was built without YJIT support. You may need to install rustc to build Ruby with YJIT.
+checking for prism.h in /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/prism-0.29.0/include... yes
+checking for prism/extension.h in /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/prism-0.29.0/ext... yes
+checking for whether -fvisibility=hidden is accepted as CFLAGS... yes
+Running make build/libprism.a with {"SOEXT"=>"so", "MAKEDIRS"=>"/usr/bin/mkdir -p", "RMALL"=>"rm -fr"}
+compiling build/static/diagnostic.o
+compiling build/static/encoding.o
+compiling build/static/node.o
+compiling build/static/options.o
+compiling build/static/pack.o
+compiling build/static/prettyprint.o
+compiling build/static/prism.o
+compiling build/static/regexp.o
+compiling build/static/serialize.o
+compiling build/static/static_literals.o
+compiling build/static/token_type.o
+compiling build/static/util/pm_buffer.o
+compiling build/static/util/pm_char.o
+compiling build/static/util/pm_constant_pool.o
+compiling build/static/util/pm_integer.o
+compiling build/static/util/pm_list.o
+compiling build/static/util/pm_memchr.o
+compiling build/static/util/pm_newline_list.o
+compiling build/static/util/pm_string.o
+compiling build/static/util/pm_string_list.o
+compiling build/static/util/pm_strncasecmp.o
+compiling build/static/util/pm_strpbrk.o
+building build/libprism.a with ar
+ar: criando build/libprism.a
+creating Makefile
+
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/prism-0.29.0/ext/prism
+make DESTDIR\= sitearchdir\=./.gem.20240523-4070315-optm7i sitelibdir\=./.gem.20240523-4070315-optm7i clean
+
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/prism-0.29.0/ext/prism
+make DESTDIR\= sitearchdir\=./.gem.20240523-4070315-optm7i sitelibdir\=./.gem.20240523-4070315-optm7i
+compiling api_node.c
+compiling api_pack.c
+compiling extension.c
+linking shared-object prism/prism.so
+
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/prism-0.29.0/ext/prism
+make DESTDIR\= sitearchdir\=./.gem.20240523-4070315-optm7i sitelibdir\=./.gem.20240523-4070315-optm7i install
+/usr/bin/install -c -m 0755 prism.so ./.gem.20240523-4070315-optm7i/prism
+
+current directory: /home/samuel/projectsByOrganizations/codeSaga/delivery_back/vendor/bundle/ruby/3.2.0/gems/prism-0.29.0/ext/prism
+make DESTDIR\= sitearchdir\=./.gem.20240523-4070315-optm7i sitelibdir\=./.gem.20240523-4070315-optm7i clean
