@@ -12,6 +12,10 @@ class User < ApplicationRecord
 
   class InvalidToken < StandardError; end
 
+  def active_for_authentication?
+    super && !discarded?
+  end
+
   def self.token_for(user)
     jwt_secret_key = Rails.application.credentials.jwt_secret_key
    
