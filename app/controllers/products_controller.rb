@@ -63,7 +63,7 @@ class ProductsController < ApplicationController
 
    def destroy
      @product = @store.products.find(params[:id])
-     @product.discard
+     @product.discard!
      respond_to do |format|
        format.html { redirect_to store_products_url, notice: "Product was successfully destroyed." }
        format.json { head :no_content}
