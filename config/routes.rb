@@ -16,5 +16,7 @@ Rails.application.routes.draw do
   get "me" => "registrations#me"
   post "new" => "registrations#create", as: :create_registration
   post "sign_in" => "registrations#sign_in"
+  delete "deactivate_user/:id" => "registrations#deactivate_user", as: :deactivate_user
+
   get "up" => "rails/health#show", as: :rails_health_check
 end
