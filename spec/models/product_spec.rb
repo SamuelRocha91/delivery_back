@@ -4,7 +4,7 @@ RSpec.describe Product, type: :model do
 
   describe "attribute presence check" do
     it { should have_db_column(:title) }
-    it { should have_db_column(:price).of_type(:decimal).with_options(precision: 10, scale: 2) }
+    it { should have_db_column(:price).of_type(:decimal).with_options(precision: 8, scale: 2) }
   end
 
   describe "checking relationships between tables" do
