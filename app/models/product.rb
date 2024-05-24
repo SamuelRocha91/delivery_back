@@ -11,7 +11,10 @@ class Product < ApplicationRecord
   validates :category, presence: true
   scope :not_discarded, -> { where(discarded: false) }
 
+<<<<<<< feature/implements-tests-api
 
+=======
+>>>>>>> main
 end
 
  

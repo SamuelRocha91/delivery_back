@@ -8,6 +8,10 @@ class Store < ApplicationRecord
   before_validation :ensure_seller
   scope :not_discarded, -> { where(discarded: false) }
 
+<<<<<<< feature/implements-tests-api
+=======
+
+>>>>>>> main
   private
 
   def ensure_seller
