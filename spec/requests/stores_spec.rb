@@ -158,7 +158,8 @@ RSpec.describe "/stores", type: :request do
       store = Store.create! valid_attributes
       expect {
         delete store_url(store)
-      }.to change(Store, :count).by(-1)
+      }.to change(Store.kept, :count).by(-1)
+        expect(store.reload.discarded_at).not_to be_nil
     end
 
     it "redirects to the stores list" do
