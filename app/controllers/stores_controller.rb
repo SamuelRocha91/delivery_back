@@ -8,9 +8,9 @@ class StoresController < ApplicationController
   # GET /stores or /stores.json
   def index
     if current_user.admin?
-      @stores = Store.all
+      @stores = Store.kept
     else
-      @stores = Store.where(user: current_user)
+      @stores = Store.kept.where(user: current_user)
     end
   end
 
@@ -62,7 +62,7 @@ class StoresController < ApplicationController
 
   # DELETE /stores/1 or /stores/1.json
   def destroy
-    @store.destroy!
+    @store.discard!
 
     respond_to do |format|
       format.html { redirect_to stores_url, notice: "Store was successfully destroyed." }
@@ -73,7 +73,14 @@ class StoresController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_store
-      @store = Store.find(params[:id])
+      @store = Store.kept.find(params[:id])
+
+      if @store.nil?
+        respond_to do |format|
+          format.html { redirect_to store_url(@store), alert: "Store not found or has been discarded." }
+          format.json { render json: { error: "Store not found or has been discarded" }, status: :not_found }
+        end
+      end
     end
 
     # Only allow a list of trusted parameters through.
