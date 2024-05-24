@@ -2,19 +2,22 @@
 
 <div class="products-container">
   <% @products.each do |product| %>
-  <div class="card">
-    <% if product.image.attached? %>
-      <div>
-        <%= image_tag product.image, alt: product.title, class: "product-image" %>
-      </div>
-    <% end %>
-    <div class="card-content">
-      <h3><%= product.title %></h3>
-      <%= link_to "Show this product", store_product_path(product.store, product) %>
-      <p>Store: <%= product.store.name %></p>
-      <%= link_to "Show this store", store_path(product.store)%>
+    <% unless product.discarded? %>
+
+      <div class="card">
+        <% if product.image.attached? %>
+          <div>
+            <%= image_tag product.image, alt: product.title, class: "product-image" %>
+          </div>
+        <% end %>
+        <div class="card-content">
+          <h3><%= product.title %></h3>
+          <%= link_to "Show this product", store_product_path(product.store, product) %>
+          <p>Store: <%= product.store.name %></p>
+          <%= link_to "Show this store", store_path(product.store)%>
+            </div>
         </div>
-    </div>
-  <hr />
+      <hr />
+   <% end %>
 <% end %>
 </div>
