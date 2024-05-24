@@ -1,5 +1,5 @@
 class RegistrationsController < ApplicationController
-  skip_forgery_protection only: [:create, :sign_in, :me]
+  skip_forgery_protection only: [:create, :sign_in, :me, :deactivate_user]
   before_action :authenticate!, only: [:me]
   rescue_from User::InvalidToken, with: :not_authorized
 
@@ -10,7 +10,7 @@ class RegistrationsController < ApplicationController
 
   def sign_in
     access = current_credential.access
-    user = User.where(role: access).find_by(email: sign_in_params[:email])
+    user = User.kept.where(role: access).find_by(email: sign_in_params[:email])
 
     if !user || !user.valid_password?(sign_in_params[:password])
       render json: {message: "Nope!"}, status: 401
@@ -27,6 +27,15 @@ class RegistrationsController < ApplicationController
       render json: {"email": @user.email}
     else
       render json: {}, status: :unprocessable_entity
+    end
+  end
+
+  def deactivate_user
+    user = User.find(params[:id])
+    if user.discard!
+      render json: { message: "User successfully deactivated." }, status: :ok
+    else
+      render json: { message: "Failed to deactivate user." }, status: :unprocessable_entity
     end
   end
 

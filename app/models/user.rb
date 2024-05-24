@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Discard::Model
+
   has_many :stores
   
   validates :role, presence: true
@@ -9,6 +11,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   class InvalidToken < StandardError; end
+
+  def active_for_authentication?
+    super && !discarded?
+  end
 
   def self.token_for(user)
     jwt_secret_key = Rails.application.credentials.jwt_secret_key

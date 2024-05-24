@@ -7,13 +7,13 @@ class ProductsController < ApplicationController
   rescue_from User::InvalidToken, with: :not_authorized
 
   def index
-    render json: { data: @store.products.all }, status: :ok
+    render json: { data: @store.products.kept }, status: :ok
   end
 
   def listing
     if request.format == Mime[:json]
       if @user && @user.admin?
-        @products = Product.all
+        @products = Product.not_discarded
         render json: { message: "Success", data: @products}
       else
         render json: { error: "Unauthorized" }, status: :unauthorized
@@ -22,7 +22,7 @@ class ProductsController < ApplicationController
       if !current_user.admin?
         redirect_to root_path, notice: "No permision for you"
       else
-        @products = Product.includes(:store, :image_attachment)
+        @products = Product.not_discarded.includes(:store, :image_attachment)
       end
     end   
   end
@@ -63,7 +63,7 @@ class ProductsController < ApplicationController
 
    def destroy
      @product = @store.products.find(params[:id])
-     @product.destroy
+     @product.discard!
      respond_to do |format|
        format.html { redirect_to store_products_url, notice: "Product was successfully destroyed." }
        format.json { head :no_content}
@@ -81,7 +81,13 @@ class ProductsController < ApplicationController
   end
 
   def set_product
-    @product = @store.products.find(params[:id])
+    @product =  @store.products.kept.find_by(id: params[:id])
+    if @product.nil?
+      respond_to do |format|
+        format.html { redirect_to store_url(@store), alert: "Product not found or has been discarded." }
+        format.json { render json: { error: "Product not found or has been discarded" }, status: :not_found }
+      end
+    end
   end
 
   def not_authorized(e)

@@ -7,6 +7,8 @@ class Product < ApplicationRecord
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :description, presence: true, length: {minimum: 10, maximum: 100}
   validates :category, presence: true
+  scope :not_discarded, -> { where(discarded: false) }
+
 end
 
  
