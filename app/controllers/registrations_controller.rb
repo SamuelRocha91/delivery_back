@@ -10,7 +10,7 @@ class RegistrationsController < ApplicationController
 
   def sign_in
     access = current_credential.access
-    user = User.where(role: access).find_by(email: sign_in_params[:email])
+    user = User.kept.where(role: access).find_by(email: sign_in_params[:email])
 
     if !user || !user.valid_password?(sign_in_params[:password])
       render json: {message: "Nope!"}, status: 401
