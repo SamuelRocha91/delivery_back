@@ -8,7 +8,6 @@ class Store < ApplicationRecord
   before_validation :ensure_seller
   scope :not_discarded, -> { where(discarded: false) }
 
-
   private
 
   def ensure_seller
