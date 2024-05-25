@@ -622,3 +622,41 @@ label {
 .store-actions-two .btn-show-store{ 
   background-color: red;
 }
+
+.store-details {
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 800px;
+  }
+
+  .store-details h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+
+  .store-details h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+
+  .product-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .product-item {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+
+  .product-item p {
+    margin: 0;
+    font-size: 1.2em;
+  }

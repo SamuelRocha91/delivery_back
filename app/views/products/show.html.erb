@@ -3,15 +3,15 @@
     
     <%= render 'product', product: @product %>
     
-    <div class="btn-links">
-      <div>
-          <%= link_to "Edit this product", edit_store_product_path(@product.store, @product) %> |
-          <%= link_to "Back to listing", listing_path %>
-      </div>
-       <% if @product.discarded? %>
-           <%= button_to "Active this product", reactivate_product_store_path(store_id: @product.store.id, id: @product.id), method: :put %>
-       <% else  %>
-          <%= button_to "Destroy this product",  store_product_path(store_id: @product.store.id, id: @product.id), method: :delete %>
-      <% end  %>
+    <div class="father-user-links">
+        <div class="store-actions-two">
+              <%= link_to "Edit this product", edit_store_product_path(@product.store, @product), class: "btn btn-edit-store" %> 
+              <%= link_to "Back to listing", listing_path, class: "btn btn-back-to-stores" %>
+           <% if @product.discarded? %>
+               <%= button_to "Active this product", reactivate_product_store_path(store_id: @product.store.id, id: @product.id), method: :put, class: "btn btn-new-store" %>
+           <% else  %>
+              <%= button_to "Destroy this product",  store_product_path(store_id: @product.store.id, id: @product.id), method: :delete , class: "btn btn-show-store"%>
+          <% end  %>
+        </div>
     </div>
 </div>
