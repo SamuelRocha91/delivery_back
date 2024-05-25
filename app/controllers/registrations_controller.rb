@@ -10,7 +10,11 @@ class RegistrationsController < ApplicationController
   end
 
   def me
-    render json:  {"email": current_user[:email], "id": current_user[:id] }
+    if request.format == Mime[:json]
+      render json:  {"email": current_user[:email], "id": current_user[:id] }
+    else 
+      @user = current_user
+    end
   end
 
   def sign_in
