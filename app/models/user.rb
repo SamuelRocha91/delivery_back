@@ -46,11 +46,18 @@ class User < ApplicationRecord
 
   private
     def discard_associated_stores
-      stores.each(&:discard)
+      stores.each do |store|
+        store.discard
+        store.products.each(&:discard)
+      end
     end
 
-    def undiscard_associated_stores
-      stores.each(&:undiscard)
+  def undiscard_associated_stores
+    stores.each do |store|
+      if store.user&.active?
+        store.undiscard
+        store.products.each(&:undiscard)
+      end
     end
-
+  end
 end
