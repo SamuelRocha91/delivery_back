@@ -1,17 +1,17 @@
 <div class="container">
-  <h1>Welcome to Delivery!</h1>
   <p style="color: green;"><%= notice %></p>
   <% if current_user %>
-    <p class="user-info">Logged in as <strong><%= current_user.email %></strong></p>
-     <div class="container-links">
+  <div class="container-links">
        <%= link_to "Listar produtos", listing_path %>
+       <%= link_to "Gerenciar usuários", sign_up_registration_path %>
        <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
      </div>
+    <h1>Welcome to Delivery!</h1>
+    <p class="user-info">Logged in as <strong><%= current_user.email %></strong></p>
   <% else %>
+    <h1>Welcome to Delivery!</h1>
     <div class="auth-links">
       <%= link_to "Sign in", new_user_session_path %>
-      or
-      <%= link_to "Sign up", new_user_registration_path %>
     </div>
   <% end %>
 </div>

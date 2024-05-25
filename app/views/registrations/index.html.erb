@@ -1,0 +1,17 @@
+<h1 id="product-title">Managing Users</h1>
+
+<div class="products-container">
+  <% @user.each do |user| %>
+
+      <div class="card">
+        <div class="card-content">
+          <h3><%= user.email %></h3>
+          <%= link_to "Show this user", store_product_path(product.store, product) %>
+          <%= link_to "Edit this user", store_path(product.store)%>
+          <%= link_to "Deactivate this user", store_path(product.store)%>
+          </div>
+        </div>
+      <hr />
+   <% end %>
+<% end %>
+</div>

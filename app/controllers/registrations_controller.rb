@@ -2,7 +2,12 @@ class RegistrationsController < ApplicationController
   skip_forgery_protection only: [:create, :sign_in, :me, :deactivate_user]
   before_action :authenticate!, only: [:me]
   rescue_from User::InvalidToken, with: :not_authorized
+  before_action :redirect_sign_up, only: [:new, :create]
 
+
+  def index
+    @user = User.all  
+  end
 
   def me
     render json:  {"email": current_user[:email], "id": current_user[:id] }
@@ -21,12 +26,21 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-    @user.role = current_credential.access
-    if @user.save
-      render json: {"email": @user.email}
+    if request.format == Mime[:json]
+      @user = User.new(user_params)
+      @user.role = current_credential.access
+      if @user.save
+        render json: {"email": @user.email}
+      else
+        render json: {}, status: :unprocessable_entity
+      end
     else
-      render json: {}, status: :unprocessable_entity
+      @user = User.new(sign_up_params)
+      if @user.save
+        redirect_to root_path, notice: 'User created successfully.'
+      else
+        render :new
+      end
     end
   end
 
@@ -37,6 +51,10 @@ class RegistrationsController < ApplicationController
     else
       render json: { message: "Failed to deactivate user." }, status: :unprocessable_entity
     end
+  end
+
+  def new
+    @user = User.new
   end
 
   private
@@ -53,7 +71,18 @@ class RegistrationsController < ApplicationController
       .permit(:email, :password)
   end
 
+  def sign_up_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :role)
+  end
+
   def not_authorized(e)
     render json: {message: "Nope!"}, status: 401
+  end
+
+  def redirect_sign_up
+    if user_signed_in?
+      flash[:alert] = "You cannot sign up while logged in."
+      redirect_to root_path
+    end
   end
 end
