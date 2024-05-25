@@ -1,8 +1,13 @@
 <h1 id="product-title">Managing Users</h1>
+<div class="father-user-links">
+  <div class="users-page-links">
+    <%= link_to "Create a new user", sign_up_registration_path, class: 'btn btn-new-store' %>
+    <%= link_to "Home", root_path, class: 'btn btn-create-store' %>
+  </div>
+</div>
 <p style="color: green;"><%= notice %></p>
 <div class="products-container">
   <% @users.each do |user| %>
-
       <div class="card">
         <div class="card-content">
           <h3><%= user.email %></h3>

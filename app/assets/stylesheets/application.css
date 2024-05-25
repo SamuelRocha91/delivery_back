@@ -587,3 +587,22 @@ label {
   flex-direction: column;
   align-items: center;
 }
+
+.users-page-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 15%;
+  gap: 0px;
+}
+
+.users-page-links a .btn .btn-new-store {
+  max-width: fit-content;
+}
+
+.father-user-links {
+  display: flex;
+  justify-content: center;
+   width: 100%;
+}
