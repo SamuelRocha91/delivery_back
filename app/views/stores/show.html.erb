@@ -3,6 +3,7 @@
 <%= render @store %>
 
 <div class="store-actions">
+    <%= link_to "Register new Product", new_store_product_path(store_id: @store.id), class: "btn btn-new-store" %>
   <%= link_to "Edit this store", edit_store_path(@store), class: "btn btn-edit-store" %>
   <%= link_to "Back to stores", stores_path, class: "btn btn-back-to-stores" %>
   <% if @store.discarded? %>

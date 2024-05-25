@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController  
   before_action :authenticate!
-  before_action :set_store, only: %i[show update destroy index edit]
+  before_action :set_store, only: %i[show update destroy index edit new]
   before_action :set_product, only: %i[show edit]
 
   skip_forgery_protection 
@@ -8,6 +8,10 @@ class ProductsController < ApplicationController
 
   def index
     render json: { data: @store.products.kept }, status: :ok
+  end
+
+  def new
+    @product = @store.products.new
   end
 
   def listing
@@ -33,7 +37,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to store_url(@store), notice: "Product was successfully created." }
+        format.html { redirect_to store_url(id: @store.id), notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: store_products_url(@store, @product) }
       else
         format.html { render :new, status: :unprocessable_entity }
