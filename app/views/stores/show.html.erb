@@ -5,6 +5,10 @@
 <div class="store-actions">
   <%= link_to "Edit this store", edit_store_path(@store), class: "btn btn-edit-store" %>
   <%= link_to "Back to stores", stores_path, class: "btn btn-back-to-stores" %>
-  <%= button_to "Destroy this store", @store, method: :delete, class: "btn btn-destroy-store", data: { confirm: "Are you sure?" } %>
+  <% if @store.discarded? %>
+      <%= button_to "Active this store", reactivate_store_path(id: @store.id), method: :put, data: { confirm: "Are you sure?" }, class: "btn btn-show-store"  %>
+   <% else  %>
+      <%= button_to "Deactivate this store", store_path(id: @store.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-show-store"   %>
+    <% end  %>
 </div>
 

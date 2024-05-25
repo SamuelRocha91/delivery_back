@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   end
 
   resources :stores do
+    member do
+      put 'reactivate', to: 'stores#reactivate'
+    end
     resources :products
   end
   scope :buyers do
