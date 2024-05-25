@@ -1,4 +1,5 @@
 <div class="user-details">
+  <p style="color: green;"><%= notice %></p>
   <h2>User: <%= @user.email%></h2>
   <p><strong>id:</strong> <%= @user.id%></p>
   <%= link_to "Edit this user",  edit_registration_path(id: @user.id)%>
