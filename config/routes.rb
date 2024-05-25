@@ -9,7 +9,6 @@ Rails.application.routes.draw do
     get 'users/all' => 'registrations#index'
   end
 
-  match "*path", to: redirect("/"), via: :all
   resources :stores do
     resources :products
   end
@@ -29,4 +28,6 @@ Rails.application.routes.draw do
   delete "deactivate_user/:id" => "registrations#deactivate_user", as: :deactivate_user
 
   get "up" => "rails/health#show", as: :rails_health_check
+  match "*path", to: redirect("/"), via: :all
+
 end

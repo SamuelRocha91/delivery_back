@@ -6,12 +6,11 @@
       <div class="card">
         <div class="card-content">
           <h3><%= user.email %></h3>
-          <%= link_to "Show this user", store_product_path(product.store, product) %>
-          <%= link_to "Edit this user", store_path(product.store)%>
-          <%= link_to "Deactivate this user", store_path(product.store)%>
-          </div>
+          <%= link_to "Show this user", me_path(user) %>
+          <%= link_to "Edit this user",  edit_user_password_path(user)%>
+          <%= link_to "Deactivate this user", deactivate_user_path(user)%>
         </div>
+     </div>
       <hr />
-   <% end %>
-<% end %>
+  <% end %>
 </div>

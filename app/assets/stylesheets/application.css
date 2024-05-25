@@ -192,3 +192,31 @@ label {
   border-radius: 15px;
   margin-bottom: 10px;
 }
+
+.container-links-welcome {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #9ea2a7;
+  padding: 15px;
+  color: white;
+  border-bottom: 2px solid #0056b3;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.container-links-welcome a, .container-links-welcome button {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e9edf1;
+  cursor: pointer;
+}
+
+.container-links-welcome a:hover, .container-links-welcome button:hover {
+  background-color: #003f7f;
+}

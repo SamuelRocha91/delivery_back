@@ -1,9 +1,9 @@
 <div class="container">
   <p style="color: green;"><%= notice %></p>
   <% if current_user %>
-  <div class="container-links">
+  <div class="container-links-welcome">
        <%= link_to "Listar produtos", listing_path %>
-       <%= link_to "Gerenciar usuários", sign_up_registration_path %>
+       <%= link_to "Gerenciar usuários", users_all_path %>
        <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
      </div>
     <h1>Welcome to Delivery!</h1>
