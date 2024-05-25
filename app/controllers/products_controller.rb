@@ -13,7 +13,7 @@ class ProductsController < ApplicationController
   def listing
     if request.format == Mime[:json]
       if @user && @user.admin?
-        @products = Product.not_discarded
+        @products = Product.kept.all
         render json: { message: "Success", data: @products}
       else
         render json: { error: "Unauthorized" }, status: :unauthorized
@@ -22,7 +22,7 @@ class ProductsController < ApplicationController
       if !current_user.admin?
         redirect_to root_path, notice: "No permision for you"
       else
-        @products = Product.not_discarded.includes(:store, :image_attachment)
+        @products = Product.kept.includes(:store, :image_attachment)
       end
     end   
   end
@@ -49,7 +49,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    @product = @store.products.find(params[:id])
+    @product = @store.products.kept.find(params[:id])
     respond_to do |format|
       if @product.update(product_params)
         format.html { redirect_to store_url(@store), notice: "Product was successfully updated." }
@@ -63,7 +63,7 @@ class ProductsController < ApplicationController
 
    def destroy
      @product = @store.products.find(params[:id])
-     @product.discard!
+     @product.discard
      respond_to do |format|
        format.html { redirect_to store_products_url, notice: "Product was successfully destroyed." }
        format.json { head :no_content}
@@ -73,7 +73,7 @@ class ProductsController < ApplicationController
   private
 
   def set_store
-      @store = Store.find(params[:store_id])
+      @store = Store.kept.find(params[:store_id])
   end
 
   def product_params

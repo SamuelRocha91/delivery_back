@@ -6,8 +6,6 @@ class Store < ApplicationRecord
   has_many :products, dependent: :destroy
   validates :name, presence: true, length: {minimum: 3}
   before_validation :ensure_seller
-  scope :not_discarded, -> { where(discarded: false) }
-
 
   private
 

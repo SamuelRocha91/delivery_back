@@ -14,9 +14,9 @@ RSpec.describe OrderItem, type: :model do
     it "creates a new order_item successfully" do
       user = create(:user_buyer)
       store = create(:store)
-      product = Product.create(store: store, title: "Mc DOnalds", price: 1.50)
+      product = Product.create(store: store, title: "Mc DOnalds", price: 1.00, description: "hambueguer excelente do mc", category: "Massas")
       order = Order.create(buyer: user, store: store)
-      order_item = OrderItem.create(order: order, product: product, price: 1.00, amount: 2 )
+      order_item = product.order_items.create(order: order, price: 1.00, amount: 2 )
       expect(order_item).to be_valid
       expect(order_item.price).to eq 1.00
       expect(order_item.amount).to eq 2 
