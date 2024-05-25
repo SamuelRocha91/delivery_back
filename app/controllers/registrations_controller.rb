@@ -6,7 +6,7 @@ class RegistrationsController < ApplicationController
 
 
   def index
-    @user = User.all  
+    @users = User.all  
   end
 
   def me
@@ -14,6 +14,19 @@ class RegistrationsController < ApplicationController
       render json:  {"email": current_user[:email], "id": current_user[:id] }
     else 
       @user = current_user
+    end
+  end
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      redirect_to users_path, notice: 'User was successfully updated.'
+    else
+      render :edit_by_admin
     end
   end
 

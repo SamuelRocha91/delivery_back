@@ -3,7 +3,7 @@
   <% if current_user %>
   <div class="container-links-welcome">
        <%= link_to "Listar produtos", listing_path %>
-       <%= link_to "Gerenciar usuários", users_all_path %>
+       <%= link_to "Gerenciar usuários", users_path %>
        <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
      </div>
     <h1>Welcome to Delivery!</h1>

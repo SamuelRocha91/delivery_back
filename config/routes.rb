@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   authenticated :user do
     get 'sign_up', to: 'registrations#new', as: :sign_up_registration
     post 'sign_up' => 'registrations#create'
-    get 'users/all' => 'registrations#index'
+    get 'users' => 'registrations#index'
+    resources :registrations, only: [:edit, :update]
   end
 
   resources :stores do
