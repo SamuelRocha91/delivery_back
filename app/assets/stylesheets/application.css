@@ -478,3 +478,112 @@ label {
   padding: 10px;
   border: 1px solid green;
 }
+
+/* Estilo para o cartão da loja */
+.store-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  transition: box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.store-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para o avatar da loja */
+.store-avatar {
+  display: block;
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+/* Estilo para os rótulos dos campos da loja */
+.store-label {
+  font-weight: bold;
+  margin-right: 5px;
+  color: #333;
+}
+
+/* Estilo para o nome da loja */
+.store-name {
+  font-size: 1.2em;
+  color: #555;
+  margin-right: 20px;
+}
+
+/* Estilo para o endereço da loja */
+.store-address {
+  font-size: 1em;
+  color: #777;
+}
+
+.store-actions {
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilo para os botões */
+.store-actions .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+/* Estilo específico para o botão "Edit this store" */
+.store-actions .btn-edit-store {
+  background-color: #ffc107; /* Cor amarela */
+}
+
+.store-actions .btn-edit-store:hover {
+  background-color: #e0a800;
+}
+
+/* Estilo específico para o botão "Back to stores" */
+.store-actions .btn-back-to-stores {
+  background-color: #6c757d; /* Cor cinza */
+}
+
+.store-actions .btn-back-to-stores:hover {
+  background-color: #5a6268;
+}
+
+/* Estilo específico para o botão "Destroy this store" */
+.store-actions .btn-destroy-store {
+  background-color: #dc3545; /* Cor vermelha */
+}
+
+.store-actions .btn-destroy-store:hover {
+  background-color: #c82333;
+}
+
+/* Hover effect para todos os botões */
+.store-actions .btn:hover {
+  background-color: #0056b3;
+}
+
+.edit-store {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
