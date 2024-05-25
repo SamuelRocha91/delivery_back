@@ -606,3 +606,19 @@ label {
   justify-content: center;
    width: 100%;
 }
+
+.store-actions-two {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  width: 50%;
+  justify-content: center;
+}
+
+.store-actions-two .btn-edit-store{ 
+  background-color: rgb(163, 163, 17);
+}
+
+.store-actions-two .btn-show-store{ 
+  background-color: red;
+}

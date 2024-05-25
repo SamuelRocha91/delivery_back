@@ -7,7 +7,11 @@ class ProductsController < ApplicationController
   rescue_from User::InvalidToken, with: :not_authorized
 
   def index
-    render json: { data: @store.products.kept }, status: :ok
+    if request.format == Mime[:json]
+      render json: { data: @store.products.kept }, status: :ok      
+    else
+      @product =  @store.products
+    end
   end
 
   def new
