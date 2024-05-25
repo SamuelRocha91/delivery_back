@@ -1,14 +1,16 @@
-<p style="color: green"><%= notice %></p>
+<p class="notice"><%= notice %></p>
 
-<h1>Stores</h1>
+<h1 class="page-title">Stores</h1>
 
-<div id="stores">
+<div id="stores" class="stores-container">
   <% @stores.each do |store| %>
-    <%= render store %>
-    <p>
-      <%= link_to "Show this store", store %>
-    </p>
+    <div class="store">
+      <%= render store %>
+      <p>
+        <%= link_to "Show this store", store, class: "btn btn-show-store" %>
+      </p>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New store", new_store_path %>
+<%= link_to "New store", new_store_path, class: "btn btn-new-store" %>

@@ -316,3 +316,165 @@ label {
 .btn-primary:hover {
   background-color: #0056b3;
 }
+/* Estilo para a mensagem de notificação */
+.notice {
+  color: green;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+/* Estilo para o título da página */
+.page-title {
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Contêiner das lojas */
+.stores-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Estilo para cada loja individual */
+.store {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  width: 300px;
+  text-align: center;
+}
+
+/* Estilo para os links e botões */
+.btn {
+  display: inline-block;
+  padding: 10px 15px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn-show-store {
+  background-color: #007bff;
+}
+
+.btn-show-store:hover {
+  background-color: #0056b3;
+}
+
+.btn-new-store {
+  background-color: #28a745;
+  display: block;
+  width: fit-content;
+  margin: 20px auto;
+}
+
+.btn-new-store:hover {
+  background-color: #218838;
+}
+
+/* Estilo para a mensagem de erro */
+.error-messages {
+  border: 1px solid red;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  color: red;
+}
+
+/* Estilo para o formulário de criação de loja */
+.create-store-form {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+/* Estilo para os grupos de formulário */
+.create-store-form .form-group {
+  margin-bottom: 15px;
+}
+
+/* Estilo para os rótulos dos campos do formulário */
+.create-store-form .form-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Estilo para os campos de entrada do formulário */
+.create-store-form .form-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Estilo para os campos de seleção do formulário */
+.create-store-form .form-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Estilo para as ações do formulário */
+.create-store-form .form-actions {
+  margin-top: 20px;
+}
+
+/* Estilo para o botão de envio */
+.btn-create-store {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-create-store:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo para o botão de voltar */
+.btn-back-to-stores {
+  background-color: #6c757d;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-back-to-stores:hover {
+  background-color: #5a6268;
+}
+
+/* Estilo para os links de navegação */
+.navigation-links {
+  margin-top: 20px;
+}
+
+.new-store {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-group .form-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid green;
+}

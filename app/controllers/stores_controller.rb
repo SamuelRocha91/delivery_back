@@ -17,7 +17,7 @@ class StoresController < ApplicationController
   def new
     @store = Store.new
     if current_user.admin?
-      @sellers = User.where(role: :seller)
+      @sellers = User.kept.where(role: :seller)
     end
   end
   # GET /stores/1 or /stores/1.json
