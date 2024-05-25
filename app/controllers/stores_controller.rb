@@ -78,8 +78,13 @@ class StoresController < ApplicationController
 
   def reactivate
     @store = Store.find(params[:id])
-    @store.undiscard 
-    redirect_to stores_path, notice: 'Store reactivated successfully.'
+    if @store.user.discarded?
+      flash[:notice] = "Unprocessable entity."
+      render :show, status: :unprocessable_entity
+    else
+      @store.undiscard 
+      redirect_to stores_path, notice: 'Store reactivated successfully.'
+    end
   end
 
   private

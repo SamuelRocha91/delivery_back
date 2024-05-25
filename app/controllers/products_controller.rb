@@ -81,8 +81,13 @@ class ProductsController < ApplicationController
 
   def reactivate
     @store = Store.find(params[:store_id])
-    @product = @store.products.find(params[:id]).undiscard
-    redirect_to listing_path, notice: 'Product reactivated successfully'
+    if @store.user.discarded? || @store.discard?
+      flash[:notice] = "Unprocessable entity."
+      render :show, status: :unprocessable_entity
+    else
+      @product = @store.products.find(params[:id]).undiscard
+      redirect_to listing_path, notice: 'Product reactivated successfully'
+    end
   end
 
   private
