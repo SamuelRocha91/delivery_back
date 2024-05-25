@@ -604,7 +604,7 @@ label {
 .father-user-links {
   display: flex;
   justify-content: center;
-   width: 100%;
+  width: 100%;
 }
 
 .store-actions-two {
@@ -660,3 +660,11 @@ label {
     margin: 0;
     font-size: 1.2em;
   }
+
+  .store-actions-three {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  width: 20%;
+  justify-content: center;
+}

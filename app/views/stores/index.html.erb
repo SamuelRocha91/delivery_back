@@ -1,6 +1,12 @@
 <p class="notice"><%= notice %></p>
 
 <h1 class="page-title">Stores</h1>
+<div class="father-user-links">
+  <div class="store-actions-three">
+    <%= link_to "New store", new_store_path, class: "btn btn-new-store" %>
+    <%= link_to "Return to welcome", root_path, class: "btn btn-back-to-stores" %>
+  </div>
+</div>
 
 <div id="stores" class="stores-container">
   <% @stores.each do |store| %>
@@ -13,6 +19,4 @@
   <% end %>
 </div>
 
-<%= link_to "New store", new_store_path, class: "btn btn-new-store" %>
-<%= link_to "Return to welcome", root_path, class: "btn btn-new-store" %>
 

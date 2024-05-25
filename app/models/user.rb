@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   include Discard::Model
-
+  after_discard :discard_associated_stores
+  after_undiscard :undiscard_associated_stores
   has_many :stores
   
   validates :role, presence: true
@@ -42,4 +43,14 @@ class User < ApplicationRecord
   rescue JWT::ExpiredSignature
     raise InvalidToken.new
   end
+
+  private
+    def discard_associated_stores
+      stores.each(&:discard)
+    end
+
+    def undiscard_associated_stores
+      stores.each(&:undiscard)
+    end
+
 end
