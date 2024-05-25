@@ -2,8 +2,6 @@ class RegistrationsController < ApplicationController
   skip_forgery_protection only: [:create, :sign_in, :me, :deactivate_user]
   before_action :authenticate!, only: [:me]
   rescue_from User::InvalidToken, with: :not_authorized
-  before_action :redirect_sign_up, only: [:new, :create]
-
 
   def index
     @users = User.all  
@@ -13,7 +11,7 @@ class RegistrationsController < ApplicationController
     if request.format == Mime[:json]
       render json:  {"email": current_user[:email], "id": current_user[:id] }
     else 
-      @user = current_user
+      @user = User.find(params[:id])
     end
   end
 
@@ -23,10 +21,10 @@ class RegistrationsController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
+    if @user.update(user_params_update)
       redirect_to users_path, notice: 'User was successfully updated.'
     else
-      render :edit_by_admin
+      render edit_registration_path, notice: 'User not was successfully updated.'
     end
   end
 
@@ -62,12 +60,27 @@ class RegistrationsController < ApplicationController
   end
 
   def deactivate_user
-    user = User.find(params[:id])
-    if user.discard!
-      render json: { message: "User successfully deactivated." }, status: :ok
+    if request.format == Mime[:json]
+      user = User.find(params[:id])
+      if user.discard!
+        render json: { message: "User successfully deactivated." }, status: :ok
+      else
+        render json: { message: "Failed to deactivate user." }, status: :unprocessable_entity
+      end
     else
-      render json: { message: "Failed to deactivate user." }, status: :unprocessable_entity
+       user = User.find(params[:id])
+       if user.discard!
+        redirect_to users_path, notice: 'User deactivate successfully.'
+      else
+        render notice: 'User not deactivate.'
+      end
     end
+  end
+
+  def reactivate
+    @user = User.find(params[:id])
+    @user.undiscard 
+    redirect_to users_path, notice: 'User reactivated successfully.'
   end
 
   def new
@@ -80,6 +93,12 @@ class RegistrationsController < ApplicationController
     params
       .required(:user)
       .permit(:email, :password, :password_confirmation)
+  end
+
+  def user_params_update
+    params
+      .required(:user)
+      .permit(:email, :role)
   end
 
   def sign_in_params
@@ -96,10 +115,4 @@ class RegistrationsController < ApplicationController
     render json: {message: "Nope!"}, status: 401
   end
 
-  def redirect_sign_up
-    if user_signed_in?
-      flash[:alert] = "You cannot sign up while logged in."
-      redirect_to root_path
-    end
-  end
 end

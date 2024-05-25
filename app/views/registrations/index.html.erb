@@ -7,9 +7,13 @@
         <div class="card-content">
           <h3><%= user.email %></h3>
           <h3><%= user.role %></h3>
-          <%= link_to "Show this user", me_path(user) %>
+         <% if user.discarded? %>
+            <h3>Status: inativo</h3>
+          <% else  %>
+            <h3>Status: ativo</h3>
+          <% end  %>
+          <%= link_to "Show this user", me_path(id: user.id) %>
           <%= link_to "Edit this user",  edit_registration_path(id: user.id)%>
-          <%= link_to "Deactivate this user", deactivate_user_path(user)%>
         </div>
      </div>
       <hr />

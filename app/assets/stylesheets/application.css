@@ -269,35 +269,50 @@ label {
   background-color: #d32f2f;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  width: 100%;
-  padding: 10px;
-}
-form input[type="email"],
-form select {
-  width: 50%;
-  padding: 10px;
-  margin-top: 5px;
+/* Estilo geral do formulário */
+.user-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  background-color: #f9f9f9;
 }
 
-form input[type="submit"] {
+/* Estilo para os grupos de formulário */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Estilo para os rótulos do formulário */
+.form-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Estilo para os campos do formulário */
+.form-control {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Estilo para o botão de envio */
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary {
   background-color: #007bff;
   color: #fff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-  margin-top: 15px;
 }
 
-form input[type="submit"]:hover {
+.btn-primary:hover {
   background-color: #0056b3;
 }
