@@ -1,4 +1,4 @@
-<%=  form_with(model: product, url: edit_store_product_path(@store, @product), method: :patch) do |form| %>
+<%=  form_with(model: product, url: store_product_path(store_id: @store, id: @product), method: :patch) do |form| %>
   <% if product.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
@@ -11,32 +11,32 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class="form-group">
+    <%= form.label :title, style: "display: block", class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-input' %>
   </div>
 
-  <div>
-    <%= form.label :price, style: "display: block" %>
-    <%= form.number_field :price %>
+  <div class="form-group">
+    <%= form.label :price, style: "display: block", class: 'form-label' %>
+    <%= form.number_field :price, class: 'form-input'%>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
+  <div class="form-group">
+    <%= form.label :description, style: "display: block", class: 'form-label' %>
+    <%= form.text_area :description, class: 'form-input' %>
   </div>
 
-  <div>
-    <%= form.label :category, style: "display: block" %>
-    <%= form.text_field :category %>
+  <div class="form-group">
+    <%= form.label :category, style: "display: block", class: 'form-label' %>
+    <%= form.text_field :category, class: 'form-input' %>
   </div>
 
-  <div>
-    <%= form.label :image, style: "display: block" %>
+  <div class="form-group">
+    <%= form.label :image, style: "display: block", class: 'form-label' %>
     <%= form.file_field :image %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit "Update Poduct", class:"btn btn-new-store" %>
   </div>
 <% end %>

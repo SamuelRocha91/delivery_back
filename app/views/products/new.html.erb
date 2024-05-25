@@ -1,0 +1,52 @@
+<div class="new-store">
+  <h1>New Product</h1>
+  
+ <%=  form_with(model: @product, url: store_products_path(store_id: @store.id), method: :post) do |form| %>
+  <% if @product.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+        <% @product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :price, style: "display: block" %>
+    <%= form.number_field :price, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description, class: "form-control"%>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :category, style: "display: block" %>
+    <%= form.text_field :category, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :image, style: "display: block" %>
+    <%= form.file_field :image, class: "form-control" %>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit "Save", class: "btn btn-primary"%>
+  </div>
+<% end %>
+  
+  <br>
+  
+  <div class="navigation-links">
+    <%= link_to "Back to stores", stores_path, class: "btn btn-back-to-stores" %>
+  </div>
+</div>

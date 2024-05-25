@@ -1,0 +1,12 @@
+<div class="store-details">
+    <h1>Loja <%= @store.name %> </h1>
+    <h2>Lista de produtos</h2>
+    <ul class="product-list">
+    <% @product.each do |product| %>
+        <li class="product-item">
+            <p><%= product.title %></p>
+            <%= link_to "Show this product", store_product_path(store_id: product.store, id: product)%>
+        </li>
+    </ul>
+  <% end %>
+</div>

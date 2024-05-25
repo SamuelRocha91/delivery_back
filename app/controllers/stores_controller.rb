@@ -7,17 +7,23 @@ class StoresController < ApplicationController
 
   # GET /stores or /stores.json
   def index
-    if current_user.admin?
-      @stores = Store.kept
+    if request.format == Mime[:json]
+
+      if current_user.admin?
+        @stores = Store.kept.includes([:avatar_attachment])
+      else
+        @stores = Store.kept.where(user: current_user).includes([:avatar_attachment])
+      end
     else
-      @stores = Store.kept.where(user: current_user)
+      @stores = Store.includes([:avatar_attachment, :user])
     end
+    
   end
 
   def new
     @store = Store.new
     if current_user.admin?
-      @sellers = User.where(role: :seller)
+      @sellers = User.kept.where(role: :seller)
     end
   end
   # GET /stores/1 or /stores/1.json
@@ -70,10 +76,21 @@ class StoresController < ApplicationController
     end
   end
 
+  def reactivate
+    @store = Store.find(params[:id])
+    if @store.user.discarded?
+      flash[:notice] = "Unprocessable entity."
+      render :show, status: :unprocessable_entity
+    else
+      @store.undiscard 
+      redirect_to stores_path, notice: 'Store reactivated successfully.'
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_store
-      @store = Store.kept.find(params[:id])
+      @store = Store.find(params[:id])
 
       if @store.nil?
         respond_to do |format|

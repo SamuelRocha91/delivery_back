@@ -1,8 +1,11 @@
 <h1 id="product-title">Products Listing</h1>
-
+<div class="father-user-links">
+  <div class="store-actions-three">
+    <%= link_to "Return to welcome", root_path, class: "btn btn-back-to-stores" %>
+  </div>
+</div>
 <div class="products-container">
   <% @products.each do |product| %>
-    <% unless product.discarded? %>
 
       <div class="card">
         <% if product.image.attached? %>
@@ -12,12 +15,16 @@
         <% end %>
         <div class="card-content">
           <h3><%= product.title %></h3>
-          <%= link_to "Show this product", store_product_path(product.store, product) %>
+          <%= link_to "Show this product", store_product_path(store_id: product.store, id: product) %>
           <p>Store: <%= product.store.name %></p>
-          <%= link_to "Show this store", store_path(product.store)%>
-            </div>
+          <%= link_to "Show this store", store_path(id: product.store)%>
+           <% if product.discarded? %>
+            <h3>Status: inativo</h3>
+            <% else  %>
+            <h3>Status: ativo</h3>
+          <% end  %>
+          </div>
         </div>
       <hr />
-   <% end %>
 <% end %>
 </div>

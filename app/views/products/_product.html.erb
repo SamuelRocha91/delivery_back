@@ -5,4 +5,9 @@
   <% end %>
   <p><strong>Store:</strong> <%= product.store.name %></p>
   <p><strong>Description:</strong> <%= product.description %></p>
+   <% if product.discarded? %>
+      <h3>Status: inativo</h3>
+    <% else  %>
+      <h3>Status: ativo</h3>
+    <% end  %>
 </div>

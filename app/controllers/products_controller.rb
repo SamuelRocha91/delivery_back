@@ -1,13 +1,21 @@
 class ProductsController < ApplicationController  
   before_action :authenticate!
-  before_action :set_store, only: %i[show update destroy index edit]
+  before_action :set_store, only: %i[show update destroy index edit new]
   before_action :set_product, only: %i[show edit]
 
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
 
   def index
-    render json: { data: @store.products.kept }, status: :ok
+    if request.format == Mime[:json]
+      render json: { data: @store.products.kept }, status: :ok      
+    else
+      @product =  @store.products
+    end
+  end
+
+  def new
+    @product = @store.products.new
   end
 
   def listing
@@ -19,10 +27,10 @@ class ProductsController < ApplicationController
         render json: { error: "Unauthorized" }, status: :unauthorized
       end
     else
-      if !current_user.admin?
-        redirect_to root_path, notice: "No permision for you"
+      if current_user.admin?
+        @products = Product.all.includes(:store, :image_attachment)
       else
-        @products = Product.kept.includes(:store, :image_attachment)
+         redirect_to root_path, notice: "No permission for you"
       end
     end   
   end
@@ -33,7 +41,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to store_url(@store), notice: "Product was successfully created." }
+        format.html { redirect_to store_url(id: @store.id), notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: store_products_url(@store, @product) }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,6 +51,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+
   end
 
   def edit
@@ -63,17 +72,28 @@ class ProductsController < ApplicationController
 
    def destroy
      @product = @store.products.find(params[:id])
-     @product.discard
+     @product.discard!
      respond_to do |format|
-       format.html { redirect_to store_products_url, notice: "Product was successfully destroyed." }
+       format.html { redirect_to listing_path, notice: "Product was successfully destroyed." }
        format.json { head :no_content}
      end
+    end
+
+  def reactivate
+    @store = Store.find(params[:store_id])
+    if @store.user.discarded? || @store.discard?
+      flash[:notice] = "Unprocessable entity."
+      render :show, status: :unprocessable_entity
+    else
+      @product = @store.products.find(params[:id]).undiscard
+      redirect_to listing_path, notice: 'Product reactivated successfully'
+    end
   end
 
   private
 
   def set_store
-      @store = Store.kept.find(params[:store_id])
+      @store = Store.find(params[:store_id])
   end
 
   def product_params
@@ -81,7 +101,7 @@ class ProductsController < ApplicationController
   end
 
   def set_product
-    @product =  @store.products.kept.find_by(id: params[:id])
+    @product =  @store.products.find_by(id: params[:id])
     if @product.nil?
       respond_to do |format|
         format.html { redirect_to store_url(@store), alert: "Product not found or has been discarded." }

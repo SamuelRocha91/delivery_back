@@ -5,8 +5,10 @@
   
   <br>
   
-  <div>
-    <%= link_to "Show this product",  store_product_path(@store, @product) %> |
-    <%= link_to "Back to products", listing_path %>
+  <div class="father-user-links">
+    <div class="store-actions-two">
+      <%= link_to "Show this product",  store_product_path(@store, @product), class:"btn btn-create-store" %>
+      <%= link_to "Back to products", listing_path, class:"btn btn-back-to-stores" %>
+    </div>
   </div>
 </div>
