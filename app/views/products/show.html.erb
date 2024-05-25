@@ -8,6 +8,10 @@
           <%= link_to "Edit this product", edit_store_product_path(@product.store, @product) %> |
           <%= link_to "Back to listing", listing_path %>
       </div>
-      <%= button_to "Destroy this product",  store_product_path(@product.store, @product), method: :delete %>
+       <% if @product.discarded? %>
+           <%= button_to "Active this product", reactivate_product_store_path(store_id: @product.store.id, id: @product.id), method: :put %>
+       <% else  %>
+          <%= button_to "Destroy this product",  store_product_path(store_id: @product.store.id, id: @product.id), method: :delete %>
+      <% end  %>
     </div>
 </div>

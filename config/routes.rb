@@ -14,7 +14,8 @@ Rails.application.routes.draw do
 
   resources :stores do
     member do
-      put 'reactivate', to: 'stores#reactivate'
+      put 'reactivate_store', to: 'stores#reactivate', as: :reactivate_store
+      put 'reactivate_product', to: 'products#reactivate', as: :reactivate_product
     end
     resources :products
   end
