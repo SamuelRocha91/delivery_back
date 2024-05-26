@@ -2,13 +2,19 @@ class ProductsController < ApplicationController
   before_action :authenticate!
   before_action :set_store, only: %i[show update destroy index edit new]
   before_action :set_product, only: %i[show edit]
-
+  before_action :set_locale!
+   
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
 
   def index
     if request.format == Mime[:json]
-      render json: { data: @store.products.kept }, status: :ok      
+      if buyer?
+        page = params.fetch(:page, 1)
+        @products = Product.kept.where(store_id: params[:store_id]).order(:title).page(page)
+      else
+      render json: { data: @store.products.kept }, status: :ok
+      end      
     else
       @product =  @store.products
     end

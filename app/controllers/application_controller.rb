@@ -17,6 +17,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_locale!
+    if params[:locale].present?
+      I18n.locale = params[:locale]
+    end
+  end
+
   def current_credential
     return nil if request.format != Mime[:json]
     Credential.find_by(key: request.headers["X-API-KEY"]) || Credential.new
@@ -33,10 +39,13 @@ class ApplicationController < ActionController::Base
   end
 
   def only_buyers!
-    is_buyer = (current_user && current_user.buyer?) && current_credential.buyer?
-    if !is_buyer
-      render json: {message: "Not authorized"}, status: 401
-    end
+     unless buyer?
+       render json: { message: "Not authorized" }, status: :unauthorized
+     end
+  end
+
+  def buyer?
+    (current_user && current_user.buyer?) && current_credential.buyer?
   end
 
   protected
