@@ -8,7 +8,12 @@ class ProductsController < ApplicationController
 
   def index
     if request.format == Mime[:json]
-      render json: { data: @store.products.kept }, status: :ok      
+      if buyer?
+        page = params.fetch(:page, 1)
+        @products = Product.kept.where(store_id: params[:store_id]).order(:title).page(page)
+      else
+      render json: { data: @store.products.kept }, status: :ok
+      end      
     else
       @product =  @store.products
     end
