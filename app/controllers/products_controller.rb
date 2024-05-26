@@ -2,7 +2,8 @@ class ProductsController < ApplicationController
   before_action :authenticate!
   before_action :set_store, only: %i[show update destroy index edit new]
   before_action :set_product, only: %i[show edit]
-
+  before_action :set_locale!
+   
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
 
