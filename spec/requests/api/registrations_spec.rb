@@ -110,17 +110,19 @@ RSpec.describe "registrations", type: :request do
     end
   end
 
-   describe "get /me" do
-    
-    it "returns hash with user data" do
+   describe "Delete /deactivate_user" do
+      let(:user) { create(:user_buyer)}
+
+    it "deactivate user with success" do
       delete(
-        "/deactivate_user/#{user.id}",
+        deactivate_user_path(user.id),
         headers: {
           "Accept" => "application/json",
            "X-API-KEY" => credential.key,
            "Authorization" => "Bearer #{signed_in["token"]}"
         },
       )
+      puts response.inspect
       expect(response).to be_successful
     end
   end

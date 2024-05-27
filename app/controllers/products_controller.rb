@@ -87,7 +87,7 @@ class ProductsController < ApplicationController
 
   def reactivate
     @store = Store.find(params[:store_id])
-    if @store.user.discarded? || @store.discard?
+    if @store.user.discarded? || @store.discarded?
       flash[:notice] = "Unprocessable entity."
       render :show, status: :unprocessable_entity
     else
