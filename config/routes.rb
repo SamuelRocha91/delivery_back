@@ -3,21 +3,19 @@ Rails.application.routes.draw do
     registrations: 'registrations'
   }, skip: [:registrations]
 
-  authenticated :user do
     get 'sign_up', to: 'registrations#new', as: :sign_up_registration
     post 'sign_up' => 'registrations#create'
     get 'users' => 'registrations#index'
     resources :registrations, only: [:edit, :update]
-    put '/users/:id/reactivate', to: 'registrations#reactivate', as: 'reactivate_user'
+    put 'users/:id/reactivate', to: 'registrations#reactivate', as: 'reactivate_user'
     delete "deactivate_user/:id", to: "registrations#deactivate_user", as: :deactivate_user
-  end
 
   resources :stores do
+    resources :products
     member do
       put 'reactivate_store', to: 'stores#reactivate', as: :reactivate_store
       put 'reactivate_product', to: 'products#reactivate', as: :reactivate_product
     end
-    resources :products
   end
 
   scope :buyers do
@@ -37,7 +35,6 @@ Rails.application.routes.draw do
 
   get "up", to: "rails/health#show", as: :rails_health_check
   
-  # Rota de coringa deve ser a última
   match "*path", to: redirect("/"), via: :all
 end
 

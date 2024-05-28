@@ -8,8 +8,7 @@ class StoresController < ApplicationController
   # GET /stores or /stores.json
   def index
     if request.format == Mime[:json]
-
-      if current_user.admin?
+      if current_user.admin? || current_user.buyer? 
         @stores = Store.kept.includes([:avatar_attachment])
       else
         @stores = Store.kept.where(user: current_user).includes([:avatar_attachment])

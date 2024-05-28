@@ -38,6 +38,7 @@ RSpec.describe "registrations", type: :request do
         }
       )
       user = User.find_by(email: "admin_user@example.com")
+      puts response.inspect
       expect(response).to be_successful
       expect(user).to be_buyer
     end
@@ -54,6 +55,7 @@ RSpec.describe "registrations", type: :request do
           }
         }
       )
+      puts response.inspect
       expect(response).to be_unprocessable
     end
 
@@ -122,7 +124,6 @@ RSpec.describe "registrations", type: :request do
            "Authorization" => "Bearer #{signed_in["token"]}"
         },
       )
-      puts response.inspect
       expect(response).to be_successful
     end
   end

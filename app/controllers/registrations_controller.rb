@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   skip_forgery_protection only: [:create, :sign_in, :me, :deactivate_user]
-  before_action :authenticate!, only: [:me, :deactivate_user]
+  before_action :authenticate!, except: [:sign_in, :create]
   rescue_from User::InvalidToken, with: :not_authorized
 
   def index
@@ -60,10 +60,8 @@ class RegistrationsController < ApplicationController
   end
 
   def deactivate_user
-    Rails.logger.info "Entering deactivate_user method"
-
     user = User.find(params[:id])
-    if request.format.json?
+    if request.format == Mime[:json]
       if user.discard!
         render json: { message: "User successfully deactivated." }, status: :ok
       else
