@@ -10,9 +10,11 @@ class ProductsController < ApplicationController
     if request.format == Mime[:json]
       if buyer?
         page = params.fetch(:page, 1)
-        @products = Product.kept.where(store_id: params[:store_id]).order(:title).page(page)
+        @products = Product.kept.where(store_id: params[:store_id]).order(:title)
         @products = @products.where('name ILIKE ?', "%#{params[:title]}%") if params[:title].present?
         @products = @products.where(category: params[:category]) if params[:category].present?
+        @products = @products.page(page)
+
       else
       render json: { data: @store.products.kept }, status: :ok
       end      
