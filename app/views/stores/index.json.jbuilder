@@ -13,9 +13,8 @@ json.result do
      end
    end
   json.stores do 
-    json.array! @stores do |product|
+    json.array! @stores do |store|
       json.extract! store, :id, :name, :description, :category, :address
-      json.price number_to_currency(store.price)
       if store.avatar.attached?
        json.avatar_url rails_blob_url(store.avatar, only_path: true)
       end
