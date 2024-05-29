@@ -38,6 +38,7 @@ RSpec.describe "registrations", type: :request do
         }
       )
       user = User.find_by(email: "admin_user@example.com")
+      puts response.inspect
       expect(response).to be_successful
       expect(user).to be_buyer
     end
@@ -54,6 +55,7 @@ RSpec.describe "registrations", type: :request do
           }
         }
       )
+      puts response.inspect
       expect(response).to be_unprocessable
     end
 
@@ -110,11 +112,12 @@ RSpec.describe "registrations", type: :request do
     end
   end
 
-   describe "get /me" do
-    
-    it "returns hash with user data" do
+   describe "Delete /deactivate_user" do
+      let(:user) { create(:user_buyer)}
+
+    it "deactivate user with success" do
       delete(
-        "/deactivate_user/#{user.id}",
+        deactivate_user_path(user.id),
         headers: {
           "Accept" => "application/json",
            "X-API-KEY" => credential.key,

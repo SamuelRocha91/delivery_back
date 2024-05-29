@@ -1,8 +1,7 @@
 class ProductsController < ApplicationController  
-  before_action :authenticate!
+  before_action :authenticate!, :set_locale!
   before_action :set_store, only: %i[show update destroy index edit new]
   before_action :set_product, only: %i[show edit]
-  before_action :set_locale!
    
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
@@ -11,7 +10,11 @@ class ProductsController < ApplicationController
     if request.format == Mime[:json]
       if buyer?
         page = params.fetch(:page, 1)
-        @products = Product.kept.where(store_id: params[:store_id]).order(:title).page(page)
+        @products = Product.kept.includes([:image_attachment]).where(store_id: params[:store_id]).order(:title)
+        @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
+        @products = @products.where(category: params[:category]) if params[:category].present?
+        @products = @products.page(page)
+
       else
       render json: { data: @store.products.kept }, status: :ok
       end      
@@ -87,7 +90,7 @@ class ProductsController < ApplicationController
 
   def reactivate
     @store = Store.find(params[:store_id])
-    if @store.user.discarded? || @store.discard?
+    if @store.user.discarded? || @store.discarded?
       flash[:notice] = "Unprocessable entity."
       render :show, status: :unprocessable_entity
     else

@@ -15,10 +15,11 @@ RSpec.describe "/stores/:store_id/products", type: :request do
 
    describe "GET /index" do
       it "renders a successful response with products data" do
-        Product.create title: "macarrao", price: 1, description: "Macarrao saboroso da vovo", category: "massas", store: store
+        Product.create! title: "macarrao", price: 1.00, description: "Macarrao saboroso da vovo", category: "massas", store_id: store.id
         get "/stores/#{store.id}/products",
         headers: {"Accept" => "application/json", "Authorization" => "Bearer #{signed_in["token"]}"}
         json = JSON.parse(response.body)
+        puts json
         expect(json["data"][0]["title"]).to eq "macarrao"
         expect(json["data"][0]["price"].to_i).to eq 1
         expect(json["data"][0]["category"]).to eq "massas"
