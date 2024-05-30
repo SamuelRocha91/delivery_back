@@ -3,8 +3,7 @@ class StoresController < ApplicationController
   before_action :set_store, only: %i[ show edit update destroy ]
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
-
-
+  
   # GET /stores or /stores.json
   def index
     if request.format == Mime[:json]

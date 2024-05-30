@@ -8,7 +8,9 @@ class Store < ApplicationRecord
   before_validation :ensure_seller
   after_discard :discard_associated_products
   after_undiscard :undiscard_associated_products
-
+  enum :category, [:bar,
+  :depósito, :lanchonete, :loja, :mercado, :restaurante]
+ 
   private
 
   def ensure_seller
