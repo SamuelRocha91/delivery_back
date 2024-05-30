@@ -20,62 +20,179 @@
             "bearerAuth": []
           }
         ],
+        "parameters": [
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "description": "API Authentication Key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Returns a list of stores according to the user's role",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
+                "oneOf": [
+                  {
+                    "description": "Paginated list of stores for admin and buyer roles",
                     "type": "object",
                     "properties": {
-                      "id": {
-                        "type": "integer"
+                      "pagination": {
+                        "type": "object",
+                        "properties": {
+                          "current": {
+                            "type": "integer"
+                          },
+                          "per_page": {
+                            "type": "integer"
+                          },
+                          "pages": {
+                            "type": "integer"
+                          },
+                          "count": {
+                            "type": "integer"
+                          },
+                          "previous": {
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "next": {
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
                       },
-                      "name": {
-                        "type": "string"
+                      "result": {
+                        "type": "object",
+                        "properties": {
+                          "stores": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "created_at": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                },
+                                "updated_at": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "category": {
+                                  "type": "string"
+                                },
+                                "address": {
+                                  "type": "string"
+                                },
+                                "phone_number": {
+                                  "type": "string"
+                                },
+                                "price_minimum": {
+                                  "type": "string"
+                                },
+                                "avatar_url": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "example": {
+                      "pagination": {
+                        "current": 1,
+                        "per_page": 10,
+                        "pages": 5,
+                        "count": 50,
+                        "previous": null,
+                        "next": 2
                       },
-                      "created_at": {
-                        "type": "string",
-                        "format": "datetime"
-                      },
-                      "updated_at": {
-                        "type": "string",
-                        "format": "datetime"
-                      },
-                      "price_minimum": {
-                        "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "phone_number": {
-                        "type": "string"
-                      },
-                      "category": {
-                        "type": "string"
-                      },
-                      "address": {
-                        "type": "string"
-                      },
-                      "avatar_url": {
-                        "type": "string"
+                      "result": {
+                        "stores": [
+                          {
+                            "id": 1,
+                            "name": "Store 1",
+                            "created_at": "2024-04-28T12:00:00Z",
+                            "updated_at": "2024-04-28T12:00:00Z",
+                            "description": "A great store",
+                            "category": "Bar",
+                            "address": "Rua da avenida bairro",
+                            "phone_number": "(71) 992594946",
+                            "price_minimum": "R$ 1,00",
+                            "avatar_url": "/delivery/rails/image/file"
+                          }
+                        ]
                       }
                     }
-                  }
-                },
-                "example": [
+                  },
                   {
-                    "id": 1,
-                    "name": "Store 1",
-                    "created_at": "2024-04-28T12:00:00Z",
-                    "updated_at": "2024-04-28T12:00:00Z",
-                    "address": "Rua da avenida bairro",
-                    "phone_number": "(71) 992594946",
-                    "category": "Bar",
-                    "price_minimum": "R$ 1,00",
-                    "avatar_url": "/delivery/rails/image/file"
+                    "description": "Non-paginated list of stores for seller role",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "category": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "phone_number": {
+                          "type": "string"
+                        },
+                        "price_minimum": {
+                          "type": "string"
+                        },
+                        "avatar_url": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "id": 1,
+                        "name": "Store 1",
+                        "created_at": "2024-04-28T12:00:00Z",
+                        "updated_at": "2024-04-28T12:00:00Z",
+                        "description": "A great store",
+                        "category": "Bar",
+                        "address": "Rua da avenida bairro",
+                        "phone_number": "(71) 992594946",
+                        "price_minimum": "R$ 1,00",
+                        "avatar_url": "/delivery/rails/image/file"
+                      }
+                    ]
                   }
                 ]
               }
@@ -246,6 +363,584 @@
         }
       }
     },
+    "/stores/{store_id}/products": {
+      "get": {
+        "summary": "Listar produtos",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "description": "ID da loja",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Número da página",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "description": "Nome do produto",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "description": "Categoria do produto",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "description": "Chave de autenticação da API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de produtos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "pages": {
+                          "type": "integer"
+                        },
+                        "per_page": {
+                          "type": "integer"
+                        },
+                        "count": {
+                          "type": "integer"
+                        },
+                        "previous": {
+                          "type": "integer"
+                        },
+                        "next": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "category": {
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "string"
+                          },
+                          "store_id": {
+                            "type": "integer"
+                          },
+                          "image_url": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar produto",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "description": "ID da loja",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "description": "Chave de autenticação da API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "price"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Produto criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "string"
+                    },
+                    "store_id": {
+                      "type": "integer"
+                    },
+                    "image_url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Entidade não processável",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stores/{store_id}/products/{id}": {
+      "get": {
+        "summary": "Obter detalhes do produto",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "description": "ID da loja",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do produto",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "description": "Chave de autenticação da API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do produto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "string"
+                    },
+                    "store_id": {
+                      "type": "integer"
+                    },
+                    "image_url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Produto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar produto",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "description": "ID da loja",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do produto",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "description": "Chave de autenticação da API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "price"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Produto atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "string"
+                    },
+                    "store_id": {
+                      "type": "integer"
+                    },
+                    "image_url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Entidade não processável",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar produto",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "description": "ID da loja",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do produto",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "description": "Chave de autenticação da API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Produto deletado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Produto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stores/{store_id}/products/{id}/reactivate": {
+      "put": {
+        "summary": "Reativar produto",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "description": "ID da loja",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do produto",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "description": "Chave de autenticação da API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produto reativado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "string"
+                    },
+                    "store_id": {
+                      "type": "integer"
+                    },
+                    "image_url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Entidade não processável",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+   },
     "/stores/{id}": {
       "put": {
         "summary": "Store update",
@@ -435,6 +1130,89 @@
                 },
                 "example": {
                   "message": "Nope!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stores/{id}/reactivate_store": {
+      "put": {
+        "summary": "Reativar uma loja",
+        "tags": [
+          "Stores"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da loja a ser reativada",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "description": "Chave de autenticação da API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Loja reativada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Store reactivated successfully."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Entidade não processável",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Unprocessable entity."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Unauthorized."
+                    }
+                  }
                 }
               }
             }
