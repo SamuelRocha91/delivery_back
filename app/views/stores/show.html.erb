@@ -11,7 +11,7 @@
     <% if @store.discarded? %>
       <%= button_to "Active this store", reactivate_store_store_path(id: @store.id), method: :put, data: { confirm: "Are you sure?" }, class: "btn btn-new-store"  %>
     <% else %>
-      <%= button_to "Deactivate this store", store_path(id: @store.id), method: :delete, form: { data: { turbo_confirm: "Tem certeza que deseja excluir?" } }, class: "btn btn-show-store"   %>
+      <%= button_to "Deactivate this store", store_path(id: @store.id), method: :delete, data: { turbo_confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-show-store"   %>
     <% end %>
   </div>
 </div>
