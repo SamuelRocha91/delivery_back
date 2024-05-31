@@ -18,7 +18,7 @@ class StoresController < ApplicationController
         @stores = Store.kept.where(user: current_user).includes(avatar_attachment: :blob)
       end
     else
-      @stores = Store.includes([:avatar_attachment, :user])
+      @stores = Store.includes(avatar_attachment: :blob).includes(:user)
     end
     
   end

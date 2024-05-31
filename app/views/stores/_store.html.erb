@@ -1,18 +1,20 @@
 <div id="<%= dom_id store %>" class="store-card">
-  <p>
+  <div class="card-container">
     <% if store.avatar.attached? %>
       <%= image_tag store.avatar, alt: store.name, class: "store-avatar" %>
     <% end %>
-    <strong class="store-label">Name:</strong>
-    <span class="store-name"><%= store.name %></span>
-    <strong class="store-label">Address:</strong>
-    <span class="store-address"><%= store.address || 'not registered' %></span>
-    <% if store.discarded? %>
-            <h3>Status: inativo</h3>
-    <% else  %>
-            <h3>Status: ativo</h3>
-    <% end  %>
-  </p>
-  <strong class="store-label">Owner:</strong>
-  <span class="store-name"><%= store.user.email %></span>
+    <div>
+      <strong class="store-label">Name:</strong>
+      <span class="store-name"><%= store.name %></span>
+      <strong class="store-label">Address:</strong>
+      <span class="store-address"><%= store.address || 'not registered' %></span>
+      <% if store.discarded? %>
+              <h3>Status: inativo</h3>
+      <% else  %>
+              <h3>Status: ativo</h3>
+      <% end  %>
+        </div>
+        <strong class="store-label">Owner:</strong>
+        <span class="store-name"><%= store.user.email %></span>
+    </div>
 </div>
