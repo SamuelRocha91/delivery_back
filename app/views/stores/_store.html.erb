@@ -9,9 +9,14 @@
       <strong class="store-label">Address:</strong>
       <span class="store-address"><%= store.address || 'not registered' %></span>
       <% if store.discarded? %>
-              <h3>Status: inativo</h3>
+        <h3>Status: inativo</h3>
       <% else  %>
-              <h3>Status: ativo</h3>
+        <h3>Status: ativo</h3>
+          <% if store.is_open %>
+            <h3 class="open-store">Loja aberta</h3>
+          <% else  %>
+            <h3 class="closed-store">Loja fechada</h3>
+         <% end  %>
       <% end  %>
         </div>
         <strong class="store-label">Owner:</strong>

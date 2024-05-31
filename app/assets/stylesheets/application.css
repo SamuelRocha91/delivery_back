@@ -682,3 +682,11 @@ label {
   flex-direction: column;
   align-items: center;
 }
+
+.open-store {
+  color: green;
+}
+
+.closed-store {
+  color: red;
+}
