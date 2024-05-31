@@ -7,7 +7,7 @@
       <%= button_to "Active this user", reactivate_user_path(id: @user.id), method: :put, data: { confirm: "Are you sure?" }, class: "btn btn-new-store"  %>
 
    <% else  %>
-      <%= button_to "Deactivate this user", deactivate_user_path(id: @user.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-new-store" %>
+      <%= button_to "Deactivate this user", deactivate_user_path(id: @user.id), method: :delete, form: { data: { turbo_confirm: "Are you sure?" } }, class: "btn btn-new-store" %>
     <% end  %>
   <%= link_to "Go To The users", users_path%>
 </div>

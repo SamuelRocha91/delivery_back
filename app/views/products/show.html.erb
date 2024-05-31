@@ -10,7 +10,7 @@
            <% if @product.discarded? %>
                <%= button_to "Active this product", reactivate_product_store_path(store_id: @product.store.id, id: @product.id), method: :put, class: "btn btn-new-store" %>
            <% else  %>
-              <%= button_to "Destroy this product",  store_product_path(store_id: @product.store.id, id: @product.id), method: :delete , class: "btn btn-show-store"%>
+              <%= button_to "Excluir produto",  store_product_path(store_id: @product.store.id, id: @product.id), method: :delete,  form: {data: { turbo_confirm: "Tem certeza que deseja excluir esse produto?"  }}, class: "btn btn-show-store"%>
           <% end  %>
         </div>
     </div>

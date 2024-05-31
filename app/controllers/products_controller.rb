@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
         @products = @products.page(page)
 
       else
-      render json: { data: @store.products.kept }, status: :ok
+        render json: { data: @store.products.kept }, status: :ok
       end      
     else
       @product =  @store.products
