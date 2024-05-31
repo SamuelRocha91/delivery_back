@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_31_010804) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_31_152559) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -95,6 +95,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_31_010804) do
     t.string "neighborhood"
     t.decimal "number_address"
     t.text "description"
+    t.boolean "is_open"
     t.index ["discarded_at"], name: "index_stores_on_discarded_at"
     t.index ["user_id"], name: "index_stores_on_user_id"
   end
