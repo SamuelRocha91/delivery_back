@@ -13,6 +13,10 @@ class Store < ApplicationRecord
  
   private
 
+  def category_name
+    category.to_s
+  end
+
   def ensure_seller
     self.user = nil if self.user && !self.user.seller?
   end
