@@ -109,9 +109,9 @@ class StoresController < ApplicationController
       required = params.require(:store)
 
       if current_user.admin?
-        required.permit(:name, :user_id, :avatar, :price_minimum, :description, :phone_number, :category, :address)
+        required.permit(:name, :user_id, :avatar, :description, :category, :address, :state, :city, :cep, :number_address, :neighborhood, :cnpj)
       else
-        required.permit(:name, :avatar, :price_minimum, :description, :phone_number, :category, :address)
+        required.permit(:name, :avatar, :description, :category, :address, :state, :city, :cep, :number_address, :neighborhood, :cnpj)
       end
     end
 
