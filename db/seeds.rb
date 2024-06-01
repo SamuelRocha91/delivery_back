@@ -28,7 +28,7 @@ end
 ].each do |dish|
   store = Store.find_by(name: "Orange Curry")
   Product.find_or_create_by!(
-    title: dish, store: store, price: 10, description: "produto delicioso da vovo", category: "Bebidas"
+    title: dish, store: store, price: 10, description: "produto delicioso da vovo", category: "massas"
 )
 end
 
@@ -40,6 +40,6 @@ end
 ].each do |dish|
   store = Store.find_by(name: "Belly King")
   Product.find_or_create_by!(
-    title: dish, store: store, price: 10, description: "produto delicioso da vovo", category: "Bebidas"
+    title: dish, store: store, price: 10, description: "produto delicioso da vovo", category: "massas"
   )
 end

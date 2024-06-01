@@ -74,7 +74,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_31_152559) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description"
-    t.string "category"
+    t.integer "category"
     t.datetime "discarded_at"
     t.index ["discarded_at"], name: "index_products_on_discarded_at"
     t.index ["store_id"], name: "index_products_on_store_id"
@@ -89,7 +89,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_31_152559) do
     t.string "cep"
     t.string "city"
     t.string "state"
-    t.string "category"
+    t.integer "category"
     t.string "cnpj"
     t.text "address"
     t.string "neighborhood"

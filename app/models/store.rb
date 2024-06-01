@@ -10,12 +10,8 @@ class Store < ApplicationRecord
   after_undiscard :undiscard_associated_products
   enum :category, [:bar,
   :depósito, :lanchonete, :loja, :mercado, :restaurante]
- 
-  private
 
-  def category_name
-    category.to_s
-  end
+  private
 
   def ensure_seller
     self.user = nil if self.user && !self.user.seller?

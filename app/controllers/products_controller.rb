@@ -14,7 +14,6 @@ class ProductsController < ApplicationController
         @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
         @products = @products.where(category: params[:category]) if params[:category].present?
         @products = @products.page(page)
-
       else
         render json: { data: @store.products.kept }, status: :ok
       end      
