@@ -26,6 +26,14 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/api-docs'
   mount ActionCable.server => '/cable'
 
+   direct :rails_blob do |blob|
+    route_for(:rails_service_blob, blob.signed_id, blob.filename)
+  end
+
+  direct :rails_blob_representation do |representation|
+    route_for(:rails_service_blob_representation, representation.blob.signed_id, representation.variation_key, representation.blob.filename)
+  end
+
   root to: "welcome#index"
 
   get "listing", to: "products#listing"
@@ -34,7 +42,5 @@ Rails.application.routes.draw do
   post "sign_in", to: "registrations#sign_in"
 
   get "up", to: "rails/health#show", as: :rails_health_check
-  
-  match "*path", to: redirect("/"), via: :all
 end
 

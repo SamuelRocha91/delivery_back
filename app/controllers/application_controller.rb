@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_nonce
 
   def current_user
     if request.format == Mime[:json]
@@ -23,7 +24,11 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
+   
+  def set_nonce
+    @nonce = SecureRandom.base64(16)
+  end
+  
   def set_locale!
     if params[:locale].present?
       I18n.locale = params[:locale]

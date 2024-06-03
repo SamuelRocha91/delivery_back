@@ -7,9 +7,16 @@ class Product < ApplicationRecord
   belongs_to :store
   validates :title, presence: true, length: {minimum: 3}
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :description, presence: true, length: {minimum: 10, maximum: 100}
+  validates :description, presence: true, length: {minimum: 10, maximum: 50}
   validates :category, presence: true
+  enum :category, [:massas,
+  :bebidas, :hamburguer, :salgados, :sorvetes, :doces]
 
+  private
+
+  def category_name
+    category.to_s
+  end
 end
 
  

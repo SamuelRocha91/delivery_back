@@ -3,23 +3,22 @@ class StoresController < ApplicationController
   before_action :set_store, only: %i[ show edit update destroy ]
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
-
-
+  
   # GET /stores or /stores.json
   def index
     if request.format == Mime[:json]
       if current_user.admin? || current_user.buyer?
         page = params.fetch(:page, 1)
-        @stores = Store.kept.includes([:avatar_attachment]).order(:name)
+        @stores = Store.kept.includes(avatar_attachment: :blob).order(:name)
         @stores = @stores.where('LOWER(name) LIKE ?', "%#{params[:name].downcase}%") if params[:name].present?
 
         @stores = @stores.where(category: params[:category]) if params[:category].present?
         @stores = @stores.page(page)
       else
-        @stores = Store.kept.where(user: current_user).includes([:avatar_attachment])
+        @stores = Store.kept.where(user: current_user).includes(avatar_attachment: :blob)
       end
     else
-      @stores = Store.includes([:avatar_attachment, :user])
+      @stores = Store.includes(avatar_attachment: :blob).includes(:user)
     end
     
   end
@@ -110,9 +109,9 @@ class StoresController < ApplicationController
       required = params.require(:store)
 
       if current_user.admin?
-        required.permit(:name, :user_id, :avatar, :price_minimum, :description, :phone_number, :category, :address)
+        required.permit(:name, :user_id, :avatar, :description, :category, :address, :state, :city, :cep, :number_address, :neighborhood, :cnpj, :is_open, :color_theme)
       else
-        required.permit(:name, :avatar, :price_minimum, :description, :phone_number, :category, :address)
+        required.permit(:name, :avatar, :description, :category, :address, :state, :city, :cep, :number_address, :neighborhood, :cnpj, :is_open,  :color_theme)
       end
     end
 

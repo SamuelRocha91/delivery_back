@@ -2,7 +2,6 @@ class ProductsController < ApplicationController
   before_action :authenticate!, :set_locale!
   before_action :set_store, only: %i[show update destroy index edit new]
   before_action :set_product, only: %i[show edit]
-   
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
 
@@ -10,13 +9,18 @@ class ProductsController < ApplicationController
     if request.format == Mime[:json]
       if buyer?
         page = params.fetch(:page, 1)
+        offset = (12 * (page.to_i - 1))
         @products = Product.kept.includes([:image_attachment]).where(store_id: params[:store_id]).order(:title)
         @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
         @products = @products.where(category: params[:category]) if params[:category].present?
-        @products = @products.page(page)
-
+        @products = @products.page(page).offset(offset)
       else
-      render json: { data: @store.products.kept }, status: :ok
+        page = params.fetch(:page, 1)
+        offset = (5 * (page.to_i - 1))
+        @products = @store.products.kept.includes(image_attachment: :blob)
+         @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
+        @products = @products.where(category: params[:category]) if params[:category].present?
+        @products = @products.page(page).per(5).offset(offset)
       end      
     else
       @product =  @store.products
@@ -60,7 +64,6 @@ class ProductsController < ApplicationController
   end
 
   def show
-
   end
 
   def edit
@@ -106,7 +109,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:title, :price, :description, :image, :category)
+    params.require(:product).permit(:title, :price, :description, :image, :category, :name)
   end
 
   def set_product
