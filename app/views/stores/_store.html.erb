@@ -1,7 +1,7 @@
 <div id="<%= dom_id store %>" class="store-card">
   <div class="card-container">
     <% if store.avatar.attached? %>
-      <%= image_tag store.avatar, alt: store.name, class: "store-avatar" %>
+      <%= image_tag store.avatar.variant(resize_to_limit: [100, 100]), alt: store.name, class: "store-avatar" %>
     <% end %>
     <div>
       <strong class="store-label">Name:</strong>
