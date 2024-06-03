@@ -329,6 +329,7 @@ DEPENDENCIES
   redis (>= 4.0.1)
   rspec-rails
   rswag
+  ruby-vips
   shoulda-matchers
   sprockets-rails
   sqlite3 (~> 1.4)
