@@ -6,6 +6,6 @@ class RefreshToken < ApplicationRecord
   private
 
   def set_token
-    self.token = SecureRandom.hex(64)
+    self.refresh_token = SecureRandom.hex(64)
   end
 end

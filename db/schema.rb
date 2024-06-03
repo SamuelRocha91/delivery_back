@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_03_015927) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_03_123208) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -82,6 +82,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_03_015927) do
     t.index ["store_id"], name: "index_products_on_store_id"
   end
 
+  create_table "refresh_tokens", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "refresh_token"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["refresh_token"], name: "index_refresh_tokens_on_refresh_token"
+    t.index ["user_id"], name: "index_refresh_tokens_on_user_id"
+  end
+
   create_table "stores", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -125,5 +135,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_03_015927) do
   add_foreign_key "orders", "stores"
   add_foreign_key "orders", "users", column: "buyer_id"
   add_foreign_key "products", "stores"
+  add_foreign_key "refresh_tokens", "users"
   add_foreign_key "stores", "users"
 end
