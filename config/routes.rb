@@ -19,14 +19,23 @@ Rails.application.routes.draw do
   end
 
   scope :buyers do
-    resources :orders, only: [:index, :create, :update, :destroy]
+    resources :orders, only: [:index, :create, :update, :destroy] do
+      member do
+        put 'accept'
+        put 'cancel'
+        put 'created'
+        put 'in_progress'
+        put 'in_delivery'
+        put 'delivered'
+      end
+    end
   end
 
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
   mount ActionCable.server => '/cable'
 
-   direct :rails_blob do |blob|
+  direct :rails_blob do |blob|
     route_for(:rails_service_blob, blob.signed_id, blob.filename)
   end
 
