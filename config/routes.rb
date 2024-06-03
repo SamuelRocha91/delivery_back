@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   get "me", to: "registrations#me"
   post "new", to: "registrations#create", as: :create_registration
   post "sign_in", to: "registrations#sign_in"
+  post 'refresh', to: 'registrations#refresh'
 
   get "up", to: "rails/health#show", as: :rails_health_check
 end

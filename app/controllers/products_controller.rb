@@ -10,7 +10,7 @@ class ProductsController < ApplicationController
       if buyer?
         page = params.fetch(:page, 1)
         offset = (12 * (page.to_i - 1))
-        @products = Product.kept.includes([:image_attachment]).where(store_id: params[:store_id]).order(:title)
+        @products = Product.kept.includes(image_attachment: :blob).where(store_id: params[:store_id]).order(:title)
         @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
         @products = @products.where(category: params[:category]) if params[:category].present?
         @products = @products.page(page).offset(offset)
