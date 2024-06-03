@@ -14,7 +14,7 @@ json.result do
    end
   json.stores do 
     json.array! @stores do |store|
-      json.extract! store, :id, :name, :description, :address, :cep, :state, :city, :neighborhood, :number_address, :cnpj, :is_open, :category
+      json.extract! store, :id, :name, :description, :address, :cep, :state, :city, :neighborhood, :number_address, :cnpj, :is_open, :category, :color_theme
       if store.avatar.attached?
        json.avatar_url rails_blob_url(store.avatar, only_path: true)
       end

@@ -7,6 +7,6 @@ class AddFieldsToStores < ActiveRecord::Migration[7.1]
     add_column :stores, :cnpj, :string
     add_column :stores, :address, :text
     add_column :stores, :neighborhood, :string
-    add_column :stores, :number_address, :decimal
+    add_column :stores, :number_address, :string
   end
 end
