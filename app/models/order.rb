@@ -4,7 +4,7 @@ class Order < ApplicationRecord
   has_many :order_items
   has_many :products, through: :order_items
   validate :buyer_role
-  accepts_nested_attributes_for :order_items, allow_destroy: true
+  accepts_nested_attributes_for :order_items
 
   state_machine initial: :created do
      event :pay do

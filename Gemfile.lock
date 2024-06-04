@@ -112,6 +112,10 @@ GEM
       railties (>= 5.0.0)
     faker (3.3.1)
       i18n (>= 1.8.11, < 2)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-net_http (3.1.0)
+      net-http
     ffi (1.16.3)
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -161,6 +165,8 @@ GEM
     minitest (5.22.3)
     msgpack (1.7.2)
     mutex_m (0.2.0)
+    net-http (0.4.1)
+      uri
     net-imap (0.4.10)
       date
       net-protocol
@@ -294,6 +300,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uniform_notifier (1.16.0)
+    uri (0.13.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -318,6 +325,7 @@ DEPENDENCIES
   discard (~> 1.2)
   factory_bot_rails (~> 6.0)
   faker
+  faraday (~> 2.9)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
