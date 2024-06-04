@@ -19,11 +19,11 @@ class OrdersController < ApplicationController
 
   private
 
-  def order_params
-    params.require(:order).permit([:store_id])
-  end
-
   def not_authorized(e)
     render json: {message: "Nope!"}, status: 401
+  end
+
+  def order_params
+    params.require(:order).permit(:store_id, order_items_attributes: [ :product_id, :amount, :price])
   end
 end
