@@ -1,5 +1,6 @@
 class PaymentJob
-
+ queue_as :default
+ 
  def perform(order:, value:, number:, valid:, cvv:)
    params = {value: value, number: number, valid: valid, cvv: cvv}
    response = con.post("/payments", params.to_json)
