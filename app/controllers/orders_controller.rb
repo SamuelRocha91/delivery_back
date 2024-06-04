@@ -13,6 +13,51 @@ class OrdersController < ApplicationController
     end
   end
 
+  def pay
+    @order.pay!
+    render json: @order
+  end
+
+  def confirm_payment
+    @order.confirm_payment!
+    render json: @order
+  end
+
+  def confirm_payment
+    @order.payment_failed!
+    render json: @order
+  end
+
+  def accept
+    @order.accept!
+    render json: @order
+  end
+
+  def cancel
+    @order.cancel!
+    render json: @order
+  end
+
+  def start_progress
+    @order.start_progress!
+    render json: @order
+  end
+
+  def ready_for_delivery
+    @order.ready_for_delivery!
+    render json: @order
+  end
+
+  def start_delivery
+    @order.start_delivery!
+    render json: @order
+  end
+
+  def deliver
+    @order.deliver!
+    render json: @order
+  end
+
   def index
     @orders = Order.where(buyer: current_user)
   end
