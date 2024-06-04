@@ -23,10 +23,10 @@ Rails.application.routes.draw do
       member do
         put 'accept'
         put 'cancel'
-        put 'created'
         put 'in_progress'
         put 'in_delivery'
         put 'delivered'
+        put 'ready_for_delivery'
       end
     end
   end
