@@ -2,9 +2,17 @@ class PaymentJob
  queue_as :default
  
  def perform(order:, value:, number:, valid:, cvv:)
+   order.pay
    params = {value: value, number: number, valid: valid, cvv: cvv}
    response = con.post("/payments", params.to_json)
-   order.paid if response.success?
+   if response.success?
+     order.confirm_payment 
+      OrdersChannel.notify_user(order.buyer, order, "Payment confirmed")
+      OrdersChannel.notify_user(order.store, order, "Payment confirmed")
+   else
+      order.payment_failed
+      OrdersChannel.notify_user(order.buyer, order, "Payment failed")
+   end
  end
 
  private
