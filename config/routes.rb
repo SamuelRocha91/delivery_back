@@ -22,6 +22,10 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :create, :update, :destroy] do
       member do
         put 'accept'
+        put 'pay'
+        put 'payment_pending'
+        put 'confirm_payment'
+        put 'payment_failed'
         put 'cancel'
         put 'in_progress'
         put 'in_delivery'
