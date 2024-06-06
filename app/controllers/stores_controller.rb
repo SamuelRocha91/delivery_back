@@ -1,5 +1,5 @@
 class StoresController < ApplicationController
-  before_action :authenticate!
+  before_action :authenticate!, except: %i[ listing ]
   before_action :set_store, only: %i[ show edit update destroy ]
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
@@ -20,7 +20,14 @@ class StoresController < ApplicationController
     else
       @stores = Store.includes(avatar_attachment: :blob).includes(:user)
     end
-    
+  end
+
+  def listing
+    page = params.fetch(:page, 1)
+    @stores = Store.kept.includes(avatar_attachment: :blob).order(:name)
+    @stores = @stores.where('LOWER(name) LIKE ?', "%#{params[:name].downcase}%") if params[:name].present?
+    @stores = @stores.where(category: params[:category]) if params[:category].present?
+    @stores = @stores.page(page)
   end
 
   def new

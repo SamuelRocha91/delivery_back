@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController  
-  before_action :authenticate!, :set_locale!
+  before_action :authenticate!, except: [:listing_within_token] 
+  before_action :set_locale!
   before_action :set_store, only: %i[show update destroy index edit new]
   before_action :set_product, only: %i[show edit]
   skip_forgery_protection 
@@ -7,18 +8,17 @@ class ProductsController < ApplicationController
 
   def index
     if request.format == Mime[:json]
+      page = params.fetch(:page, 1)
       if buyer?
-        page = params.fetch(:page, 1)
         offset = (12 * (page.to_i - 1))
         @products = Product.kept.includes(image_attachment: :blob).where(store_id: params[:store_id]).order(:title)
         @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
         @products = @products.where(category: params[:category]) if params[:category].present?
         @products = @products.page(page).offset(offset)
       else
-        page = params.fetch(:page, 1)
-        offset = (5 * (page.to_i - 1))
+        offset = (8 * (page.to_i - 1))
         @products = @store.products.kept.includes(image_attachment: :blob)
-         @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
+        @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
         @products = @products.where(category: params[:category]) if params[:category].present?
         @products = @products.page(page).per(5).offset(offset)
       end      
@@ -48,7 +48,16 @@ class ProductsController < ApplicationController
     end   
   end
 
- def create
+  def listing_within_token
+    page = params.fetch(:page, 1)
+    offset = (12 * (page.to_i - 1))
+    @products = Product.kept.includes(image_attachment: :blob).where(store_id: params[:store_id]).order(:title)
+    @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
+    @products = @products.where(category: params[:category]) if params[:category].present?
+    @products = @products.page(page).offset(offset)
+  end
+
+  def create
     @store = Store.find(params[:store_id])
     @product = @store.products.new(product_params)
 

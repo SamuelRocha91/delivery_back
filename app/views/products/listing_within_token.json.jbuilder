@@ -1,4 +1,3 @@
-Rails.application.routes.url_helpers
 json.result do
   if params[:page].present?
      json.pagination do
