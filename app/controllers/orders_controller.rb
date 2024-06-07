@@ -14,9 +14,11 @@ class OrdersController < ApplicationController
   end
 
   def pay
-    PaymentJob.perform_later(order: @order, value: params[:value], number: params[:number], valid: params[:valid], cvv: params[:cvv])
-    notify_users(@order, "Order paid")
-    render json: {message: 'Payment processing'}, status: :ok
+    @order = Order.find(params[:id])
+    PaymentJob.perform_later(order: @order, value: payment_params[:value],number: payment_params[:number],valid: payment_params[:valid],cvv: payment_params[:cvv])
+    render json: { message: 'Payment processing started' }, status: :ok
+  rescue StandardError => e
+    render json: { error: e.message }, status: :internal_server_error
   end
 
   def confirm_payment
@@ -79,6 +81,10 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:store_id, order_items_attributes: [ :product_id, :amount, :price])
+  end
+
+  def payment_params
+    params.require(:payment).permit(:value, :number, :valid, :cvv)
   end
 
   def notify_users(order, message)

@@ -19,8 +19,8 @@ class Order < ApplicationRecord
         transition payment_pending: :payment_failed
     end
     
-    event :confirm_payment do
-      transition created: :accepted
+    event :confirm do
+      transition payment_confirmed: :accepted
     end
 
      event :cancel do

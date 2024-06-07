@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
         @products = @products.where(category: params[:category]) if params[:category].present?
         @products = @products.page(page).offset(offset)
       else
-        offset = (8 * (page.to_i - 1))
+        offset = (5 * (page.to_i - 1))
         @products = @store.products.kept.includes(image_attachment: :blob)
         @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
         @products = @products.where(category: params[:category]) if params[:category].present?
