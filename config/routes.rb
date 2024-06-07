@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: 'registrations'
   }, skip: [:registrations]
+    get "/stores/listing", to: "stores#listing"
+    get "/stores/:store_id/products/listing", to: "products#listing_within_token"
+
 
     get 'sign_up', to: 'registrations#new', as: :sign_up_registration
     post 'sign_up' => 'registrations#create'
@@ -21,12 +24,15 @@ Rails.application.routes.draw do
   scope :buyers do
     resources :orders, only: [:index, :create, :update, :destroy] do
       member do
+        put 'pay'
+        put 'confirm_payment'
+        put 'payment_failed'
         put 'accept'
+        put 'start_progress'
+        put 'ready_for_delivery'
+        put 'start_delivery'
+        put 'deliver'
         put 'cancel'
-        put 'created'
-        put 'in_progress'
-        put 'in_delivery'
-        put 'delivered'
       end
     end
   end
@@ -46,6 +52,7 @@ Rails.application.routes.draw do
   root to: "welcome#index"
 
   get "listing", to: "products#listing"
+  
   get "me", to: "registrations#me"
   post "new", to: "registrations#create", as: :create_registration
   post "sign_in", to: "registrations#sign_in"

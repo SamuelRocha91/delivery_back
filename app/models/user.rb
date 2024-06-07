@@ -22,7 +22,7 @@ class User < ApplicationRecord
     jwt_secret_key = Rails.application.credentials.jwt_secret_key
    
 
-    jwt_headers = {exp: 1.minute.from_now.to_i}
+    jwt_headers = {exp: 1.hour.from_now.to_i}
     payload = {
        id: user.id,
        email: user.email,
