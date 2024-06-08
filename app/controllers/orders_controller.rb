@@ -23,49 +23,41 @@ class OrdersController < ApplicationController
 
   def confirm_payment
     @order.confirm_payment!
-    notify_users(@order, "Payment confirmed")
     render json: @order
   end
 
   def confirm_payment
     @order.payment_failed!
-    notify_users(@order, "Payment failed")
     render json: @order
   end
 
   def accept
     @order.accept!
-    notify_users(@order, "Order accepted")
     render json: @order
   end
 
   def cancel
     @order.cancel!
-    notify_users(@order, "Order canceled")
     render json: @order
   end
 
   def start_progress
     @order.start_progress!
-    notify_users(@order, "Order in progress")
     render json: @order
   end
 
   def ready_for_delivery
     @order.ready_for_delivery!
-    notify_users(@order, "Order ready for delivery")
     render json: @order
   end
 
   def start_delivery
     @order.start_delivery!
-    notify_users(@order, "Order out for delivery")
     render json: @order
   end
 
   def deliver
     @order.deliver!
-    notify_users(@order, "Order delivered")
     render json: @order
   end
 
@@ -87,10 +79,4 @@ class OrdersController < ApplicationController
     params.require(:payment).permit(:value, :number, :valid, :cvv)
   end
 
-  def notify_users(order, message)
-    buyer = User.find(order.buyer_id)
-    store = User.find(order.store_id)
-    OrdersChannel.notify_user(buyer, order, message)
-    OrdersChannel.notify_user(store, order, message)
-  end
 end
