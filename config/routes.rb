@@ -21,6 +21,10 @@ Rails.application.routes.draw do
     end
   end
 
+   resources :credentials, only: [:index, :create, :update] 
+   delete '/credentials/:id', to: 'credentials#destroy', as: 'delete_credential'
+
+    
   scope :buyers do
     resources :orders, only: [:index, :create, :update, :destroy] do
       member do
