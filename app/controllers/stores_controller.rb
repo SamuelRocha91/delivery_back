@@ -22,6 +22,28 @@ class StoresController < ApplicationController
     end
   end
 
+  def new_order
+    response.headers["Content-Type"] = "text/event-stream"
+    sse = SSE.new(response.stream, retry:300, event: "waiting-orders")
+    sse.write({ hello: "world!"}, event: "waiting-order")
+
+    EventMachine.run do
+      EventMachine::PeriodicTimer.new(3) do
+        order = Order.last
+        if order
+          message = {time: Time.now, order: order}
+          sse.write(message, event: "new order")
+        else
+          sse.write(message, event: "no")
+        end
+      end
+    end
+  rescue IOError, ActionController::Live::ClientDisconnected
+    sse.close
+  ensure
+    sse.close
+  end
+
   def listing
     page = params.fetch(:page, 1)
     @stores = Store.kept.includes(avatar_attachment: :blob).order(:name)
