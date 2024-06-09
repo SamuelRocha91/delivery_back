@@ -14,10 +14,10 @@ class OrdersController < ApplicationController
   end
 
    def show
-    @order = current_user.orders.find(params[:id])
-    render json: @order, status: :ok 
+    @order = current_user.orders.includes(:order_items).find(params[:id])
+    render json: order_json(@order), status: :ok 
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "Pedido não encontrado" }, status: :not_found # 
+    render json: { error: "Pedido não encontrado" }, status: :not_found #
   end
 
   def pay
@@ -86,4 +86,22 @@ class OrdersController < ApplicationController
     params.require(:payment).permit(:value, :number, :valid, :cvv)
   end
 
+  def order_json(order)
+    {
+      id: order.id,
+      status: order.state,
+      items: order.order_items.map do |item|
+        {
+          product: item.product.title,
+          amount: item.amount,
+          price: item.price
+        }
+      end,
+      total: calculate_total(order)
+    }
+  end
+
+   def calculate_total(order)
+    order.order_items.sum { |item| item.price * item.amount }
+  end
 end
