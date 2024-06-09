@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController 
   skip_forgery_protection
-  before_action :authenticate!, :only_buyers!
+  before_action :authenticate!
+  before_action  :only_buyers!, except: [:show]
   rescue_from User::InvalidToken, with: :not_authorized
 
   def create
@@ -14,7 +15,7 @@ class OrdersController < ApplicationController
   end
 
    def show
-    @order = current_user.orders.includes(:order_items).find(params[:id])
+    @order = Order.find(params[:id]).includes([:product])
     render json: order_json(@order), status: :ok 
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Pedido não encontrado" }, status: :not_found #
