@@ -13,9 +13,16 @@ class OrdersController < ApplicationController
     end
   end
 
+   def show
+    @order = current_user.orders.find(params[:id])
+    render json: @order, status: :ok 
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Pedido não encontrado" }, status: :not_found # 
+  end
+
   def pay
-    @order = Order.find(params[:id])
-    PaymentJob.perform_later(order: @order, value: payment_params[:value],number: payment_params[:number],valid: payment_params[:valid],cvv: payment_params[:cvv])
+    order = Order.find(params[:id])
+    PaymentJob.perform_later(order: order, value: payment_params[:value],number: payment_params[:number],valid: payment_params[:valid],cvv: payment_params[:cvv])
     render json: { message: 'Payment processing started' }, status: :ok
   rescue StandardError => e
     render json: { error: e.message }, status: :internal_server_error

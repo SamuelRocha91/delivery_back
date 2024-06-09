@@ -12,9 +12,11 @@ Rails.application.routes.draw do
     resources :registrations, only: [:edit, :update]
     put 'users/:id/reactivate', to: 'registrations#reactivate', as: 'reactivate_user'
     delete "deactivate_user/:id", to: "registrations#deactivate_user", as: :deactivate_user
+  
 
   resources :stores do
     resources :products
+    get "orders/new" => "stores#new_order"
     member do
       put 'reactivate_store', to: 'stores#reactivate', as: :reactivate_store
       put 'reactivate_product', to: 'products#reactivate', as: :reactivate_product
@@ -39,6 +41,7 @@ Rails.application.routes.draw do
         put 'cancel'
       end
     end
+    get 'orders/:id', to: 'orders#show', as: 'buyer_order'
   end
 
   mount Rswag::Ui::Engine => '/api-docs'

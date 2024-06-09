@@ -1,4 +1,6 @@
 class StoresController < ApplicationController
+  include ActionController::Live
+
   before_action :authenticate!, except: %i[ listing ]
   before_action :set_store, only: %i[ show edit update destroy ]
   skip_forgery_protection 
@@ -24,24 +26,29 @@ class StoresController < ApplicationController
 
   def new_order
     response.headers["Content-Type"] = "text/event-stream"
-    sse = SSE.new(response.stream, retry:300, event: "waiting-orders")
-    sse.write({ hello: "world!"}, event: "waiting-order")
-
-    EventMachine.run do
-      EventMachine::PeriodicTimer.new(3) do
-        order = Order.last
-        if order
-          message = {time: Time.now, order: order}
-          sse.write(message, event: "new order")
-        else
-          sse.write(message, event: "no")
+    sse = SSE.new(response.stream, retry: 300, event: "waiting-orders")
+    last_orders = nil
+    begin
+      sse.write({ hello: "world!"}, event: "waiting-order")
+      EventMachine.run do
+        EventMachine::PeriodicTimer.new(3) do
+         orders = Order.where.not(state: [:canceled, :delivered, :payment_failed, :created, :payment_pending])
+        if orders != last_orders 
+          if orders.any?
+            message = { time: Time.now, orders: orders } 
+            sse.write(message, event: "new orders")
+          else
+            sse.write({ message: "no orders" }, event: "no")
+          end
+          last_orders = orders 
+        end
         end
       end
-    end
-  rescue IOError, ActionController::Live::ClientDisconnected
+   rescue IOError, ActionController::Live::ClientDisconnected
     sse.close
-  ensure
+   ensure
     sse.close
+   end
   end
 
   def listing
