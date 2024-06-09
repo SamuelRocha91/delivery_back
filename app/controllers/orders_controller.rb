@@ -43,9 +43,9 @@ class OrdersController < ApplicationController
     order = Order.find(params[:id])
     if order.confirm!
       render json: { message: "Pedido aceito com sucesso", order: order }, status: :ok
-   else
-     render json: { error: "Não foi possível aceitar o pedido" }, status: :unprocessable_entity
-   end
+    else
+      render json: { error: "Não foi possível aceitar o pedido" }, status: :unprocessable_entity
+    end
   end
 
   def cancel
@@ -55,13 +55,21 @@ class OrdersController < ApplicationController
   end
 
   def start_progress
-    @order.start_progress!
-    render json: @order
+    order = Order.find(params[:id])
+    if order.start_progress!
+      render json: { message: "Pedido está sendo preparado", order: order }, status: :ok
+    else
+      render json: { error: "Não foi possível alterar o pedido pro estado de preparo" }, status: :unprocessable_entity
+    end
   end
 
   def ready_for_delivery
-    @order.ready_for_delivery!
-    render json: @order
+    order = Order.find(params[:id])
+    if order.ready_for_delivery!
+      render json: { message: "Pedido pronto para entrega", order: order }, status: :ok
+    else
+      render json: { error: "Não foi possível alterar o pedido pro estado de entrega" }, status: :unprocessable_entity
+    end
   end
 
   def start_delivery

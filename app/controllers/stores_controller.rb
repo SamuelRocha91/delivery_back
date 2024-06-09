@@ -65,15 +65,12 @@ class StoresController < ApplicationController
       @sellers = User.kept.where(role: :seller)
     end
   end
-  # GET /stores/1 or /stores/1.json
   def show
   end
 
-  # GET /stores/1/edit
   def edit
   end
 
-  # POST /stores or /stores.json
   def create
     @store = Store.new(store_params)
     if !current_user.admin?
@@ -92,7 +89,6 @@ class StoresController < ApplicationController
     end
   end
 
-  # PATCH/PUT /stores/1 or /stores/1.json
   def update
     respond_to do |format|
       if @store.update(store_params)
@@ -105,7 +101,6 @@ class StoresController < ApplicationController
     end
   end
 
-  # DELETE /stores/1 or /stores/1.json
   def destroy
     @store.discard!
 
@@ -127,7 +122,6 @@ class StoresController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_store
       @store = Store.find(params[:id])
 
@@ -139,11 +133,8 @@ class StoresController < ApplicationController
       end
     end
 
-    # Only allow a list of trusted parameters through.
     def store_params
-
       required = params.require(:store)
-
       if current_user.admin?
         required.permit(:name, :user_id, :avatar, :description, :category, :address, :state, :city, :cep, :number_address, :neighborhood, :cnpj, :is_open, :color_theme)
       else
