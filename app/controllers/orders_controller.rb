@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController 
   skip_forgery_protection
   before_action :authenticate!
-  before_action  :only_buyers!, except: [:show, :accept, :cancel]
+  before_action  :only_buyers!, except: [:show, :accept, :cancel, :start_progress, :ready_for_delivery, :start_delivery, :deliver]
   rescue_from User::InvalidToken, with: :not_authorized
 
   def create
