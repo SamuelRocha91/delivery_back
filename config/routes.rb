@@ -21,18 +21,9 @@ Rails.application.routes.draw do
       put 'reactivate_store', to: 'stores#reactivate', as: :reactivate_store
       put 'reactivate_product', to: 'products#reactivate', as: :reactivate_product
     end
-  end
 
-   resources :credentials, only: [:index, :create, :update] 
-   delete '/credentials/:id', to: 'credentials#destroy', as: 'delete_credential'
-
-    
-  scope :buyers do
-    resources :orders, only: [:index, :create, :update, :destroy] do
+    resources :orders, only: [:index, :show] do
       member do
-        put 'pay'
-        put 'confirm_payment'
-        put 'payment_failed'
         put 'accept'
         put 'start_progress'
         put 'ready_for_delivery'
@@ -41,6 +32,14 @@ Rails.application.routes.draw do
         put 'cancel'
       end
     end
+  end
+
+   resources :credentials, only: [:index, :create, :update] 
+   delete '/credentials/:id', to: 'credentials#destroy', as: 'delete_credential'
+
+    
+  scope :buyers do
+    resources :orders, only: [:index, :create, :update, :destroy]
     get 'orders/:id', to: 'orders#show', as: 'buyer_order'
   end
 

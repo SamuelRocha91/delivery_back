@@ -40,8 +40,11 @@ class OrdersController < ApplicationController
   end
 
   def accept
-    @order.accept!
-    render json: @order
+    if @order.accept!
+      render json: { message: "Pedido aceito com sucesso", order: @order }, status: :ok
+   else
+     render json: { error: "Não foi possível aceitar o pedido" }, status: :unprocessable_entity
+   end
   end
 
   def cancel
