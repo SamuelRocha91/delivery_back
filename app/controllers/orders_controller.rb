@@ -14,6 +14,33 @@ class OrdersController < ApplicationController
     end
   end
 
+  def stream
+    response.headers["Content-Type"] = "text/event-stream"
+    sse = SSE.new(response.stream, retry: 300, event: "waiting-orders")
+    last_orders = nil
+    begin
+      sse.write({ hello: "world!"}, event: "waiting-order")
+      EventMachine.run do
+        EventMachine::PeriodicTimer.new(3) do
+        orders = Order.where(buyer_id: current_user.id)
+         if orders != last_orders 
+          if orders.any?
+            message = { time: Time.now, orders: orders } 
+            sse.write(message, event: "new orders")
+          else
+            sse.write({ message: "no orders" }, event: "no")
+          end
+          last_orders = orders 
+        end
+        end
+      end
+    rescue IOError, ActionController::Live::ClientDisconnected
+      sse.close
+    ensure
+      sse.close
+    end
+  end
+
    def show
     @order = Order.includes(order_items: :product).find(params[:id])
     render json: order_json(@order), status: :ok 

@@ -45,9 +45,9 @@ class StoresController < ApplicationController
         end
       end
    rescue IOError, ActionController::Live::ClientDisconnected
-    sse.close
+     sse.close
    ensure
-    sse.close
+     sse.close
    end
   end
 

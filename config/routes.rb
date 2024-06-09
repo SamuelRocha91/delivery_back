@@ -41,6 +41,7 @@ Rails.application.routes.draw do
   scope :buyers do
     resources :orders, only: [:index, :create, :update, :destroy]
     get 'orders/:id', to: 'orders#show', as: 'buyer_order'
+    get 'orders/stream', to: 'orders#stream'
   end
 
   mount Rswag::Ui::Engine => '/api-docs'
