@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController 
   skip_forgery_protection
   before_action :authenticate!
-  before_action  :only_buyers!, except: [:show]
+  before_action  :only_buyers!, except: [:show, :accept, :cancel]
   rescue_from User::InvalidToken, with: :not_authorized
 
   def create
@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
   end
 
    def show
-    @order = Order.find(params[:id]).includes([:product])
+    @order = Order.includes(order_items: :product).find(params[:id])
     render json: order_json(@order), status: :ok 
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Pedido não encontrado" }, status: :not_found #
@@ -40,15 +40,17 @@ class OrdersController < ApplicationController
   end
 
   def accept
-    if @order.accept!
-      render json: { message: "Pedido aceito com sucesso", order: @order }, status: :ok
+    order = Order.find(params[:id])
+    if order.confirm!
+      render json: { message: "Pedido aceito com sucesso", order: order }, status: :ok
    else
      render json: { error: "Não foi possível aceitar o pedido" }, status: :unprocessable_entity
    end
   end
 
   def cancel
-    @order.cancel!
+    order = Order.find(params[:id])
+    order.cancel!
     render json: @order
   end
 
