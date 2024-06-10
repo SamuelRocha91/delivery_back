@@ -8,6 +8,17 @@ if !admin
     )
   admin.save!
 end
+
+developer = User.find_by(email: "developer@example.com")
+if !developer
+  developer = User.new(
+    email: "developer@example.com",
+    password: "123456",
+    password_confirmation: "123456",
+    role: :developer
+    )
+  developer.save!
+end
 ["Orange Curry", "Belly King"].each do |store|
   user = User.new(
     email: "#{store.split.map { |s| s.downcase }.join(".")}@example.com",

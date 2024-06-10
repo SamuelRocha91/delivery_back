@@ -53,6 +53,10 @@ class ApplicationController < ActionController::Base
     (current_user && current_user.buyer?) && current_credential.buyer?
   end
 
+  def developer?
+    (current_user && current_user.developer?)
+  end
+
   protected
 
    def verified_request?

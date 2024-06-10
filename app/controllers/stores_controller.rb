@@ -1,4 +1,6 @@
 class StoresController < ApplicationController
+  include ActionController::Live
+
   before_action :authenticate!, except: %i[ listing ]
   before_action :set_store, only: %i[ show edit update destroy ]
   skip_forgery_protection 
@@ -22,6 +24,33 @@ class StoresController < ApplicationController
     end
   end
 
+  def new_order
+    response.headers["Content-Type"] = "text/event-stream"
+    sse = SSE.new(response.stream, retry: 300, event: "waiting-orders")
+    last_orders = nil
+    begin
+      sse.write({ hello: "world!"}, event: "waiting-order")
+      EventMachine.run do
+        EventMachine::PeriodicTimer.new(3) do
+         orders = Order.where.not(state: [:canceled, :delivered, :payment_failed, :created, :payment_pending])
+        if orders != last_orders 
+          if orders.any?
+            message = { time: Time.now, orders: orders } 
+            sse.write(message, event: "new orders")
+          else
+            sse.write({ message: "no orders" }, event: "no")
+          end
+          last_orders = orders 
+        end
+        end
+      end
+   rescue IOError, ActionController::Live::ClientDisconnected
+     sse.close
+   ensure
+     sse.close
+   end
+  end
+
   def listing
     page = params.fetch(:page, 1)
     @stores = Store.kept.includes(avatar_attachment: :blob).order(:name)
@@ -36,15 +65,12 @@ class StoresController < ApplicationController
       @sellers = User.kept.where(role: :seller)
     end
   end
-  # GET /stores/1 or /stores/1.json
   def show
   end
 
-  # GET /stores/1/edit
   def edit
   end
 
-  # POST /stores or /stores.json
   def create
     @store = Store.new(store_params)
     if !current_user.admin?
@@ -63,7 +89,6 @@ class StoresController < ApplicationController
     end
   end
 
-  # PATCH/PUT /stores/1 or /stores/1.json
   def update
     respond_to do |format|
       if @store.update(store_params)
@@ -76,7 +101,6 @@ class StoresController < ApplicationController
     end
   end
 
-  # DELETE /stores/1 or /stores/1.json
   def destroy
     @store.discard!
 
@@ -98,7 +122,6 @@ class StoresController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_store
       @store = Store.find(params[:id])
 
@@ -110,11 +133,8 @@ class StoresController < ApplicationController
       end
     end
 
-    # Only allow a list of trusted parameters through.
     def store_params
-
       required = params.require(:store)
-
       if current_user.admin?
         required.permit(:name, :user_id, :avatar, :description, :category, :address, :state, :city, :cep, :number_address, :neighborhood, :cnpj, :is_open, :color_theme)
       else

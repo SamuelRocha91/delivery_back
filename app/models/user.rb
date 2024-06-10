@@ -7,7 +7,7 @@ class User < ApplicationRecord
   
   validates :role, presence: true
 
-  enum :role, [:admin, :seller, :buyer]
+  enum :role, [:admin, :seller, :buyer, :developer]
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable

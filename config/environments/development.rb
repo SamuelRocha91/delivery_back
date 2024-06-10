@@ -83,6 +83,11 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+  config.web_console.whitelisted_ips = '172.21.0.1'
+  config.web_console.permissions = '172.22.0.1'
+  config.web_console.permissions = '172.23.0.1'
+
+
   config.logger = ActiveSupport::Logger.new(STDOUT)
   config.log_level = :debug
 

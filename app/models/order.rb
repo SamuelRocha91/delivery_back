@@ -1,4 +1,6 @@
 class Order < ApplicationRecord
+  include GlobalID::Identification
+
   belongs_to :buyer, class_name: "User"
   belongs_to :store
   has_many :order_items

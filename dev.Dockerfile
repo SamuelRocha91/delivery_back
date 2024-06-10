@@ -28,4 +28,4 @@ RUN bundle exec rake db:migrate
 RUN bundle exec rake db:seed
 
 # Start the application
-CMD ["sh", "-c", "rm -f /rails/tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"]
+CMD ["sh", "-c", "rm -f /rails/tmp/pids/server.pid && bundle exec rails server"]

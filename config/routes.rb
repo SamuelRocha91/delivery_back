@@ -12,21 +12,18 @@ Rails.application.routes.draw do
     resources :registrations, only: [:edit, :update]
     put 'users/:id/reactivate', to: 'registrations#reactivate', as: 'reactivate_user'
     delete "deactivate_user/:id", to: "registrations#deactivate_user", as: :deactivate_user
+  
 
   resources :stores do
     resources :products
+    get "orders/new" => "stores#new_order"
     member do
       put 'reactivate_store', to: 'stores#reactivate', as: :reactivate_store
       put 'reactivate_product', to: 'products#reactivate', as: :reactivate_product
     end
-  end
 
-  scope :buyers do
-    resources :orders, only: [:index, :create, :update, :destroy] do
+    resources :orders, only: [:index, :show] do
       member do
-        put 'pay'
-        put 'confirm_payment'
-        put 'payment_failed'
         put 'accept'
         put 'start_progress'
         put 'ready_for_delivery'
@@ -35,6 +32,20 @@ Rails.application.routes.draw do
         put 'cancel'
       end
     end
+  end
+
+   resources :credentials, only: [:index, :create, :update] 
+   delete '/credentials/:id', to: 'credentials#destroy', as: 'delete_credential'
+
+    
+  scope :buyers do
+    resources :orders, only: [:index, :create, :update, :destroy] do
+      member do
+        put 'pay'
+      end
+    end
+    get 'orders/stream', to: 'orders#stream'  
+    get 'orders/:id', to: 'orders#show', as: 'buyer_order'
   end
 
   mount Rswag::Ui::Engine => '/api-docs'
