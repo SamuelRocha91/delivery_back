@@ -1,0 +1,37 @@
+<div class="orders-page">
+  <h1>Orders</h1>
+  <%= form_with url: orders_path, method: :get, local: true do |form| %>
+    <div>
+      <%= form.label :state, "Filtrar por estado" %>
+      <%= form.select :state, Order.states.map { |state| [state.to_s.humanize, state] }, prompt: "Todos" %>
+      <%= form.submit "Filtrar" %>
+    </div>
+  <% end %>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Id do comprador</th>
+        <th>Criação</th>
+        <th>Status</th>
+        th>Detalhes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.id %></td>
+          <td><%= order.buyer_id %></td>
+          <td><%= order.created_at.strftime("%d/%m/%Y %H:%M") %></td>
+          <td><%= order.state %></td>
+          <td><%= link_to "Detalhes", buyer_order_path(order) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <%= paginate @orders %>
+  </div>
+</div>

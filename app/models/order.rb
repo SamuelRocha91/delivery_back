@@ -46,6 +46,10 @@ class Order < ApplicationRecord
     end
   end
 
+  def self.states
+    state_machine.states.map(&:name)
+  end
+  
   private
 
   def buyer_role
