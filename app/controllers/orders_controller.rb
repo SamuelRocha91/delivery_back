@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController 
   include ActionController::Live
-
   skip_forgery_protection
   before_action :authenticate!
+  before_action :set_locale!
   before_action  :only_buyers!, except: [:show, :accept, :cancel, :start_progress, :ready_for_delivery, :start_delivery, :deliver]
   rescue_from User::InvalidToken, with: :not_authorized
 
@@ -113,7 +113,10 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.where(buyer: current_user)
+    page = params.fetch(:page, 1)
+    offset = (12 * (page.to_i - 1))
+    @orders = Order.where(buyer: current_user).where(state: [:canceled, :delivered, :payment_failed])
+    @orders = @orders.page(page).offset(offset)
   end
 
   private
@@ -131,21 +134,29 @@ class OrdersController < ApplicationController
   end
 
   def order_json(order)
-    {
-      id: order.id,
-      status: order.state,
-      items: order.order_items.map do |item|
-        {
-          product: item.product.title,
-          amount: item.amount,
-          price: item.price
-        }
-      end,
-      total: calculate_total(order)
-    }
+    locale = params[:locale] || I18n.default_locale
+
+    I18n.with_locale(locale) do
+      {
+        id: order.id,
+        status: order.state,
+        items: order.order_items.map do |item|
+          {
+            product: item.product.title,
+            amount: item.amount,
+             price: format_price(item.price)
+          }
+        end,
+        total: format_price(calculate_total(order)) 
+      }
+    end
   end
 
-   def calculate_total(order)
+  def format_price(price)
+    ActionController::Base.helpers.number_to_currency(price)
+  end
+
+  def calculate_total(order)
     order.order_items.sum { |item| item.price * item.amount }
   end
 end
