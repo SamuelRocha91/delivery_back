@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController 
+  include ActionController::Live
+
   skip_forgery_protection
   before_action :authenticate!
   before_action  :only_buyers!, except: [:show, :accept, :cancel, :start_progress, :ready_for_delivery, :start_delivery, :deliver]
@@ -23,15 +25,16 @@ class OrdersController < ApplicationController
       EventMachine.run do
         EventMachine::PeriodicTimer.new(3) do
         orders = Order.where(buyer_id: current_user.id)
+              .where.not(state: [:canceled, :delivered, :payment_failed])
          if orders != last_orders 
-          if orders.any?
+           if orders.any?
             message = { time: Time.now, orders: orders } 
             sse.write(message, event: "new orders")
-          else
+           else
             sse.write({ message: "no orders" }, event: "no")
-          end
-          last_orders = orders 
-        end
+           end
+           last_orders = orders 
+         end
         end
       end
     rescue IOError, ActionController::Live::ClientDisconnected
