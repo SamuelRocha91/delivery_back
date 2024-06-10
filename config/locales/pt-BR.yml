@@ -223,3 +223,33 @@ pt-BR:
       long: "%d de %B de %Y, %H:%M"
       short: "%d de %B, %H:%M"
     pm: pm
+  devise:
+    confirmations:
+      confirmed: 'Sua conta foi confirmada com sucesso.'
+    failure:
+      already_authenticated: 'Você já está autenticado.'
+      unconfirmed: 'Você precisa confirmar sua conta antes de continuar.'
+      invalid: 'Email ou senha inválidos.'
+      locked: 'Sua conta está bloqueada.'
+      last_attempt: 'Você tem mais uma tentativa antes de sua conta ser bloqueada.'
+      not_found_in_database: 'Email ou senha inválidos.'
+      timeout: 'Sua sessão expirou. Por favor, entre novamente.'
+      unauthenticated: 'Você precisa fazer login ou se registrar antes de continuar.'
+      unauthorized: 'Você não tem permissão para realizar esta ação.'
+    passwords:
+      no_token: 'Token não encontrado.'
+      send_instructions: 'Você receberá um email com instruções para a troca de senha em breve.'
+      updated: 'Sua senha foi alterada com sucesso.'
+      updated_not_active: 'Sua senha foi alterada com sucesso, mas sua conta não foi ativada.'
+    registrations:
+      signed_up: 'Bem-vindo! Você se registrou com sucesso.'
+      signed_up_but_inactive: 'Você se registrou com sucesso. Nós lhe enviaremos um email quando sua conta for ativada.'
+      signed_up_but_locked: 'Você se registrou com sucesso, mas sua conta está bloqueada.'
+      signed_up_but_unconfirmed: 'Você se registrou com sucesso. Nós lhe enviaremos um email com as instruções de confirmação da sua conta.'
+      update_needs_confirmation: 'Você atualizou sua conta com sucesso, mas precisamos confirmar seu novo endereço de email. Verifique seu email e clique no link de confirmação para continuar.'
+      updated: 'Sua conta foi atualizada com sucesso.'
+    sessions:
+      signed_in: 'Você entrou com sucesso.'
+      signed_out: 'Você saiu com sucesso.'
+      user:
+        signed_in: 'Você entrou com sucesso.'
