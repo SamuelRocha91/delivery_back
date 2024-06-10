@@ -59,9 +59,16 @@ class OrdersController < ApplicationController
 
    def show
     @order = Order.includes(order_items: :product).find(params[:id])
-    render json: order_json(@order), status: :ok 
-  rescue ActiveRecord::RecordNotFound
-    render json: { error: "Pedido não encontrado" }, status: :not_found #
+    @store = @order.store
+    @buyer = @order.buyer
+    @order_items = @order.order_items
+    if request.format.json?
+      if @order
+        render json: order_json(@order), status: :ok 
+      else
+        render json: { error: "Pedido não encontrado" }, status: :not_found #
+      end
+    end
   end
 
   def pay
@@ -84,45 +91,82 @@ class OrdersController < ApplicationController
 
   def accept
     order = Order.find(params[:id])
-    if order.confirm!
-      render json: { message: "Pedido aceito com sucesso", order: order }, status: :ok
+    if request.format.json?
+      if order.confirm!
+        render json: { message: "Pedido aceito com sucesso", order: order }, status: :ok
+      else
+        render json: { error: "Não foi possível aceitar o pedido" }, status: :unprocessable_entity
+      end
     else
-      render json: { error: "Não foi possível aceitar o pedido" }, status: :unprocessable_entity
+      order.confirm!
+      flash[:notice] = "Pedido aceito com sucesso"
+      redirect_to orders_path(order)
     end
   end
 
   def cancel
     order = Order.find(params[:id])
-    order.cancel!
-    render json: @order
+    if request.format.json?
+      if order.cancel!
+        render json: { message: "Pedido cancelado", order: order }, status: :ok
+      else
+        render json: { error: "Não foi possível cancelar o pedido" }, status: :unprocessable_entity
+      end
+    else
+      order.cancel!
+      redirect_to orders_path(order), notice: "Pedido cancelado"
+    end
   end
 
   def start_progress
     order = Order.find(params[:id])
-    if order.start_progress!
-      render json: { message: "Pedido está sendo preparado", order: order }, status: :ok
+    if request.format.json?
+      if order.start_progress!
+        render json: { message: "Pedido está sendo preparado", order: order }, status: :ok
+      else
+        render json: { error: "Não foi possível alterar o pedido pro estado de preparo" }, status: :unprocessable_entity
+      end
     else
-      render json: { error: "Não foi possível alterar o pedido pro estado de preparo" }, status: :unprocessable_entity
+      order.start_progress!
+      redirect_to orders_path(order), notice: "Pedido está sendo preparado"
     end
   end
 
   def ready_for_delivery
     order = Order.find(params[:id])
-    if order.ready_for_delivery!
-      render json: { message: "Pedido pronto para entrega", order: order }, status: :ok
+    if request.format.json?
+      if order.ready_for_delivery!
+        render json: { message: "Pedido pronto para entrega", order: order }, status: :ok
+      else
+        render json: { error: "Não foi possível alterar o pedido pro estado de entrega" }, status: :unprocessable_entity
+      end
     else
-      render json: { error: "Não foi possível alterar o pedido pro estado de entrega" }, status: :unprocessable_entity
+      order.ready_for_delivery!
+      redirect_to orders_path(order), notice: "Pedido pronto para entrega"
     end
   end
 
   def start_delivery
-    @order.start_delivery!
-    render json: @order
+    @order = Order.find(params[:id])
+    if request.format.json?
+      @order.start_delivery!
+      render json: @order
+    else
+      @order.start_delivery!
+      redirect_to orders_path(@order), notice: "Pedido está sendo entregue"
+    end
+    
   end
 
   def deliver
-    @order.deliver!
-    render json: @order
+    @order = Order.find(params[:id])
+    if request.format.json?
+      @order.deliver!
+      render json: @order
+    else
+      @order.deliver!
+      redirect_to orders_path(@order), notice: "Pedido entregue"
+    end
   end
 
   private
