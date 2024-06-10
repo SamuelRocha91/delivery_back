@@ -39,7 +39,14 @@
   justify-content: center;
 }
 
+tr th {
+    padding: 8px;
+    gap: 4px;
+    border: 1px solid blue;
+}
+
 td {
   text-align: left;
   border: 1px solid #ccc;
+  border-right-color: #007bff;
 }
