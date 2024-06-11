@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   post 'sign_up' => 'registrations#create'
   get 'users' => 'registrations#index'
   resources :registrations, only: [:edit, :update]
-  put 'users/:id/reactivate', to: 'registrations#reactivate', as: 'reactivate_user'
   delete "deactivate_user/:id", to: "registrations#deactivate_user", as: :deactivate_user
   
   resources :stores do

@@ -88,12 +88,6 @@ class RegistrationsController < ApplicationController
     end
   end
 
-  def reactivate
-    @user = User.find(params[:id])
-    @user.undiscard 
-    redirect_to users_path, notice: 'User reactivated successfully.'
-  end
-
   def new
     @user = User.new
   end
