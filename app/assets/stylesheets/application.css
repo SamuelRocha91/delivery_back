@@ -8,6 +8,7 @@
  *= require_tree .
  *= require_self
  *= require orders
+ *= require credentials
  */
 
 
@@ -704,95 +705,3 @@ label {
   color: red;
 }
 
-.dashboard-container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.credentials-list {
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid white;
-  box-shadow: 1px 3px 3px black;
-  padding:10px;
-}
-
-.credential-item {
-  margin-bottom: 10px;
-}
-
-.credential-access {
-  font-weight: bold;
-}
-
-.credential-submit {
-  margin-left: 10px;
-}
-
-.new-credential-fields {
-  margin-bottom: 10px;
-}
-
-.new-credential-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.new-credential-select,
-.new-credential-key {
-  width: 100%;
-  padding: 8px;
-  font-size: 16px;
-}
-
-.new-credential-submit {
-  margin-top: 10px;
-   display: flex;
-  justify-content: center;
-}
-
-.new-credential-button {
- 
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width:300px
-}
-
-.new-credential-button:hover {
-  background-color: #0056b3;
-}
-
-.credential-delete {
-  color: #dc3545;
-  text-decoration: none;
-  margin-left: 10px;
-}
-
-.credential-delete:hover {
-  text-decoration: underline;
-}
-
-.text-center {
-  text-align: center
-}
-
-.key {
-  display: flex;
-  align-items: center;
-  gap: 5px
-}
-
-.form-new-key{ 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid white;
-  box-shadow: 1px 3px 3px black;
-  padding:10px;
-}
