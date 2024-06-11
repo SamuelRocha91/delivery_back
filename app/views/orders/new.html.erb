@@ -1,0 +1,40 @@
+<%= form_with model: @order, local: true do |form| %>
+  <div>
+    <%= form.label :buyer_id, "Comprador" %>
+    <%= form.select :buyer_id, @users.collect { |u| [u.email, u.id] }, prompt: "Selecione um comprador" %>
+  </div>
+
+  <div>
+    <%= form.label :store_id, "Loja" %>
+    <%= form.select :store_id, @stores.collect { |s| [s.name, s.id] }, prompt: "Selecione uma loja" %>
+  </div>
+
+  <h2>Itens do Pedido</h2>
+  <div id="order_items">
+    <%= form.fields_for :order_items do |item_form| %>
+      <div class="order_item">
+        <div>
+          <%= item_form.label :product_id, "Produto" %>
+          <%= item_form.select :product_id, @products.collect { |p| [p.title, p.id] }, prompt: "Selecione um produto" %>
+        </div>
+        <div>
+          <%= item_form.label :amount, "Quantidade" %>
+          <%= item_form.number_field :amount, min: 1, value: 1 %>
+        </div>
+        <div>
+          <%= item_form.label :price, "Preço" %>
+          <%= item_form.number_field :price, step: 0.01 %>
+        </div>
+        <%= link_to "Remover", '#', class: "remove_order_item" %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= link_to "Adicionar Item", '#', id: "add_order_item" %>
+
+  <div>
+    <%= form.submit "Criar Pedido" %>
+  </div>
+<% end %>
+
+<%= javascript_include_tag 'order_form' %>

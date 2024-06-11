@@ -6,7 +6,6 @@
 </div>
 <div class="products-container">
   <% @products.each do |product| %>
-
       <div class="card">
         <% if product.image.attached? %>
           <div>
@@ -19,12 +18,10 @@
           <p>Store: <%= product.store.name %></p>
           <%= link_to "Show this store", store_path(id: product.store)%>
            <% if product.discarded? %>
-            <h3>Status: inativo</h3>
-            <% else  %>
-            <h3>Status: ativo</h3>
+            <h3>Produto excluído</h3>
           <% end  %>
           </div>
         </div>
       <hr />
-<% end %>
+  <% end %>
 </div>

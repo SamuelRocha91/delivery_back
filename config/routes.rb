@@ -45,6 +45,7 @@ Rails.application.routes.draw do
     get 'orders/:id', to: 'orders#show', as: 'buyer_order'
   end
 
+  get 'orders/create', to: 'orders#new'
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
   mount ActionCable.server => '/cable'

@@ -20,6 +20,13 @@ class OrdersController < ApplicationController
     end
   end
 
+  def new
+    @order = Order.new
+    @users = User.all
+    @stores = Store.all
+    @products = Product.all
+  end
+
   def create
     @order = Order.new(order_params)
     @order.buyer = current_user
