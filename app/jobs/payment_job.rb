@@ -5,11 +5,11 @@ class PaymentJob < ApplicationJob
   order.pay!
   params = {payment: {value: value, number: number, valid: valid, cvv: cvv}}
   response = con.post("/payments", params.to_json)
-   if response.success?
-     order.confirm_payment!
-   else
-      order.payment_failed!
-   end
+  if response.success?
+    order.confirm_payment!
+  else
+    order.payment_failed!
+  end
  end
 
  private
@@ -25,6 +25,7 @@ class PaymentJob < ApplicationJob
        "Content-Type" => "application/json",
        "Accept" => "application/json",
       }
-     )
+   )
  end
+
 end
