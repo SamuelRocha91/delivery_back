@@ -1,0 +1,96 @@
+.sign-out-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sign-out-btn:hover {
+  background-color: #d32f2f;
+}
+
+.btn-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 15px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn-show-store {
+  background-color: #007bff;
+}
+
+.btn-show-store:hover {
+  background-color: #0056b3;
+}
+
+.btn-new-store {
+  background-color: #28a745;
+  display: block;
+  width: fit-content;
+  margin: 20px auto;
+}
+
+.btn-new-store:hover {
+  background-color: #218838;
+}
+
+.btn-create-store {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-create-store:hover {
+  background-color: #0056b3;
+}
+
+.btn-back-to-stores {
+  background-color: #6c757d;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-back-to-stores:hover {
+  background-color: #5a6268;
+}
