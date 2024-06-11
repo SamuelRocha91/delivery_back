@@ -2,18 +2,17 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: 'registrations'
   }, skip: [:registrations]
-    get "/stores/listing", to: "stores#listing"
-    get "/stores/:store_id/products/listing", to: "products#listing_within_token"
-
-
-    get 'sign_up', to: 'registrations#new', as: :sign_up_registration
-    post 'sign_up' => 'registrations#create'
-    get 'users' => 'registrations#index'
-    resources :registrations, only: [:edit, :update]
-    put 'users/:id/reactivate', to: 'registrations#reactivate', as: 'reactivate_user'
-    delete "deactivate_user/:id", to: "registrations#deactivate_user", as: :deactivate_user
   
+  get "/stores/listing", to: "stores#listing"
+  get "/stores/:store_id/products/listing", to: "products#listing_within_token"
 
+  get 'sign_up', to: 'registrations#new', as: :sign_up_registration
+  post 'sign_up' => 'registrations#create'
+  get 'users' => 'registrations#index'
+  resources :registrations, only: [:edit, :update]
+  put 'users/:id/reactivate', to: 'registrations#reactivate', as: 'reactivate_user'
+  delete "deactivate_user/:id", to: "registrations#deactivate_user", as: :deactivate_user
+  
   resources :stores do
     resources :products
     get "orders/new" => "stores#new_order"
@@ -34,9 +33,8 @@ Rails.application.routes.draw do
     end
   end
 
-   resources :credentials, only: [:index, :create, :update] 
-   delete '/credentials/:id', to: 'credentials#destroy', as: 'delete_credential'
-
+  resources :credentials, only: [:index, :create, :update] 
+    delete '/credentials/:id', to: 'credentials#destroy', as: 'delete_credential'
     
   scope :buyers do
     resources :orders, only: [:index, :create, :update, :destroy] do

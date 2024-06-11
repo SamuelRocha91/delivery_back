@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :stores
   has_many :refresh_tokens
   validates :role, presence: true
+  before_discard :anonymize_email
 
   enum :role, [:admin, :seller, :buyer, :developer]
 
@@ -60,4 +61,8 @@ class User < ApplicationRecord
     end
   end
 
+  def anonymize_email
+    domain = email.split('@').last
+    self.email = "anon_#{id}@#{domain}"
+  end
 end
