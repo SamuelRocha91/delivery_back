@@ -60,15 +60,16 @@ class ApplicationController < ActionController::Base
   protected
 
    def verified_request?
-    if request.content_type == 'application/json'
-      true
-    else
-      super
-    end
-  end
+     if request.content_type == 'application/json'
+       true
+     else
+       super
+     end
+   end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:role])
     devise_parameter_sanitizer.permit(:account_update, keys: [:role])
   end
+
 end
