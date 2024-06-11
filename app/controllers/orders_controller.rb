@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
   before_action  :only_buyers!, except: [:show, :accept, :cancel, :start_progress, :ready_for_delivery, :start_delivery, :deliver], if: :json_request?
   rescue_from User::InvalidToken, with: :not_authorized
 
-   def index
+  def index
     if request.format.json?
       page = params.fetch(:page, 1)
       offset = (12 * (page.to_i - 1))
@@ -32,22 +32,18 @@ class OrdersController < ApplicationController
   def stream
     response.headers["Content-Type"] = "text/event-stream"
     sse = SSE.new(response.stream, retry: 300, event: "waiting-orders")
-    last_orders = nil
     begin
       sse.write({ hello: "world!"}, event: "waiting-order")
       EventMachine.run do
         EventMachine::PeriodicTimer.new(3) do
         orders = Order.where(buyer_id: current_user.id)
               .where.not(state: [:canceled, :delivered, :payment_failed])
-         if orders != last_orders 
            if orders.any?
             message = { time: Time.now, orders: orders } 
             sse.write(message, event: "new orders")
            else
             sse.write({ message: "no orders" }, event: "no")
            end
-           last_orders = orders 
-         end
         end
       end
     rescue IOError, ActionController::Live::ClientDisconnected
@@ -57,7 +53,7 @@ class OrdersController < ApplicationController
     end
   end
 
-   def show
+  def show
     @order = Order.includes(order_items: :product).find(params[:id])
     @store = @order.store
     @buyer = @order.buyer
@@ -77,16 +73,6 @@ class OrdersController < ApplicationController
     render json: { message: 'Payment processing started' }, status: :ok
   rescue StandardError => e
     render json: { error: e.message }, status: :internal_server_error
-  end
-
-  def confirm_payment
-    @order.confirm_payment!
-    render json: @order
-  end
-
-  def confirm_payment
-    @order.payment_failed!
-    render json: @order
   end
 
   def accept
@@ -155,7 +141,6 @@ class OrdersController < ApplicationController
       @order.start_delivery!
       redirect_to orders_path(@order), notice: "Pedido está sendo entregue"
     end
-    
   end
 
   def deliver
@@ -185,7 +170,6 @@ class OrdersController < ApplicationController
 
   def order_json(order)
     locale = params[:locale] || I18n.default_locale
-
     I18n.with_locale(locale) do
       {
         id: order.id,
@@ -213,4 +197,5 @@ class OrdersController < ApplicationController
   def json_request?
     request.format.json?
   end
+
 end

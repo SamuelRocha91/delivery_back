@@ -114,7 +114,7 @@ class ProductsController < ApplicationController
   private
 
   def set_store
-      @store = Store.find(params[:store_id])
+    @store = Store.find(params[:store_id])
   end
 
   def product_params
@@ -134,5 +134,5 @@ class ProductsController < ApplicationController
   def not_authorized(e)
     render json: {message: "Nope!"}, status: 401
   end
-end
 
+end
