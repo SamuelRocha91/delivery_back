@@ -1,0 +1,55 @@
+<div class="orders-page">
+  <h1>Detalhes do Pedido</h1>
+
+  <h2>Detalhes da Loja</h2>
+  <p><strong>Nome da Loja:</strong> <%= @store.name %></p>
+
+  <h2>Detalhes do Comprador</h2>
+  <p><strong>Email do Comprador:</strong> <%= @buyer.email %></p>
+
+  <h2>Itens do Pedido</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Produto</th>
+        <th>Quantidade</th>
+        <th>Preço Unitário</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order_items.each do |item| %>
+        <tr>
+          <td><%= item.product.title %></td>
+          <td><%= item.amount %></td>
+          <td><%= number_to_currency(item.price, unit: 'R$') %></td>
+          <td><%= number_to_currency(item.price * item.amount, unit: 'R$') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3"><strong>Total</strong></td>
+        <td><strong><%= number_to_currency(@order.order_items.sum { |item| item.price * item.amount }, unit: 'R$') %></strong></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <% if @order.state == "payment_confirmed" %>
+    <%= button_to "Aceitar Pedido", accept_store_order_path(store_id: @order.store_id, id: @order.id), method: :put %>
+  <% elsif @order.state == "accepted" %>
+    <%= button_to "Iniciar Progresso", start_progress_store_order_path(store_id: @order.store_id, id: @order.id), method: :put %>
+  <% elsif @order.state == "in_progress" %>
+    <%= button_to "Pronto para Entrega", ready_for_delivery_store_order_path(store_id: @order.store_id, id: @order.id), method: :put %>
+  <% elsif @order.state == "ready_for_delivery" %>
+    <%= button_to "Iniciar Entrega", start_delivery_store_order_path(store_id: @order.store_id, id: @order.id), method: :put %>
+  <% elsif @order.state == "in_delivery" %>
+    <%= button_to "Entregar Pedido", deliver_store_order_path(store_id: @order.store_id, id: @order.id), method: :put %>
+  <% end %>
+
+  <% if @order.state != "payment_failed" && @order.state != "canceled" && @order.state != "delivered" %>
+    <%= button_to "Cancelar Pedido", cancel_store_order_path(store_id: @order.store_id, id: @order.id), method: :put %>
+  <% end %>
+
+  <%= link_to "Voltar para página de pedidos", orders_path %>
+</div>

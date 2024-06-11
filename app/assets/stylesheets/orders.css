@@ -1,0 +1,52 @@
+.pagination {
+  display: flex;
+  list-style: none;
+  gap: 4px;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination li {
+  margin: 0 10px; /* Aumenta o espaçamento horizontal entre os itens */
+}
+
+.pagination li a,
+.pagination li span {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.pagination li.active span {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination li.disabled span {
+  color: #ccc;
+  border-color: #ccc;
+}
+
+.orders-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+}
+
+tr th {
+    padding: 8px;
+    gap: 4px;
+    border: 1px solid blue;
+}
+
+td {
+  text-align: left;
+  border: 1px solid #ccc;
+  border-right-color: #007bff;
+}

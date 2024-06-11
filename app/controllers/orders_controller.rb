@@ -3,8 +3,21 @@ class OrdersController < ApplicationController
   skip_forgery_protection
   before_action :authenticate!
   before_action :set_locale!
-  before_action  :only_buyers!, except: [:show, :accept, :cancel, :start_progress, :ready_for_delivery, :start_delivery, :deliver]
+  before_action  :only_buyers!, except: [:show, :accept, :cancel, :start_progress, :ready_for_delivery, :start_delivery, :deliver], if: :json_request?
   rescue_from User::InvalidToken, with: :not_authorized
+
+   def index
+    if request.format.json?
+      page = params.fetch(:page, 1)
+      offset = (12 * (page.to_i - 1))
+      @orders = Order.where(buyer: current_user).where(state: [:canceled, :delivered, :payment_failed])
+      @orders = @orders.page(page).offset(offset)  
+    else
+      @orders = Order.all
+      @orders = @orders.where(state: params[:state]) if params[:state].present?
+      @orders = @orders.page(params[:page]).per(10)
+    end
+  end
 
   def create
     @order = Order.new(order_params)
@@ -46,9 +59,16 @@ class OrdersController < ApplicationController
 
    def show
     @order = Order.includes(order_items: :product).find(params[:id])
-    render json: order_json(@order), status: :ok 
-  rescue ActiveRecord::RecordNotFound
-    render json: { error: "Pedido não encontrado" }, status: :not_found #
+    @store = @order.store
+    @buyer = @order.buyer
+    @order_items = @order.order_items
+    if request.format.json?
+      if @order
+        render json: order_json(@order), status: :ok 
+      else
+        render json: { error: "Pedido não encontrado" }, status: :not_found #
+      end
+    end
   end
 
   def pay
@@ -71,52 +91,82 @@ class OrdersController < ApplicationController
 
   def accept
     order = Order.find(params[:id])
-    if order.confirm!
-      render json: { message: "Pedido aceito com sucesso", order: order }, status: :ok
+    if request.format.json?
+      if order.confirm!
+        render json: { message: "Pedido aceito com sucesso", order: order }, status: :ok
+      else
+        render json: { error: "Não foi possível aceitar o pedido" }, status: :unprocessable_entity
+      end
     else
-      render json: { error: "Não foi possível aceitar o pedido" }, status: :unprocessable_entity
+      order.confirm!
+      flash[:notice] = "Pedido aceito com sucesso"
+      redirect_to orders_path(order)
     end
   end
 
   def cancel
     order = Order.find(params[:id])
-    order.cancel!
-    render json: @order
+    if request.format.json?
+      if order.cancel!
+        render json: { message: "Pedido cancelado", order: order }, status: :ok
+      else
+        render json: { error: "Não foi possível cancelar o pedido" }, status: :unprocessable_entity
+      end
+    else
+      order.cancel!
+      redirect_to orders_path(order), notice: "Pedido cancelado"
+    end
   end
 
   def start_progress
     order = Order.find(params[:id])
-    if order.start_progress!
-      render json: { message: "Pedido está sendo preparado", order: order }, status: :ok
+    if request.format.json?
+      if order.start_progress!
+        render json: { message: "Pedido está sendo preparado", order: order }, status: :ok
+      else
+        render json: { error: "Não foi possível alterar o pedido pro estado de preparo" }, status: :unprocessable_entity
+      end
     else
-      render json: { error: "Não foi possível alterar o pedido pro estado de preparo" }, status: :unprocessable_entity
+      order.start_progress!
+      redirect_to orders_path(order), notice: "Pedido está sendo preparado"
     end
   end
 
   def ready_for_delivery
     order = Order.find(params[:id])
-    if order.ready_for_delivery!
-      render json: { message: "Pedido pronto para entrega", order: order }, status: :ok
+    if request.format.json?
+      if order.ready_for_delivery!
+        render json: { message: "Pedido pronto para entrega", order: order }, status: :ok
+      else
+        render json: { error: "Não foi possível alterar o pedido pro estado de entrega" }, status: :unprocessable_entity
+      end
     else
-      render json: { error: "Não foi possível alterar o pedido pro estado de entrega" }, status: :unprocessable_entity
+      order.ready_for_delivery!
+      redirect_to orders_path(order), notice: "Pedido pronto para entrega"
     end
   end
 
   def start_delivery
-    @order.start_delivery!
-    render json: @order
+    @order = Order.find(params[:id])
+    if request.format.json?
+      @order.start_delivery!
+      render json: @order
+    else
+      @order.start_delivery!
+      redirect_to orders_path(@order), notice: "Pedido está sendo entregue"
+    end
+    
   end
 
   def deliver
-    @order.deliver!
-    render json: @order
-  end
-
-  def index
-    page = params.fetch(:page, 1)
-    offset = (12 * (page.to_i - 1))
-    @orders = Order.where(buyer: current_user).where(state: [:canceled, :delivered, :payment_failed])
-    @orders = @orders.page(page).offset(offset)
+    @order = Order.find(params[:id])
+    if request.format.json?
+      @order.deliver!
+      render json: @order
+    else
+      @order.deliver!
+      redirect_to orders_path(@order), notice: "Pedido entregue"
+    end
   end
 
   private
@@ -158,5 +208,9 @@ class OrdersController < ApplicationController
 
   def calculate_total(order)
     order.order_items.sum { |item| item.price * item.amount }
+  end
+
+  def json_request?
+    request.format.json?
   end
 end
