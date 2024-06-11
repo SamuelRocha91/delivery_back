@@ -9,6 +9,7 @@
  *= require_self
  *= require orders
  *= require credentials
+*= require products
  */
 
 
@@ -128,12 +129,7 @@ label {
   gap: 10px;
 }
 
-.products-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding: 20px;
-}
+
 
 .card {
   border: 1px solid #ddd;
@@ -194,17 +190,6 @@ label {
 
 .card:hover {
   transform: translateY(-5px);
-}
-
-#product-title {
-  text-align: center;
-}
-
-.product-image {
-  width: 200px;
-  height: 150px;
-  border-radius: 15px;
-  margin-bottom: 10px;
 }
 
 .container-links-welcome {
@@ -654,27 +639,6 @@ label {
   .store-details h2 {
     font-size: 2em;
     margin-bottom: 20px;
-  }
-
-  .product-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .product-item {
-    background: #f9f9f9;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    text-align: left;
-  }
-
-  .product-item p {
-    margin: 0;
-    font-size: 1.2em;
   }
 
   .store-actions-three {
