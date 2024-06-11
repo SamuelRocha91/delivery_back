@@ -2,9 +2,9 @@
   <p class="notice"><%= notice %></p>
   <h2>User: <%= @user.email%></h2>
   <p><strong>id:</strong> <%= @user.id%></p>
-  <%= link_to "Edit this user",  edit_registration_path(id: @user.id)%>
     <% if !@user.discarded? %>
-      <%= button_to "Deactivate this user", deactivate_user_path(id: @user.id), method: :delete, form: { data: { turbo_confirm: "Are you sure?" } }, class: "btn btn-new-store" %>
+      <%= link_to "Edit this user",  edit_registration_path(id: @user.id)%>
+      <%= button_to "Deactivate this user", deactivate_user_path(id: @user.id), method: :delete, form: { data: { turbo_confirm: "Tem certeza?" } }, class: "btn btn-new-store" %>
     <% end  %>
   <%= link_to "Go To The users", users_path%>
 </div>
