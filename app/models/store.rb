@@ -1,6 +1,5 @@
 class Store < ApplicationRecord
   include Discard::Model
-
   has_one_attached :avatar
   belongs_to :user
   has_many :products, dependent: :destroy
@@ -24,4 +23,5 @@ class Store < ApplicationRecord
   def undiscard_associated_products
     products.each(&:undiscard)
   end
+
 end
