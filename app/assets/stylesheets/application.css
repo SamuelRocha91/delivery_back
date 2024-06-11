@@ -9,7 +9,8 @@
  *= require_self
  *= require orders
  *= require credentials
-*= require products
+ *= require products
+ *= require stores
  */
 
 
@@ -330,25 +331,6 @@ label {
   color: #333;
 }
 
-/* Contêiner das lojas */
-.stores-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-/* Estilo para cada loja individual */
-.store {
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  width: 300px;
-  text-align: center;
-}
-
-/* Estilo para os links e botões */
 .btn {
   display: inline-block;
   padding: 10px 15px;
@@ -379,7 +361,6 @@ label {
   background-color: #218838;
 }
 
-/* Estilo para a mensagem de erro */
 .error-messages {
   border: 1px solid red;
   padding: 10px;
@@ -388,49 +369,6 @@ label {
   color: red;
 }
 
-/* Estilo para o formulário de criação de loja */
-.create-store-form {
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: center;
-}
-
-/* Estilo para os grupos de formulário */
-.create-store-form .form-group {
-  margin-bottom: 15px;
-}
-
-/* Estilo para os rótulos dos campos do formulário */
-.create-store-form .form-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-/* Estilo para os campos de entrada do formulário */
-.create-store-form .form-input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* Estilo para os campos de seleção do formulário */
-.create-store-form .form-select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* Estilo para as ações do formulário */
-.create-store-form .form-actions {
-  margin-top: 20px;
-}
-
-/* Estilo para o botão de envio */
 .btn-create-store {
   background-color: #007bff;
   color: #fff;
@@ -445,7 +383,6 @@ label {
   background-color: #0056b3;
 }
 
-/* Estilo para o botão de voltar */
 .btn-back-to-stores {
   background-color: #6c757d;
   color: #fff;
@@ -460,17 +397,11 @@ label {
   background-color: #5a6268;
 }
 
-/* Estilo para os links de navegação */
 .navigation-links {
   margin-top: 20px;
 }
 
-.new-store {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .form-group .form-select {
   width: 100%;
@@ -478,68 +409,6 @@ label {
   border: 1px solid green;
 }
 
-/* Estilo para o cartão da loja */
-.store-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #f9f9f9;
-  transition: box-shadow 0.3s;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-}
-
-.store-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Estilo para o avatar da loja */
-.store-avatar {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  max-width: 100px;
-  max-height: 100px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-
-/* Estilo para os rótulos dos campos da loja */
-.store-label {
-  font-weight: bold;
-  margin-right: 5px;
-  color: #333;
-}
-
-/* Estilo para o nome da loja */
-.store-name {
-  font-size: 1.2em;
-  color: #555;
-  margin-right: 20px;
-}
-
-/* Estilo para o endereço da loja */
-.store-address {
-  font-size: 1em;
-  color: #777;
-}
-
-.store-actions {
-  width: 100%;
-  margin-top: 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Estilo para os botões */
 .store-actions .btn {
   display: inline-block;
   padding: 10px 20px;
@@ -550,7 +419,6 @@ label {
   transition: background-color 0.3s;
 }
 
-/* Estilo específico para o botão "Edit this store" */
 .store-actions .btn-edit-store {
   background-color: #ffc107; /* Cor amarela */
 }
@@ -559,7 +427,6 @@ label {
   background-color: #e0a800;
 }
 
-/* Estilo específico para o botão "Back to stores" */
 .store-actions .btn-back-to-stores {
   background-color: #6c757d; /* Cor cinza */
 }
@@ -568,7 +435,6 @@ label {
   background-color: #5a6268;
 }
 
-/* Estilo específico para o botão "Destroy this store" */
 .store-actions .btn-destroy-store {
   background-color: #dc3545; /* Cor vermelha */
 }
@@ -577,7 +443,6 @@ label {
   background-color: #c82333;
 }
 
-/* Hover effect para todos os botões */
 .store-actions .btn:hover {
   background-color: #0056b3;
 }
@@ -608,46 +473,6 @@ label {
   width: 100%;
 }
 
-.store-actions-two {
-  display: flex;
-  align-items: center;
-  align-content: center;
-  width: 50%;
-  justify-content: center;
-}
-
-.store-actions-two .btn-edit-store{ 
-  background-color: rgb(163, 163, 17);
-}
-
-.store-actions-two .btn-show-store{ 
-  background-color: red;
-}
-
-.store-details {
-    text-align: center;
-    margin: 0 auto;
-    padding: 20px;
-    max-width: 800px;
-  }
-
-  .store-details h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-  }
-
-  .store-details h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-  }
-
-  .store-actions-three {
-  display: flex;
-  align-items: center;
-  align-content: center;
-  width: 20%;
-  justify-content: center;
-}
 
 .notice {
   color: green;
@@ -659,13 +484,5 @@ label {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.open-store {
-  color: green;
-}
-
-.closed-store {
-  color: red;
 }
 
