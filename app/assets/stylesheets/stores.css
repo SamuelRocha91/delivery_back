@@ -161,3 +161,8 @@
 .closed-store {
   color: red;
 }
+
+.store-content {
+  display:flex;
+  flex-direction: column; 
+}
