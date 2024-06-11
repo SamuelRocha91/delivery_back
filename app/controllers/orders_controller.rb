@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
   before_action :authenticate!
   before_action :set_locale!
   before_action  :only_buyers!, except: [:show, :accept, :cancel, :start_progress, :ready_for_delivery, :start_delivery, :deliver], if: :json_request?
+  before_action :set_order, only: [:pay, :show, :accept, :cancel, :start_progress, :ready_for_delivery, :start_delivery, :deliver]
   rescue_from User::InvalidToken, with: :not_authorized
 
   def index
@@ -68,72 +69,66 @@ class OrdersController < ApplicationController
   end
 
   def pay
-    order = Order.find(params[:id])
-    PaymentJob.perform_later(order: order, value: payment_params[:value],number: payment_params[:number],valid: payment_params[:valid],cvv: payment_params[:cvv])
+    PaymentJob.perform_later(order: @order, value: payment_params[:value],number: payment_params[:number],valid: payment_params[:valid],cvv: payment_params[:cvv])
     render json: { message: 'Payment processing started' }, status: :ok
   rescue StandardError => e
     render json: { error: e.message }, status: :internal_server_error
   end
 
   def accept
-    order = Order.find(params[:id])
     if request.format.json?
-      if order.confirm!
-        render json: { message: "Pedido aceito com sucesso", order: order }, status: :ok
+      if @order.confirm!
+        render json: { message: "Pedido aceito com sucesso", order: @order }, status: :ok
       else
         render json: { error: "Não foi possível aceitar o pedido" }, status: :unprocessable_entity
       end
     else
-      order.confirm!
+      @order.confirm!
       flash[:notice] = "Pedido aceito com sucesso"
-      redirect_to orders_path(order)
+      redirect_to orders_path(@order)
     end
   end
 
   def cancel
-    order = Order.find(params[:id])
     if request.format.json?
-      if order.cancel!
-        render json: { message: "Pedido cancelado", order: order }, status: :ok
+      if @order.cancel!
+        render json: { message: "Pedido cancelado", order: @order }, status: :ok
       else
         render json: { error: "Não foi possível cancelar o pedido" }, status: :unprocessable_entity
       end
     else
-      order.cancel!
-      redirect_to orders_path(order), notice: "Pedido cancelado"
+      @order.cancel!
+      redirect_to orders_path(@order), notice: "Pedido cancelado"
     end
   end
 
   def start_progress
-    order = Order.find(params[:id])
     if request.format.json?
-      if order.start_progress!
-        render json: { message: "Pedido está sendo preparado", order: order }, status: :ok
+      if @order.start_progress!
+        render json: { message: "Pedido está sendo preparado", order: @order }, status: :ok
       else
         render json: { error: "Não foi possível alterar o pedido pro estado de preparo" }, status: :unprocessable_entity
       end
     else
-      order.start_progress!
-      redirect_to orders_path(order), notice: "Pedido está sendo preparado"
+      @order.start_progress!
+      redirect_to orders_path(@order), notice: "Pedido está sendo preparado"
     end
   end
 
   def ready_for_delivery
-    order = Order.find(params[:id])
     if request.format.json?
-      if order.ready_for_delivery!
-        render json: { message: "Pedido pronto para entrega", order: order }, status: :ok
+      if @order.ready_for_delivery!
+        render json: { message: "Pedido pronto para entrega", order: @order }, status: :ok
       else
         render json: { error: "Não foi possível alterar o pedido pro estado de entrega" }, status: :unprocessable_entity
       end
     else
-      order.ready_for_delivery!
-      redirect_to orders_path(order), notice: "Pedido pronto para entrega"
+      @order.ready_for_delivery!
+      redirect_to orders_path(@order), notice: "Pedido pronto para entrega"
     end
   end
 
   def start_delivery
-    @order = Order.find(params[:id])
     if request.format.json?
       @order.start_delivery!
       render json: @order
@@ -144,7 +139,6 @@ class OrdersController < ApplicationController
   end
 
   def deliver
-    @order = Order.find(params[:id])
     if request.format.json?
       @order.deliver!
       render json: @order
@@ -196,6 +190,10 @@ class OrdersController < ApplicationController
 
   def json_request?
     request.format.json?
+  end
+
+  def set_order
+    @order = Order.find(params[:id])
   end
 
 end
