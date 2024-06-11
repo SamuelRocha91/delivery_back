@@ -1,6 +1,5 @@
 class RefreshToken < ApplicationRecord
   belongs_to :user
-
   before_create :set_token
 
   private
@@ -8,4 +7,5 @@ class RefreshToken < ApplicationRecord
   def set_token
     self.refresh_token = SecureRandom.hex(64)
   end
+
 end
