@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   delete "deactivate_user/:id", to: "registrations#deactivate_user", as: :deactivate_user
   
   resources :stores do
+    get 'products', on: :member
     resources :products
     get "orders/new" => "stores#new_order"
     member do

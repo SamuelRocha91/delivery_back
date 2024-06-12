@@ -1,0 +1,42 @@
+<!-- app/views/orders/_payment.html.erb -->
+<div class="container mt-5 gap-3">
+  <h1 class="text-center">Pagamento</h1>
+  <%= form_with(url: pay_order_path(@order), method: :put, local: true) do |form| %>
+    <div class="mb-4 d-flex justify-content-center align-content-center flex-column mt-5">
+      <h3>Método de pagamento</h3>
+      <div class="form-check">
+        <%= form.radio_button 'payment[payment_method]', 'credit', class: 'form-check-input', id: 'credit' %>
+        <%= form.label 'payment[payment_method]', 'Crédito', class: 'form-check-label', for: 'credit' %>
+      </div>
+      <div class="form-check">
+        <%= form.radio_button 'payment[payment_method]', 'debit', class: 'form-check-input', id: 'debit' %>
+        <%= form.label 'payment[payment_method]', 'Débito', class: 'form-check-label', for: 'debit' %>
+      </div>
+    </div>
+    <div class="mb-4">
+      <h3>Detalhes de pagamento</h3>
+      <div class="form-group">
+        <%= form.label 'payment[number]', 'Número do cartão' %>
+        <%= form.text_field 'payment[number]', placeholder: 'xxxx xxxx xxxx xxxx', class: 'form-control', maxlength: 19 %>
+      </div>
+      <div class="form-group">
+        <%= form.label 'payment[valid]', 'Expiração' %>
+        <%= form.text_field 'payment[valid]', placeholder: '01-07-2050', class: 'form-control', maxlength: 10 %>
+      </div>
+      <div class="form-group">
+        <%= form.label 'payment[cvv]', 'CVV' %>
+        <%= form.text_field 'payment[cvv]', placeholder: '123', class: 'form-control', maxlength: 3 %>
+      </div>
+       <div class="form-group">
+        <%= form.label 'payment[value]', 'Valor Total' %>
+        <% total_value = @order.order_items.sum { |item| item.price * item.amount } %>
+        <%= form.text_field 'payment[value]', value: total_value, class: 'form-control', readonly: true %>
+        <%= form.hidden_field 'payment[value]', value: total_value %>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <%= form.submit 'Pagar', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
+

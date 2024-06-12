@@ -22,18 +22,30 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new
-    @users = User.all
-    @stores = Store.all
-    @products = Product.all
+    @order.order_items.build
+    @users = User.kept.where(role: :buyer)
+    @stores = Store.kept.where(is_open: true)
   end
 
   def create
-    @order = Order.new(order_params)
-    @order.buyer = current_user
-    if @order.save
-      render json: {order: @order}, status: :created
-    else
-      render json: {errors: @order.errors}, status: :unprocessable_entity
+  
+    if json_request?  
+      @order = Order.new(order_params)
+      @order.buyer = current_user
+      if @order.save
+        render json: {order: @order}, status: :created
+      else
+        render json: {errors: @order.errors}, status: :unprocessable_entity
+      end
+    else 
+      @order = Order.new(store_id: order_params[:store_id], buyer_id: order_params[:buyer_id], order_items_attributes: [order_params[:order_items_attributes]])
+      if @order.save
+        flash[:notice] = "Pedido criado com sucesso"
+        redirect_to orders_path
+      else
+        flash[:notice] = "Pedido não foi criado parça"
+        redirect_to orders_path
+      end
     end
   end
 
@@ -77,7 +89,12 @@ class OrdersController < ApplicationController
 
   def pay
     PaymentJob.perform_later(order: @order, value: payment_params[:value],number: payment_params[:number],valid: payment_params[:valid],cvv: payment_params[:cvv])
-    render json: { message: 'Payment processing started' }, status: :ok
+    if json_request?
+      render json: { message: 'Payment processing started' }, status: :ok
+    else
+      flash[:notice] = "Pagamento sendo processado"
+      redirect_to orders_path
+    end
   rescue StandardError => e
     render json: { error: e.message }, status: :internal_server_error
   end
@@ -162,7 +179,7 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:store_id, order_items_attributes: [ :product_id, :amount, :price])
+    params.require(:order).permit(:store_id, :buyer_id, order_items_attributes: [ :product_id, :amount, :price])
   end
 
   def payment_params
