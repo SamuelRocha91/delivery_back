@@ -21,16 +21,20 @@ RSpec.describe User, type: :model do
 
     it "is expected to validate that :role should raise an exception in case of invalid role" do
       expect {
-      User.new(role: 'elefante')
+        User.new(role: 'elefante')
       }.to raise_error(ArgumentError, "'elefante' is not a valid role")
     end
 
-
     it "is expected to validate that :password_confirmation cannot be different of password" do
-      user = User.create(email: "elefante@hotmail.com", password: '123456', password_confirmation: '123457', role: :admin)
+      user = User.create(
+        email: "elefante@hotmail.com",
+        password: '123456',
+        password_confirmation: '123457',
+        role: :admin
+        )
       expect(user).not_to be_valid
       expect(user.errors[:password_confirmation]).to include "doesn't match Password" 
     end
-
   end
+  
 end
