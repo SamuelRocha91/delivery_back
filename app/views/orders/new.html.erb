@@ -19,7 +19,7 @@
       <% end %>
     </div>
   
-    <%= link_to "Adicionar Item", '#', id: "add_order_item" %>
+  <%= link_to "Adicionar Item", "#", id: "add_order_item", data: { nonce: @nonce } %>
   
     <div>
       <%= form.submit "Criar Pedido" %>

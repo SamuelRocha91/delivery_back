@@ -25,6 +25,7 @@ class OrdersController < ApplicationController
     @order.order_items.build
     @users = User.kept.where(role: :buyer)
     @stores = Store.kept.where(is_open: true)
+    @nonce = request.content_security_policy_nonce
   end
 
   def create

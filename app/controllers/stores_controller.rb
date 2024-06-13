@@ -115,9 +115,10 @@ class StoresController < ApplicationController
 
   def products
     @store = Store.find(params[:id])
-    @products = @store.products
+    @product = @store.products
     respond_to do |format|
-      format.json { render json: @products }
+      format.html { render 'products/index' }
+      format.json { render json: @product }
     end
   end
   
