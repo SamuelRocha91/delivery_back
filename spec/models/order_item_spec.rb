@@ -1,14 +1,10 @@
 require 'rails_helper'
 
-require 'rails_helper'
-
 RSpec.describe OrderItem, type: :model do
   describe "attribute presence check" do
-
     it { should have_db_column(:amount).with_options(default: 1) }
     it { should have_db_column(:price).of_type(:decimal) }
   end
-
    
   describe "checking field validations" do
     it "creates a new order_item successfully" do
@@ -32,4 +28,21 @@ RSpec.describe OrderItem, type: :model do
       expect(order_item.errors[:product]).to include( "product should belong to `Store`: #{order.store.name}")
     end
   end
+
+   it "checks the associations" do
+    should belong_to(:order)
+    should belong_to(:product)
+  end
+
+  describe "checking the numericality of the fields" do
+    it { should validate_numericality_of(:amount).is_greater_than(0) }
+    it { should validate_numericality_of(:price).is_greater_than(0) }
+  end
+  
+  describe "checking the presence of the fields" do
+    it { should validate_presence_of(:amount) }
+    it { should validate_presence_of(:price) }
+  end
+
 end
+
