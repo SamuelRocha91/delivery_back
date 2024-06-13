@@ -35,6 +35,13 @@ RSpec.describe User, type: :model do
       expect(user).not_to be_valid
       expect(user.errors[:password_confirmation]).to include "doesn't match Password" 
     end
+
+    it "the discarded_at field is expected to have data and the email is anonymized when user is discarded" do
+      user = create(:user)
+      user.discard!
+      expect(user.discarded?).to be true
+      expect(user.email).to match (/anon/)
+    end
   end
-  
+
 end
