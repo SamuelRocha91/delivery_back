@@ -4,20 +4,20 @@ RSpec.describe "stores/edit", type: :view do
   let(:store) {
     Store.create!(
       name: "MyString",
-      user: create(:user)
+      user: create(:user, :seller)
     )
   }
 
   let(:sellers) do
     [
-      create(:user_two),
-      create(:user_three)
+      create(:user, :seller),
+      create(:user, :seller)
     ]
   end
   before(:each) do
     assign(:store, store)
     assign(:sellers, sellers)
-    allow(view).to receive(:current_user).and_return(create(:user_admin))
+    allow(view).to receive(:current_user).and_return(create(:user, :admin))
   end
 
   it "renders the edit store form" do

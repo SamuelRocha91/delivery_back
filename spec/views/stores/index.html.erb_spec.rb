@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "stores/index", type: :view do
   before(:each) do
     assign(:stores, [
-      Store.create!(name: "Name", user: create(:user)),
-      Store.create!(name: "Name", user: create(:user_two))
+      Store.create!(name: "Name", user: create(:user, :seller)),
+      Store.create!(name: "Name", user: create(:user, :seller))
     ])
   end
 
