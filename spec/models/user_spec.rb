@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
 
   describe "checking field validations" do
     it { should validate_presence_of(:role) }
-    it { should define_enum_for(:role).with_values([:admin, :seller, :buyer]) }
+    it { should define_enum_for(:role).with_values([:admin, :seller, :buyer, :developer]) }
     it { should_not allow_value('sam').for(:email) }
     it { should allow_value('sam@hotmail.com').for(:email) }
 
