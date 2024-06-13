@@ -24,6 +24,8 @@ RSpec.describe Store, type: :model do
 
   describe "checking relationships between tables" do
     it { should belong_to(:user) }
+    it { should have_many(:products).dependent(:destroy) }
+    it { should have_one_attached(:avatar) }
   end
 
   describe "checking field validations" do
