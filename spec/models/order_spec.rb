@@ -28,13 +28,13 @@ RSpec.describe Order, type: :model do
       expect(order.errors[:buyer]).to include("should be a `user.buyer`")
     end
 
-    it "transitions from created to accepted" do
+    it "transitions from created to payment_pending" do
       user_three = create(:user_buyer)
       store_two = create(:store)
       order = Order.create(buyer: user_three, store:  store_two)
       expect(order.state).to eq("created")
-      order.accept!
-      expect(order.state).to eq("accepted")
+      order.pay!
+      expect(order.state).to eq("payment_pending")
     end
   end
 
