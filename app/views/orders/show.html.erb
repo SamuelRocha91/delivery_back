@@ -53,3 +53,7 @@
 
   <%= link_to "Voltar para página de pedidos", orders_path %>
 </div>
+
+  <% if @order.state == 'created' %>
+    <%= render 'payment', order: @order %>
+  <% end %>

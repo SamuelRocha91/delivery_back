@@ -4,9 +4,10 @@ class OrdersController < ApplicationController
   before_action :authenticate!
   before_action :set_locale!
   before_action  :only_buyers!, except: [:show, :accept, :cancel, :start_progress, :ready_for_delivery, :start_delivery, :deliver], if: :json_request?
+  before_action :set_order, only: [:pay, :show, :accept, :cancel, :start_progress, :ready_for_delivery, :start_delivery, :deliver]
   rescue_from User::InvalidToken, with: :not_authorized
 
-   def index
+  def index
     if request.format.json?
       page = params.fetch(:page, 1)
       offset = (12 * (page.to_i - 1))
@@ -19,35 +20,51 @@ class OrdersController < ApplicationController
     end
   end
 
+  def new
+    @order = Order.new
+    @order.order_items.build
+    @users = User.kept.where(role: :buyer)
+    @stores = Store.kept.where(is_open: true)
+    @nonce = request.content_security_policy_nonce
+  end
+
   def create
-    @order = Order.new(order_params)
-    @order.buyer = current_user
-    if @order.save
-      render json: {order: @order}, status: :created
-    else
-      render json: {errors: @order.errors}, status: :unprocessable_entity
+  
+    if json_request?  
+      @order = Order.new(order_params)
+      @order.buyer = current_user
+      if @order.save
+        render json: {order: @order}, status: :created
+      else
+        render json: {errors: @order.errors}, status: :unprocessable_entity
+      end
+    else 
+      @order = Order.new(store_id: order_params[:store_id], buyer_id: order_params[:buyer_id], order_items_attributes: [order_params[:order_items_attributes]])
+      if @order.save
+        flash[:notice] = "Pedido criado com sucesso"
+        redirect_to orders_path
+      else
+        flash[:notice] = "Pedido não foi criado parça"
+        redirect_to orders_path
+      end
     end
   end
 
   def stream
     response.headers["Content-Type"] = "text/event-stream"
     sse = SSE.new(response.stream, retry: 300, event: "waiting-orders")
-    last_orders = nil
     begin
       sse.write({ hello: "world!"}, event: "waiting-order")
       EventMachine.run do
         EventMachine::PeriodicTimer.new(3) do
         orders = Order.where(buyer_id: current_user.id)
               .where.not(state: [:canceled, :delivered, :payment_failed])
-         if orders != last_orders 
            if orders.any?
             message = { time: Time.now, orders: orders } 
             sse.write(message, event: "new orders")
            else
             sse.write({ message: "no orders" }, event: "no")
            end
-           last_orders = orders 
-         end
         end
       end
     rescue IOError, ActionController::Live::ClientDisconnected
@@ -57,7 +74,7 @@ class OrdersController < ApplicationController
     end
   end
 
-   def show
+  def show
     @order = Order.includes(order_items: :product).find(params[:id])
     @store = @order.store
     @buyer = @order.buyer
@@ -72,82 +89,71 @@ class OrdersController < ApplicationController
   end
 
   def pay
-    order = Order.find(params[:id])
-    PaymentJob.perform_later(order: order, value: payment_params[:value],number: payment_params[:number],valid: payment_params[:valid],cvv: payment_params[:cvv])
-    render json: { message: 'Payment processing started' }, status: :ok
+    PaymentJob.perform_later(order: @order, value: payment_params[:value],number: payment_params[:number],valid: payment_params[:valid],cvv: payment_params[:cvv])
+    if json_request?
+      render json: { message: 'Payment processing started' }, status: :ok
+    else
+      flash[:notice] = "Pagamento sendo processado"
+      redirect_to orders_path
+    end
   rescue StandardError => e
     render json: { error: e.message }, status: :internal_server_error
   end
 
-  def confirm_payment
-    @order.confirm_payment!
-    render json: @order
-  end
-
-  def confirm_payment
-    @order.payment_failed!
-    render json: @order
-  end
-
   def accept
-    order = Order.find(params[:id])
     if request.format.json?
-      if order.confirm!
-        render json: { message: "Pedido aceito com sucesso", order: order }, status: :ok
+      if @order.confirm!
+        render json: { message: "Pedido aceito com sucesso", order: @order }, status: :ok
       else
         render json: { error: "Não foi possível aceitar o pedido" }, status: :unprocessable_entity
       end
     else
-      order.confirm!
+      @order.confirm!
       flash[:notice] = "Pedido aceito com sucesso"
-      redirect_to orders_path(order)
+      redirect_to orders_path(@order)
     end
   end
 
   def cancel
-    order = Order.find(params[:id])
     if request.format.json?
-      if order.cancel!
-        render json: { message: "Pedido cancelado", order: order }, status: :ok
+      if @order.cancel!
+        render json: { message: "Pedido cancelado", order: @order }, status: :ok
       else
         render json: { error: "Não foi possível cancelar o pedido" }, status: :unprocessable_entity
       end
     else
-      order.cancel!
-      redirect_to orders_path(order), notice: "Pedido cancelado"
+      @order.cancel!
+      redirect_to orders_path(@order), notice: "Pedido cancelado"
     end
   end
 
   def start_progress
-    order = Order.find(params[:id])
     if request.format.json?
-      if order.start_progress!
-        render json: { message: "Pedido está sendo preparado", order: order }, status: :ok
+      if @order.start_progress!
+        render json: { message: "Pedido está sendo preparado", order: @order }, status: :ok
       else
         render json: { error: "Não foi possível alterar o pedido pro estado de preparo" }, status: :unprocessable_entity
       end
     else
-      order.start_progress!
-      redirect_to orders_path(order), notice: "Pedido está sendo preparado"
+      @order.start_progress!
+      redirect_to orders_path(@order), notice: "Pedido está sendo preparado"
     end
   end
 
   def ready_for_delivery
-    order = Order.find(params[:id])
     if request.format.json?
-      if order.ready_for_delivery!
-        render json: { message: "Pedido pronto para entrega", order: order }, status: :ok
+      if @order.ready_for_delivery!
+        render json: { message: "Pedido pronto para entrega", order: @order }, status: :ok
       else
         render json: { error: "Não foi possível alterar o pedido pro estado de entrega" }, status: :unprocessable_entity
       end
     else
-      order.ready_for_delivery!
-      redirect_to orders_path(order), notice: "Pedido pronto para entrega"
+      @order.ready_for_delivery!
+      redirect_to orders_path(@order), notice: "Pedido pronto para entrega"
     end
   end
 
   def start_delivery
-    @order = Order.find(params[:id])
     if request.format.json?
       @order.start_delivery!
       render json: @order
@@ -155,11 +161,9 @@ class OrdersController < ApplicationController
       @order.start_delivery!
       redirect_to orders_path(@order), notice: "Pedido está sendo entregue"
     end
-    
   end
 
   def deliver
-    @order = Order.find(params[:id])
     if request.format.json?
       @order.deliver!
       render json: @order
@@ -176,7 +180,7 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:store_id, order_items_attributes: [ :product_id, :amount, :price])
+    params.require(:order).permit(:store_id, :buyer_id, order_items_attributes: [ :product_id, :amount, :price])
   end
 
   def payment_params
@@ -185,7 +189,6 @@ class OrdersController < ApplicationController
 
   def order_json(order)
     locale = params[:locale] || I18n.default_locale
-
     I18n.with_locale(locale) do
       {
         id: order.id,
@@ -213,4 +216,9 @@ class OrdersController < ApplicationController
   def json_request?
     request.format.json?
   end
+
+  def set_order
+    @order = Order.find(params[:id])
+  end
+
 end

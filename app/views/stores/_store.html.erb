@@ -4,14 +4,19 @@
       <%= image_tag store.avatar.variant(resize_to_limit: [100, 100]), alt: store.name, class: "store-avatar" %>
     <% end %>
     <div>
-      <strong class="store-label">Name:</strong>
-      <span class="store-name"><%= store.name %></span>
-      <strong class="store-label">Address:</strong>
-      <span class="store-address"><%= store.address || 'not registered' %></span>
+      <div class="store-content">
+        <div>
+          <strong class="store-label">Name:</strong>
+          <span class="store-name"><%= store.name %></span>
+        </div>
+        <div>
+          <strong class="store-label">Address:</strong>
+          <span class="store-address"><%= store.address || 'not registered' %></span>
+        </div>
+      </div>
       <% if store.discarded? %>
-        <h3>Status: inativo</h3>
+        <h3>Cadastro excluído</h3>
       <% else  %>
-        <h3>Status: ativo</h3>
           <% if store.is_open %>
             <h3 class="open-store">Loja aberta</h3>
           <% else  %>
@@ -19,7 +24,9 @@
          <% end  %>
       <% end  %>
         </div>
-        <strong class="store-label">Owner:</strong>
-        <span class="store-name"><%= store.user.email %></span>
+        <div>
+          <strong class="store-label">Proprietário:</strong>
+          <span class="store-name"><%= store.user.email %></span>
+        </div>
     </div>
 </div>

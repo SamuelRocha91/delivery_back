@@ -8,32 +8,29 @@ class CredentialsController < ApplicationController
     @new_credential = Credential.new
   end
 
- def create
-  @credential = Credential.new(credential_params)
-  access = credential_params[:access].to_sym
-
-  if Credential.exists?(access: @credential.access)
-    redirect_to root_path, alert: "#{@credential.access.capitalize} credential already exists."
-  else
-    if @credential = Credential.create_access(access)
-      redirect_to root_path, notice: 'Credential was successfully created.'
+  def create
+    @credential = Credential.new(credential_params)
+    access = credential_params[:access].to_sym
+    if Credential.exists?(access: @credential.access)
+      redirect_to root_path, alert: "#{@credential.access.capitalize} credential already exists."
     else
-      render :new, alert: 'Failed to create credential.'
+      if @credential = Credential.create_access(access)
+        redirect_to root_path, notice: 'Credential was successfully created.'
+      else
+        render :new, alert: 'Failed to create credential.'
+      end
     end
   end
- end
 
-
- def update
-  if @credential.update(key: SecureRandom.base64(20))
-    redirect_to root_path, notice: 'Credential was successfully updated.'
-  else
-    @credentials = Credential.all
-    @new_credential = @credential
-    render :index
+  def update
+    if @credential.update(key: SecureRandom.base64(20))
+      redirect_to root_path, notice: 'Credential was successfully updated.'
+    else
+      @credentials = Credential.all
+      @new_credential = @credential
+      render :index
+    end
   end
-end
-
 
   def destroy
     @credential.destroy
@@ -56,4 +53,5 @@ end
       redirect_to root_path
     end
   end
+
 end

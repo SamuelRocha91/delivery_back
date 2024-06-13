@@ -1,7 +1,6 @@
 class OrderItem < ApplicationRecord
   belongs_to :order
   belongs_to :product
-
   validate :store_product
 
   private
@@ -14,4 +13,5 @@ class OrderItem < ApplicationRecord
       )
     end
   end
+
 end

@@ -1,11 +1,10 @@
 class User < ApplicationRecord
   include Discard::Model
   after_discard :discard_associated_stores
-  after_undiscard :undiscard_associated_stores
   has_many :stores
   has_many :refresh_tokens
-  
   validates :role, presence: true
+  before_discard :anonymize_email
 
   enum :role, [:admin, :seller, :buyer, :developer]
 
@@ -20,18 +19,16 @@ class User < ApplicationRecord
 
   def self.token_for(user)
     jwt_secret_key = Rails.application.credentials.jwt_secret_key
-   
-
     jwt_headers = {exp: 1.hour.from_now.to_i}
     payload = {
-       id: user.id,
-       email: user.email,
-       role: user.role
+      id: user.id,
+      email: user.email,
+      role: user.role
     }
     JWT.encode(
-       payload.merge(jwt_headers),
-       jwt_secret_key,
-       "HS256"
+      payload.merge(jwt_headers),
+      jwt_secret_key,
+      "HS256"
     )
   end
 
@@ -46,19 +43,16 @@ class User < ApplicationRecord
   end
 
   private
-    def discard_associated_stores
-      stores.each do |store|
-        store.discard
-        store.products.each(&:discard)
-      end
-    end
 
-  def undiscard_associated_stores
+  def discard_associated_stores
     stores.each do |store|
-      if store.user&.active?
-        store.undiscard
-        store.products.each(&:undiscard)
-      end
+      store.discard
+      store.products.each(&:discard)
     end
+  end
+
+  def anonymize_email
+    domain = email.split('@').last
+    self.email = "anon_#{id}@#{domain}"
   end
 end

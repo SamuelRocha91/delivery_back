@@ -1,0 +1,168 @@
+.stores-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.store {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  width: 300px;
+  text-align: center;
+}
+
+.create-store-form {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+.create-store-form .form-group {
+  margin-bottom: 15px;
+}
+
+.create-store-form .form-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.create-store-form .form-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.create-store-form .form-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.create-store-form .form-actions {
+  margin-top: 20px;
+}
+
+.new-store {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.store-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  transition: box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.store-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.store-avatar {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.store-label {
+  font-weight: bold;
+  margin-right: 5px;
+  color: #333;
+}
+
+.store-name {
+  font-size: 1.2em;
+  color: #555;
+  margin-right: 20px;
+}
+
+.store-address {
+  font-size: 1em;
+  color: #777;
+}
+
+.store-actions {
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.store-actions-two {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  width: 50%;
+  justify-content: center;
+}
+
+.store-actions-two .btn-edit-store{ 
+  background-color: rgb(163, 163, 17);
+}
+
+.store-actions-two .btn-show-store{ 
+  background-color: red;
+}
+
+.store-details {
+  text-align: center;
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 800px;
+}
+
+.store-details h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.store-details h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.store-actions-three {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  width: 20%;
+  justify-content: center;
+}
+
+.open-store {
+  color: green;
+}
+
+.closed-store {
+  color: red;
+}
+
+.store-content {
+  display:flex;
+  flex-direction: column; 
+}
