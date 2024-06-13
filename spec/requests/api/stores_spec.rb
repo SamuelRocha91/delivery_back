@@ -33,12 +33,12 @@ RSpec.describe "/stores", type: :request do
       expect(response).to have_http_status(:ok)
 
       json_response = JSON.parse(response.body)
+      puts json_response.inspect
+      expect(json_response["result"]["stores"]).to be_an(Array)
+      expect(json_response["result"]["stores"].length).to eq(1)
 
-      expect(json_response).to be_an(Array)
-      expect(json_response.length).to eq(1)
-
-      expect(json_response[0]["id"]).to eq(store.id)
-      expect(json_response[0]["name"]).to eq(store.name)
+      expect(json_response["result"]["stores"][0]["id"]).to eq(store.id)
+      expect(json_response["result"]["stores"][0]["name"]).to eq(store.name)
     end
   end
 

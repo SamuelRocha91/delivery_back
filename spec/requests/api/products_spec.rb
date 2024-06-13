@@ -19,8 +19,7 @@ RSpec.describe "/stores/:store_id/products", type: :request do
         get "/stores/#{store.id}/products",
         headers: {"Accept" => "application/json", "Authorization" => "Bearer #{signed_in["token"]}"}
         json = JSON.parse(response.body)
-        puts json
-        expect(json["data"][0]["title"]).to eq "macarrao"
+        expect(json["data"]["title"].).to eq "macarrao"
         expect(json["data"][0]["price"].to_i).to eq 1
         expect(json["data"][0]["category"]).to eq "massas"
       end
