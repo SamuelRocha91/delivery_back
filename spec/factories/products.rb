@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :product do
     title { Faker::Food.dish }
     price { Faker::Commerce.price(range: 10.0..100.0) }
-    description { Faker::Lorem.sentence(word_count: 10) }
+    description { Faker::Lorem.characters(number: 50)}
     category { Product.categories.keys.sample }
     quantity_in_stock { Faker::Number.within(range: 1..100) }
     product_available { true }

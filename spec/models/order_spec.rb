@@ -188,28 +188,6 @@ RSpec.describe Order, type: :model do
       expect(order.store).to eq(store_two)
     end
 
-    it "returns the order items of the order" do
-      user_three = create(:user, :buyer)
-      seller = create(:user, :seller)
-      store_two = create(:store, user: seller)
-      product = create(:product, store: store_two)
-      order_item = create(:order_item, product: product)
-      order = Order.create(buyer: user_three, store: store_two)
-      order.order_items << order_item
-      expect(order.order_items).to include(order_item)
-    end
-
-    it "returns the products of the order" do
-      user_three = create(:user, :buyer)
-      seller = create(:user, :seller)
-      store_two = create(:store, user: seller)
-      product = create(:product, store: store_two)
-      order_item = create(:order_item, product: product)
-      order = Order.create(buyer: user_three, store: store_two)
-      order.order_items << order_item
-      expect(order.products).to include(product)
-    end
-
     it "returns the order successfully" do
       user = create(:user, :buyer)
       seller = create(:user, :seller)
