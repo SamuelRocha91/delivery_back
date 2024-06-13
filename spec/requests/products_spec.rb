@@ -14,7 +14,7 @@ RSpec.describe "Products", type: :request do
   }
 
   before {
-    Product.create(store: Store.create(name: "Store 3", user: user), title: "japan", price: 9.50, description: "hambuerguer massa que e otimo", category: "Fritas" )
+    Product.create(store: Store.create(name: "Store 3", user: user), title: "japan", price: 9.50, description: "hambuerguer massa que e otimo", category: "massas" )
   }
 
   describe "GET /listing" do

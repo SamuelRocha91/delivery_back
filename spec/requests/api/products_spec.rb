@@ -19,9 +19,9 @@ RSpec.describe "/stores/:store_id/products", type: :request do
         get "/stores/#{store.id}/products",
         headers: {"Accept" => "application/json", "Authorization" => "Bearer #{signed_in["token"]}"}
         json = JSON.parse(response.body)
-        expect(json["data"]["title"].).to eq "macarrao"
-        expect(json["data"][0]["price"].to_i).to eq 1
-        expect(json["data"][0]["category"]).to eq "massas"
+        expect(json[0]["title"]).to eq "macarrao"
+        expect(json[0]["price"].to_f).to eq 1.0
+        expect(json[0]["category"]).to eq "massas"
       end
    end
 
@@ -64,11 +64,11 @@ RSpec.describe "/stores/:store_id/products", type: :request do
         headers: {"Accept" => "application/json", "Authorization" => "Bearer #{signed_in["token"]}"},
         params: {
           product: {
-           price: 2 
+           price: 2.00 
           }
         }
         json = JSON.parse(response.body)
-        expect(json["price"].to_i).to eq 2
+        expect(json["price"]).to eq "$2.00"
         expect(response.status).to eq 200
      end
    end
