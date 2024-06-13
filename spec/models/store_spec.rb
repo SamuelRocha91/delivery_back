@@ -1,15 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe Store, type: :model do
-  let(:admin) {
-    create(:user_admin)
-  }
+  let(:admin) { create(:user, :admin) }
+  let(:seller) { create(:user, :seller) }
 
-  let(:store) { create(:store)}
+  let(:store) { create(:store, user: seller) }
 
   describe "attribute presence check" do
     it { should have_db_column(:name) }
     it { should have_db_column(:user_id) }
+    it { should have_db_column(:cep) }
+    it { should have_db_column(:city) }
+    it { should have_db_column(:state) }
+    it { should have_db_column(:category) }
+    it { should have_db_column(:cnpj) }
+    it { should have_db_column(:address) }
+    it { should have_db_column(:neighborhood) }
+    it { should have_db_column(:number_address) }
+    it { should have_db_column(:description) }
+    it { should have_db_column(:is_open) }
+    it { should have_db_column(:color_theme) }
   end
 
   describe "checking relationships between tables" do
