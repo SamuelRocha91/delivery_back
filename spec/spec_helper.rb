@@ -1,3 +1,7 @@
+require 'simplecov'
+
+SimpleCov.start 'rails' do
+end
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
