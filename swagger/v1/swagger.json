@@ -277,19 +277,37 @@
                         "type": "string",
                         "format": "binary"
                       },
-                      "price_minimum": {
-                        "type": "string"
-                      },
                       "description": {
-                        "type": "string"
-                      },
-                      "phone_number": {
                         "type": "string"
                       },
                       "category": {
                         "type": "string"
                       },
                       "address": {
+                        "type": "string"
+                      },
+                      "cnpj": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "cep": {
+                        "type": "string"
+                      },
+                      "number_address": {
+                        "type": "number"
+                      },
+                      "neighborhood": {
+                        "type": "string"
+                      },
+                      "is_open": {
+                        "type": "boolean"
+                      },
+                      "color_theme": {
                         "type": "string"
                       }
                     }
@@ -301,10 +319,17 @@
                   "id": 1,
                   "name": "Store 1",
                   "address": "Rua da avenida bairro",
-                  "phone_number": "(71) 992594946",
-                  "category": "Bar",
-                  "price_minimum": "R$ 1,00",
-                  "avatar_url": "/delivery/rails/image/file"
+                  "category": "bar",
+                  "avatar_url": "/delivery/rails/image/file",
+                  "decription": "Loja do povo da banda",
+                  "city": "Salvador",
+                  "cep": "40415345",
+                  "number_address": 27,
+                  "is_open": true,
+                  "color_theme": "#435455",
+                  "cnpj": "46.379.400/0001-50",
+                  "neighborhood": "Bonfim",
+                  "state": "Bahia"
                 }
               }
             }
@@ -335,19 +360,37 @@
                     "avatar_url": {
                       "type": "string"
                     },
-                    "price_minimum": {
-                      "type": "string"
-                    },
                     "description": {
-                      "type": "string"
-                    },
-                    "phone_number": {
                       "type": "string"
                     },
                     "category": {
                       "type": "string"
                     },
                     "address": {
+                      "type": "string"
+                    },
+                    "cnpj": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string"
+                    },
+                    "cep": {
+                      "type": "string"
+                    },
+                    "number_address": {
+                      "type": "number"
+                    },
+                    "is_open": {
+                      "type": "boolean"
+                    },
+                    "color_theme": {
+                      "type": "string"
+                    },
+                    "neighborhood": {
                       "type": "string"
                     }
                   }
@@ -358,11 +401,17 @@
                   "created_at": "2024-04-28T12:00:00Z",
                   "updated_at": "2024-04-28T12:00:00Z",
                   "address": "Rua da avenida bairro",
-                  "phone_number": "(71) 992594946",
-                  "category": "Bar",
-                  "price_minimum": "R$ 1,00",
+                  "category": "bar",
                   "avatar_url": "/delivery/rails/image/file",
-                  "description": "Loja de acarajé"
+                  "description": "Loja de acarajé",
+                  "city": "Salvador",
+                  "cep": "40415345",
+                  "number_address": 27,
+                  "is_open": true,
+                  "color_theme": "#435455",
+                  "cnpj": "46.379.400/0001-50",
+                  "neighborhood": "Bonfim",
+                  "state": "Bahia"
                 }
               }
             }
@@ -976,7 +1025,7 @@
           }
         }
       }
-   },
+    },
     "/stores/{id}": {
       "put": {
         "summary": "Store update",
