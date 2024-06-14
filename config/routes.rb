@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    registrations: 'registrations'
+    registrations: 'registrations',
+    passwords: 'passwords'
   }, skip: [:registrations]
   
   get "/stores/listing", to: "stores#listing"
