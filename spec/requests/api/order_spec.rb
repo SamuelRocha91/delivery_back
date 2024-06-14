@@ -175,5 +175,50 @@ RSpec.describe "Orders API", type: :request do
         end
       end
     end
+
+    describe "PUT /stores/:store_id/orders/:id/start_progress" do
+      context "when the record exists" do
+        before { 
+          order.pay!
+          order.reload
+          order.confirm_payment!
+          order.reload
+          order.confirm!
+          order.reload
+        }
+        before { put "/stores/#{store.id}/orders/#{order.id}/start_progress", headers: headers }
+
+        it "returns status code 200" do
+          expect(response).to have_http_status(200)
+        end
+
+        it "returns a success message" do
+          json = JSON.parse(response.body)
+          expect(json['message']).to eq("Pedido está sendo preparado")
+        end
+
+        it "changes the order state to in_progress" do
+          order.reload
+          expect(order.state).to eq('in_progress')
+        end
+
+        it "returns the order" do
+          json = JSON.parse(response.body)
+          expect(json['order']['state']).to eq('in_progress')
+        end
+      end
+
+      context "when the record does not exist" do
+        before { put "/stores/#{store.id}/orders/100/start_progress", headers: headers }
+
+        it "returns status code 404"  do
+          expect(response).to have_http_status(404)
+        end
+
+        it "returns a not found message" do
+          expect(response.body).to match(/Couldn't find Order/)
+        end
+      end
+    end
   end
 end
