@@ -311,5 +311,51 @@ RSpec.describe "Orders API", type: :request do
         end
       end
     end
+
+    describe "PUT /stores/:store_id/orders/:id/deliver" do
+      context "when the record exists" do
+        before { 
+          order.pay!
+          order.reload
+          order.confirm_payment!
+          order.reload
+          order.confirm!
+          order.reload
+          order.start_progress!
+          order.reload
+          order.ready_for_delivery!
+          order.reload
+          order.start_delivery!
+          order.reload
+        }
+        before { put "/stores/#{store.id}/orders/#{order.id}/deliver", headers: headers }
+
+        it "returns status code 200", :slow  do
+          expect(response).to have_http_status(200)
+        end
+
+        it "changes the order state to delivered", :slow  do
+          order.reload
+          expect(order.state).to eq('delivered')
+        end
+
+        it "returns the order", :slow  do
+          json = JSON.parse(response.body)
+          expect(json['order']).to eq('delivered')
+        end
+      end
+
+      context "when the record does not exist", :slow  do
+        before { put "/stores/#{store.id}/orders/100/deliver", headers: headers }
+
+        it "returns status code 404", :slow   do
+          expect(response).to have_http_status(404)
+        end
+
+        it "returns a not found message", :slow  do
+          expect(response.body).to match(/Couldn't find Order/)
+        end
+      end
+    end
   end
 end
