@@ -1,35 +1,26 @@
+# spec/factories/users.rb
 FactoryBot.define do
   factory :user do
-    email { "john@example.com" }
-    password { "kosjksjd123235@" }
-    password_confirmation { "kosjksjd123235@" }
-    role {:seller}
-  end
-  
-  factory :user_two, class: User do
-    email { "johntwo@example.com" }
-    password { "kosjksjd123235@" }
-    password_confirmation { "kosjksjd123235@" }
-    role {:seller}
-  end
+    email { Faker::Internet.email }
+    password { 'password' }
+    password_confirmation { 'password' }
+    role { :buyer } # default role
 
-  factory :user_three, class: User do
-    email { "johnthree@example.com" }
-    password { "kosjksjd123235@" }
-    password_confirmation { "kosjksjd123235@" }
-    role {:seller}
-  end
+    trait :admin do
+      role { :admin }
+    end
 
-  factory :user_buyer, class: User do
-    email { "johnfour@example.com" }
-    password { "kosjksjd123235@" }
-    password_confirmation { "kosjksjd123235@" }
-    role {:buyer}
-  end
-  factory :user_admin, class: User do
-    email { "johnfour@example.com" }
-    password { "kosjksjd123235@" }
-    password_confirmation { "kosjksjd123235@" }
-    role {:admin}
+    trait :seller do
+      role { :seller }
+    end
+
+    trait :developer do
+      role { :developer }
+    end
+
+    after(:build) do |user|
+      user.stores << build(:store, user: user) if user.seller?
+    end
   end
 end
+

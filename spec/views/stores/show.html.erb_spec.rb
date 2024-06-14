@@ -4,7 +4,7 @@ RSpec.describe "stores/show", type: :view do
   before(:each) do
     assign(:store, Store.create!(
       name: "Name",
-      user: create(:user)
+      user: create(:user, :seller)
     ))
   end
 

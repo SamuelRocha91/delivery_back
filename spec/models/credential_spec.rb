@@ -24,6 +24,7 @@ RSpec.describe Credential, type: :model do
     end
 
     it { should allow_value("seller").for(:access) }
+    it { should allow_value("buyer").for(:access) }    
   end
 
 end

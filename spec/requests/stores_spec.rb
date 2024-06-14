@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "/stores", type: :request do
   
   let(:user) {
-    create(:user)
+    create(:user, :seller)
   }
 
   let(:valid_attributes) {
@@ -30,8 +30,8 @@ RSpec.describe "/stores", type: :request do
     }
 
     before {
-      Store.create(name: "Store 1", user: user)
-      Store.create(name: "Store 2", user: user)
+      create(:store, name: "Store 1", user: user)
+      create(:store,name: "Store 2", user: user)
       sign_in(admin)
     }
 

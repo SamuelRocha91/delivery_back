@@ -4,7 +4,7 @@
  <%=  form_with(model: @product, url: store_products_path(store_id: @store.id), method: :post) do |form| %>
   <% if @product.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
 
       <ul>
         <% @product.errors.each do |error| %>

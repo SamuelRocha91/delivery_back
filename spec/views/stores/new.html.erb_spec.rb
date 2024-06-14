@@ -4,8 +4,8 @@ RSpec.describe "stores/new", type: :view do
 
   let(:sellers) do
     [
-      create(:user_two),
-      create(:user_three)
+      create(:user, :seller),
+      create(:user, :seller)
     ]
   end  
   before(:each) do
@@ -13,7 +13,7 @@ RSpec.describe "stores/new", type: :view do
       name: "MyString"
     ))
     assign(:sellers, sellers)
-    allow(view).to receive(:current_user).and_return(create(:user_admin))
+    allow(view).to receive(:current_user).and_return(create(:user, :admin))
   end
 
   it "renders new store form" do

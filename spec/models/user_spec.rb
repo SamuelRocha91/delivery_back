@@ -15,22 +15,40 @@ RSpec.describe User, type: :model do
 
   describe "checking field validations" do
     it { should validate_presence_of(:role) }
-    it { should define_enum_for(:role).with_values([:admin, :seller, :buyer]) }
+    it { should define_enum_for(:role).with_values([:admin, :seller, :buyer, :developer]) }
     it { should_not allow_value('sam').for(:email) }
     it { should allow_value('sam@hotmail.com').for(:email) }
 
     it "is expected to validate that :role should raise an exception in case of invalid role" do
       expect {
-      User.new(role: 'elefante')
+        User.new(role: 'elefante')
       }.to raise_error(ArgumentError, "'elefante' is not a valid role")
     end
 
-
     it "is expected to validate that :password_confirmation cannot be different of password" do
-      user = User.create(email: "elefante@hotmail.com", password: '123456', password_confirmation: '123457', role: :admin)
+      user = User.create(
+        email: "elefante@hotmail.com",
+        password: '123456',
+        password_confirmation: '123457',
+        role: :admin
+        )
       expect(user).not_to be_valid
       expect(user.errors[:password_confirmation]).to include "doesn't match Password" 
     end
 
+    it "the discarded_at field is expected to have data and the email is anonymized when user is discarded" do
+      user = create(:user)
+      user.discard!
+      expect(user.discarded?).to be true
+      expect(user.email).to match (/anon/)
+    end
+
+    it "the discarded_at field is expected to have data and the email is anonymized when user is discarded" do
+      user = create(:user)
+      user.discard!
+      expect(user.discarded?).to be true
+      expect(user.email).to match (/anon/)
+    end
   end
+
 end
