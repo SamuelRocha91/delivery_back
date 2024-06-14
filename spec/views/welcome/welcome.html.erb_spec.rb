@@ -33,7 +33,6 @@ RSpec.describe "welcome/index.html.erb", type: :view do
             expect(rendered).to match(/<a href="\/listing">Produtos<\/a>/)
             expect(rendered).to match(/<a href="\/buyers\/orders">Gerenciar pedidos<\/a>/)
             expect(rendered).to include('<form class="button_to" method="post" action="/users/sign_out"><input type="hidden" name="_method" value="delete" autocomplete="off" /><button type="submit">Sair</button></form>')
-
           end
       end
   end

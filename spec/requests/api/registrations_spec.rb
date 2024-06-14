@@ -104,6 +104,24 @@ RSpec.describe "registrations", type: :request do
     end
   end
 
+  describe "post /refresh", :slow do
+    let(:refresh_token) { create(:refresh_token, user: user) }
+
+    it "refresh token with success" do
+      post(
+        "/refresh",
+        headers: {
+          "Accept" => "application/json",
+          "X-API-KEY" => credential.key
+        },
+        params: {
+          refresh_token: refresh_token.refresh_token
+        }
+      )
+      expect(response).to be_successful
+    end
+  end
+
    describe "Delete /deactivate_user" do
      let(:user) { create(:user, :buyer)}
 
