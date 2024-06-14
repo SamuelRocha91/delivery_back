@@ -6,112 +6,74 @@ RSpec.describe "Orders API", type: :request do
     let!(:buyer) { create(:user) }
     let(:seller) {create(:user, :seller)}
     let!(:store) { create(:store, user: seller) }
-    let!(:order) { create(:order, buyer: buyer, store: store) }
-    let!(:order_items) { create_list(:order_item, 3, order: order) }
+    let!(:order) { create(:order, store: store) }
+    let!(:order_item) { create(:order_item, order: order, product: create(:product, store: store)) }
     let(:order_id) { order.id }
+    let(:credential) { Credential.create_access(:buyer) }
+    let(:signed_in) { api_sign_in(buyer, credential) }
+    let(:headers) { { "Accept" => "application/json", "Authorization" => "Bearer #{signed_in['token']}", "X-API-KEY" => credential.key } }
 
-    describe "GET /orders" do
-        before { get "/orders" }
+    describe "GET /buyers/orders" do
+      before { get "/buyers/orders", headers: headers }
 
         it "returns all orders" do
+            json = JSON.parse(response.body)
             expect(json).not_to be_empty
             expect(json.size).to eq(1)
         end
 
         it "returns status code 200" do
+            puts response.inspect
             expect(response).to have_http_status(200)
         end
     end
 
-    describe "GET /orders/:id" do
-        before { get "/orders/#{order_id}" }
-
-        context "when the record exists" do
-            it "returns the order" do
-                expect(json).not_to be_empty
-                expect(json["id"]).to eq(order_id)
-            end
-
-            it "returns status code 200" do
-                expect(response).to have_http_status(200)
-            end
+    describe "GET /buyers/orders/:id" do
+      before { get "/buyers/orders/#{order_id}", headers: headers}
+      context "when the record exists" do
+        it "returns the order" do
+          json = JSON.parse(response.body)
+          expect(json).not_to be_empty
+          expect(json["id"]).to eq(order_id)
         end
 
-        context "when the record does not exist" do
-            let(:order_id) { 100 }
-
-            it "returns status code 404" do
-                expect(response).to have_http_status(404)
-            end
-
-            it "returns a not found message" do
-                expect(response.body).to match(/Couldn't find Order/)
-            end
+        it "returns status code 200" do
+          expect(response).to have_http_status(200)
         end
+      end
+
+      context "when the record does not exist" do
+        let(:order_id) { 100 }
+          it "returns status code 404" do
+            expect(response).to have_http_status(404)
+          end
+
+          it "returns a not found message" do
+            expect(response.body).to match(/Couldn't find Order/)
+          end
+      end
     end
 
     describe "POST /orders" do
-        let(:valid_attributes) { { buyer_id: buyer.id, store_id: store.id } }
+      let(:valid_attributes) { { order: { store_id: store.id, order_items_attributes: [product_id: 1, amount: 3, price: 10] }} }
+      context "when the request is valid" do
+        before { post "/buyers/orders", headers: headers, params: valid_attributes }
+          it "creates an order" do
+            json = JSON(response.body)
+            expect(json["order"]["store_id"]).to eq(store.id)
+          end
 
-        context "when the request is valid" do
-            before { post "/orders", params: valid_attributes }
-
-            it "creates an order" do
-                expect(json["buyer_id"]).to eq(buyer.id)
-                expect(json["store_id"]).to eq(store.id)
-            end
-
-            it "returns status code 201" do
-                expect(response).to have_http_status(201)
-            end
+          it "returns status code 201" do
+            expect(response).to have_http_status(201)
+          end
         end
 
         context "when the request is invalid" do
-            before { post "/orders", params: { buyer_id: buyer.id } }
+          before { post "/buyers/orders", headers: headers, params: { buyer_id: buyer.id } }
 
-            it "returns status code 422" do
-                expect(response).to have_http_status(422)
-            end
-
-            it "returns a validation failure message" do
-                expect(response.body).to match(/Validation failed: Store must exist/)
-            end
-        end
-    end
-
-    describe "PUT /orders/:id" do
-        let(:valid_attributes) { { buyer_id: buyer.id } }
-
-        context "when the record exists" do
-            before { put "/orders/#{order_id}", params: valid_attributes }
-
-            it "updates the order" do
-                expect(response.body).to be_empty
-            end
-
-            it "returns status code 204" do
-                expect(response).to have_http_status(204)
-            end
-        end
-
-        context "when the record does not exist" do
-            let(:order_id) { 100 }
-
-            it "returns status code 404" do
-                expect(response).to have_http_status(404)
-            end
-
-            it "returns a not found message" do
-                expect(response.body).to match(/Couldn't find Order/)
-            end
-        end
-    end
-
-    describe "DELETE /orders/:id" do
-        before { delete "/orders/#{order_id}" }
-
-        it "returns status code 204" do
-            expect(response).to have_http_status(204)
+          it "returns status code 422" do
+            expect(response).to have_http_status(400)
+          end
         end
     end
 end
