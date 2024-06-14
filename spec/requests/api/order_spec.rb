@@ -11,6 +11,7 @@ RSpec.describe "Orders API", type: :request do
     let(:credential_seller) { Credential.create_access(:seller) }
     let(:signed_in) { api_sign_in(buyer, credential) }
     let(:headers) { { "Accept" => "application/json", "Authorization" => "Bearer #{signed_in['token']}", "X-API-KEY" => credential.key } }
+    let(:valid_order) { { order: { store_id: store.id, buyer_id: buyer.id, order_items_attributes: [ { product_id: order_item.product.id, amount: 1, price: 10.0 } ] } } }
     let(:valid_attributes) { { payment: { value: 30, number: 1234, valid: "12/25", cvv: 123 } } }
     let (:headers_seller) { { "Accept" => "application/json", "Authorization" => "Bearer #{api_sign_in(seller, credential_seller)['token']}", "X-API-KEY" => credential_seller.key } }
 
@@ -18,14 +19,13 @@ RSpec.describe "Orders API", type: :request do
       before { get "/buyers/orders", headers: headers }
 
         it "returns all orders" do
-            json = JSON.parse(response.body)
-            expect(json).not_to be_empty
-            expect(json.size).to eq(1)
+          json = JSON.parse(response.body)
+          expect(json).not_to be_empty
+          expect(json.size).to eq(1)
         end
 
         it "returns status code 200" do
-            puts response.inspect
-            expect(response).to have_http_status(200)
+          expect(response).to have_http_status(200)
         end
     end
 
@@ -55,9 +55,9 @@ RSpec.describe "Orders API", type: :request do
       end
     end
 
-    describe "POST /orders" do
+    describe "POST /orders"  do
       context "when the request is valid" do
-        before { post "/buyers/orders", headers: headers, params: valid_attributes }
+        before { post "/buyers/orders", headers: headers, params: valid_order }
           it "creates an order" do
             json = JSON(response.body)
             expect(json["order"]["store_id"]).to eq(store.id)
@@ -288,12 +288,12 @@ RSpec.describe "Orders API", type: :request do
           expect(response).to have_http_status(200)
         end
 
-        it "changes the order state to in_delivery", :slow  do
+        it "changes the order state to in_delivery"  do
           order.reload
           expect(order.state).to eq('in_delivery')
         end
 
-        it "returns the order", :slow  do
+        it "returns the order"  do
           json = JSON.parse(response.body)
           expect(json['state']).to eq('in_delivery')
         end
@@ -330,29 +330,29 @@ RSpec.describe "Orders API", type: :request do
         }
         before { put "/stores/#{store.id}/orders/#{order.id}/deliver", headers: headers }
 
-        it "returns status code 200", :slow  do
+        it "returns status code 200" do
           expect(response).to have_http_status(200)
         end
 
-        it "changes the order state to delivered", :slow  do
+        it "changes the order state to delivered" do
           order.reload
           expect(order.state).to eq('delivered')
         end
 
-        it "returns the order", :slow  do
+        it "returns the order" do
           json = JSON.parse(response.body)
-          expect(json['order']).to eq('delivered')
+          expect(json['state']).to eq('delivered')
         end
       end
 
-      context "when the record does not exist", :slow  do
+      context "when the record does not exist" do
         before { put "/stores/#{store.id}/orders/100/deliver", headers: headers }
 
-        it "returns status code 404", :slow   do
+        it "returns status code 404" do
           expect(response).to have_http_status(404)
         end
 
-        it "returns a not found message", :slow  do
+        it "returns a not found message" do
           expect(response.body).to match(/Couldn't find Order/)
         end
       end

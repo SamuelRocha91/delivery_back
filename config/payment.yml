@@ -1,4 +1,6 @@
 development:
  host: http://localhost:3200
+test:
+ host: http://localhost:3200
 production:
  host: https://example.com/service/payment
