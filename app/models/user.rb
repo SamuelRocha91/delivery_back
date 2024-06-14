@@ -42,6 +42,10 @@ class User < ApplicationRecord
     raise InvalidToken.new
   end
 
+  def developer?
+    role == 'developer'
+  end
+  
   private
 
   def discard_associated_stores
