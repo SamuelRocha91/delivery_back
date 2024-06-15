@@ -120,4 +120,12 @@ class RegistrationsController < ApplicationController
     render json: {message: "Nope!"}, status: 401
   end
 
+  def distance_between_addresses
+    address1 = Address.find(params[:address1_id])
+    address2 = Address.find(params[:address2_id])
+
+    distance = address1.distance_to(address2)
+
+    render json: { distance: distance }
+  end
 end
