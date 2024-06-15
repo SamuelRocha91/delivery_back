@@ -137,9 +137,9 @@ class StoresController < ApplicationController
   def store_params
     required = params.require(:store)
     if current_user.admin?
-      required.permit(:name, :user_id, :avatar, :description, :category, :address, :state, :city, :cep, :number_address, :neighborhood, :cnpj, :is_open, :color_theme)
+      required.permit(:name, :user_id, :avatar, :description, :category, :cnpj, :is_open, :color_theme)
     else
-      required.permit(:name, :avatar, :description, :category, :address, :state, :city, :cep, :number_address, :neighborhood, :cnpj, :is_open,  :color_theme)
+      required.permit(:name, :avatar, :description, :category, :address, :cnpj, :is_open,  :color_theme)
     end
   end
 
