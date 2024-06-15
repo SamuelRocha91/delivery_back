@@ -11,7 +11,6 @@ RSpec.describe Store, type: :model do
     it { should have_db_column(:user_id) }
     it { should have_db_column(:category) }
     it { should have_db_column(:cnpj) }
-    it { should have_db_column(:number_address) }
     it { should have_db_column(:description) }
     it { should have_db_column(:is_open) }
     it { should have_db_column(:color_theme) }

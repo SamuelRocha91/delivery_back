@@ -136,12 +136,15 @@ class StoresController < ApplicationController
 
   def store_params
     required = params.require(:store)
+    address_attributes = [:street, :number, :neighborhood, :city, :state, :postal_code]
+
     if current_user.admin?
-      required.permit(:name, :user_id, :avatar, :description, :category, :cnpj, :is_open, :color_theme)
+      required.permit(:name, :user_id, :avatar, :description, :category, :cnpj, :is_open, :color_theme, addresses_attributes: address_attributes)
     else
-      required.permit(:name, :avatar, :description, :category, :address, :cnpj, :is_open,  :color_theme)
+      required.permit(:name, :avatar, :description, :category, :cnpj, :is_open, :color_theme, addresses_attributes: address_attributes)
     end
   end
+
 
   def not_authorized(e)
     render json: {message: "Nope!"}, status: 401

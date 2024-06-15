@@ -22,6 +22,38 @@
     </div>
   <% end %>
 
+  <%= f.fields_for :addresses do |address_fields| %>
+    <div class="form-group">
+      <%= address_fields.label :street, 'Rua', class: 'form-label' %>
+      <%= address_fields.text_field :street, class: 'form-input' %>
+    </div>
+
+    <div class="form-group">
+      <%= address_fields.label :number, 'Número', class: 'form-label' %>
+      <%= address_fields.text_field :number, class: 'form-input' %>
+    </div>
+
+    <div class="form-group">
+      <%= address_fields.label :neighborhood, 'Bairro', class: 'form-label' %>
+      <%= address_fields.text_field :neighborhood, class: 'form-input' %>
+    </div>
+
+    <div class="form-group">
+      <%= address_fields.label :city, 'Cidade', class: 'form-label' %>
+      <%= address_fields.text_field :city, class: 'form-input' %>
+    </div>
+
+    <div class="form-group">
+      <%= address_fields.label :state, 'Estado', class: 'form-label' %>
+      <%= address_fields.text_field :state, class: 'form-input' %>
+    </div>
+
+    <div class="form-group">
+      <%= address_fields.label :postal_code, 'CEP', class: 'form-label' %>
+      <%= address_fields.text_field :postal_code, class: 'form-input' %>
+    </div>
+  <% end %>
+
   <div class="form-actions">
     <%= f.submit "Save", class: 'btn btn-create-store' %>
   </div>
