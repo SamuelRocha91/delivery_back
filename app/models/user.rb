@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :refresh_tokens
   validates :role, presence: true
   before_discard :anonymize_email
+  has_many :addresses, as: :addressable, dependent: :destroy
 
   enum :role, [:admin, :seller, :buyer, :developer]
 
