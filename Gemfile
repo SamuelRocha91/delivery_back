@@ -67,3 +67,5 @@ gem 'simplecov', require: false
 gem 'letter_opener'
 
 gem 'geocoder'
+
+gem 'rinruby'
