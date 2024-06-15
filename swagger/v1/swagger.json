@@ -29,6 +29,42 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "User authentication key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Número da página",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "description": "Nome do produto",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "description": "Categoria do produto",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -241,19 +277,37 @@
                         "type": "string",
                         "format": "binary"
                       },
-                      "price_minimum": {
-                        "type": "string"
-                      },
                       "description": {
-                        "type": "string"
-                      },
-                      "phone_number": {
                         "type": "string"
                       },
                       "category": {
                         "type": "string"
                       },
                       "address": {
+                        "type": "string"
+                      },
+                      "cnpj": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "cep": {
+                        "type": "string"
+                      },
+                      "number_address": {
+                        "type": "number"
+                      },
+                      "neighborhood": {
+                        "type": "string"
+                      },
+                      "is_open": {
+                        "type": "boolean"
+                      },
+                      "color_theme": {
                         "type": "string"
                       }
                     }
@@ -262,13 +316,19 @@
               },
               "example": {
                 "store": {
-                  "id": 1,
                   "name": "Store 1",
                   "address": "Rua da avenida bairro",
-                  "phone_number": "(71) 992594946",
-                  "category": "Bar",
-                  "price_minimum": "R$ 1,00",
-                  "avatar_url": "/delivery/rails/image/file"
+                  "category": "bar",
+                  "avatar_url": "/delivery/rails/image/file",
+                  "decription": "Loja do povo da banda",
+                  "city": "Salvador",
+                  "cep": "40415345",
+                  "number_address": 27,
+                  "is_open": true,
+                  "color_theme": "#435455",
+                  "cnpj": "46.379.400/0001-50",
+                  "neighborhood": "Bonfim",
+                  "state": "Bahia"
                 }
               }
             }
@@ -299,19 +359,37 @@
                     "avatar_url": {
                       "type": "string"
                     },
-                    "price_minimum": {
-                      "type": "string"
-                    },
                     "description": {
-                      "type": "string"
-                    },
-                    "phone_number": {
                       "type": "string"
                     },
                     "category": {
                       "type": "string"
                     },
                     "address": {
+                      "type": "string"
+                    },
+                    "cnpj": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string"
+                    },
+                    "cep": {
+                      "type": "string"
+                    },
+                    "number_address": {
+                      "type": "number"
+                    },
+                    "is_open": {
+                      "type": "boolean"
+                    },
+                    "color_theme": {
+                      "type": "string"
+                    },
+                    "neighborhood": {
                       "type": "string"
                     }
                   }
@@ -322,11 +400,17 @@
                   "created_at": "2024-04-28T12:00:00Z",
                   "updated_at": "2024-04-28T12:00:00Z",
                   "address": "Rua da avenida bairro",
-                  "phone_number": "(71) 992594946",
-                  "category": "Bar",
-                  "price_minimum": "R$ 1,00",
+                  "category": "bar",
                   "avatar_url": "/delivery/rails/image/file",
-                  "description": "Loja de acarajé"
+                  "description": "Loja de acarajé",
+                  "city": "Salvador",
+                  "cep": "40415345",
+                  "number_address": 27,
+                  "is_open": true,
+                  "color_theme": "#435455",
+                  "cnpj": "46.379.400/0001-50",
+                  "neighborhood": "Bonfim",
+                  "state": "Bahia"
                 }
               }
             }
@@ -472,6 +556,12 @@
                           },
                           "image_url": {
                             "type": "string"
+                          },
+                          "quantity_in_stock": {
+                            "type": "integer"
+                          },
+                          "product_available": {
+                            "type": "boolean"
                           }
                         }
                       }
@@ -529,6 +619,15 @@
                   },
                   "price": {
                     "type": "string"
+                  },
+                  "image": {
+                    "type": "string"
+                  },
+                  "quantity_in_stock": {
+                    "type": "integer"
+                  },
+                  "product_available": {
+                    "type": "boolean"
                   }
                 },
                 "required": [
@@ -567,6 +666,12 @@
                     },
                     "image_url": {
                       "type": "string"
+                    },
+                    "quantity_in_stock": {
+                      "type": "integer"
+                    },
+                    "product_available": {
+                      "type": "boolean"
                     }
                   }
                 }
@@ -654,6 +759,12 @@
                     },
                     "image_url": {
                       "type": "string"
+                    },
+                    "quantity_in_stock": {
+                      "type": "integer"
+                    },
+                    "product_available": {
+                      "type": "boolean"
                     }
                   }
                 }
@@ -729,6 +840,18 @@
                   },
                   "price": {
                     "type": "string"
+                  },
+                  "image": {
+                    "type": "string"
+                  },
+                  "quantity_in_stock": {
+                    "type": "integer"
+                  },
+                  "product_available": {
+                    "type": "boolean"
+                  },
+                  "store_id": {
+                    "type": "integer"
                   }
                 },
                 "required": [
@@ -767,6 +890,12 @@
                     },
                     "image_url": {
                       "type": "string"
+                    },
+                    "quantity_in_stock": {
+                      "type": "integer"
+                    },
+                    "product_available": {
+                      "type": "boolean"
                     }
                   }
                 }
@@ -917,6 +1046,12 @@
                     },
                     "image_url": {
                       "type": "string"
+                    },
+                    "quantity_in_stock": {
+                      "type": "integer"
+                    },
+                    "product_available": {
+                      "type": "boolean"
                     }
                   }
                 }
@@ -940,7 +1075,7 @@
           }
         }
       }
-   },
+    },
     "/stores/{id}": {
       "put": {
         "summary": "Store update",
@@ -1003,13 +1138,62 @@
                     "properties": {
                       "name": {
                         "type": "string"
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "format": "binary"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "category": {
+                        "type": "string"
+                      },
+                      "address": {
+                        "type": "string"
+                      },
+                      "cnpj": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "cep": {
+                        "type": "string"
+                      },
+                      "number_address": {
+                        "type": "number"
+                      },
+                      "neighborhood": {
+                        "type": "string"
+                      },
+                      "is_open": {
+                        "type": "boolean"
+                      },
+                      "color_theme": {
+                        "type": "string"
                       }
                     },
                     "required": [
                       "name"
                     ],
                     "example": {
-                      "name": "McDonald's"
+                      "name": "McDonald's",
+                      "address": "Rua da avenida bairro",
+                      "category": "bar",
+                      "avatar_url": "/delivery/rails/image/file",
+                      "decription": "Loja do povo da banda",
+                      "city": "Salvador",
+                      "cep": "40415345",
+                      "number_address": 27,
+                      "is_open": true,
+                      "color_theme": "#435455",
+                      "cnpj": "46.379.400/0001-50",
+                      "neighborhood": "Bonfim",
+                      "state": "Bahia"
                     }
                   }
                 ]
@@ -1038,6 +1222,42 @@
                     "updated_at": {
                       "type": "string",
                       "format": "datetime"
+                    },
+                    "avatar_url": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "cnpj": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string"
+                    },
+                    "cep": {
+                      "type": "string"
+                    },
+                    "number_address": {
+                      "type": "number"
+                    },
+                    "is_open": {
+                      "type": "boolean"
+                    },
+                    "color_theme": {
+                      "type": "string"
+                    },
+                    "neighborhood": {
+                      "type": "string"
                     }
                   }
                 },
@@ -1045,7 +1265,19 @@
                   "id": 1,
                   "name": "Store 1",
                   "created_at": "2024-04-28T12:00:00Z",
-                  "updated_at": "2024-04-28T12:00:00Z"
+                  "updated_at": "2024-04-28T12:00:00Z",
+                  "address": "Rua da avenida bairro",
+                  "category": "bar",
+                  "avatar_url": "/delivery/rails/image/file",
+                  "description": "Loja de acarajé",
+                  "city": "Salvador",
+                  "cep": "40415345",
+                  "number_address": 27,
+                  "is_open": true,
+                  "color_theme": "#435455",
+                  "cnpj": "46.379.400/0001-50",
+                  "neighborhood": "Bonfim",
+                  "state": "Bahia"
                 }
               }
             }
@@ -1220,6 +1452,470 @@
         }
       }
     },
+    "/stores/{store_id}/orders/{id}/accept": {
+      "put": {
+        "summary": "Accept Order",
+        "description": "Accept an order",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order accepted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/stores/{store_id}/orders/{id}/start_progress": {
+      "put": {
+        "summary": "Start Order Progress",
+        "description": "Start the progress of an order",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order progress started",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/stores/{store_id}/orders/{id}/ready_for_delivery": {
+      "put": {
+        "summary": "Order Ready for Delivery",
+        "description": "Mark an order as ready for delivery",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order ready for delivery",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/stores/{store_id}/orders/{id}/start_delivery": {
+      "put": {
+        "summary": "Start Order Delivery",
+        "description": "Start the delivery of an order",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order delivery started",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/stores/{store_id}/orders/{id}/deliver": {
+      "put": {
+        "summary": "Deliver Order",
+        "description": "Mark an order as delivered",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order delivered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/stores/{store_id}/orders/{id}/cancel": {
+      "put": {
+        "summary": "Cancel Order",
+        "description": "Cancel an order",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order canceled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/stores/{store_id}/orders": {
+      "get": {
+        "summary": "List Orders",
+        "description": "Retrieve a list of orders for a store",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Filter by order state",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stores/{store_id}/orders/{id}": {
+      "get": {
+        "summary": "Get Order",
+        "description": "Retrieve a specific order by ID",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Order not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/buyers/orders/{id}/pay": {
+      "put": {
+        "summary": "Pay for Order",
+        "description": "Initiate payment for an order",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Payment details",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "number": {
+                    "type": "string"
+                  },
+                  "valid": {
+                    "type": "string"
+                  },
+                  "cvv": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value",
+                  "number",
+                  "valid",
+                  "cvv"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payment processing started",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/buyers/orders/stream": {
+      "get": {
+        "summary": "Stream Orders",
+        "description": "Stream order events",
+        "tags": [
+          "Orders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Order events stream started"
+          }
+        }
+      },
+    "/orders/create": {
+      "get": {
+        "summary": "Create Order Form",
+        "description": "Render a form for creating a new order",
+        "tags": [
+          "Orders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Form rendered successfully"
+          }
+        }
+      }
+    }
+  },
     "/buyers/orders": {
       "get": {
         "summary": "A buyer's order list",
@@ -1613,12 +2309,16 @@
                     },
                     "token": {
                       "type": "string"
+                    },
+                    "refresh_token": {
+                      "type": "string"
                     }
                   }
                 },
                 "example": {
                   "email": "samuel@hotmail.com",
-                  "token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcxMjA2NzM0N30.__xUucFOhfkrnpvxUUYDm_pBRj9m2PFS68YOpPflPIs"
+                  "token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcxMjA2NzM0N30.__xUucFOhfkrnpvxUUYDm_pBRj9m2PFS68YOpPflPIs",
+                  "refresh_token": "eyJsassdcdccdvdv"
                 }
               }
             }
@@ -1643,6 +2343,87 @@
           }
         }
       }
+    },
+      "/refresh": {
+        "post": {
+          "summary": "Refresh JWT Token",
+          "description": "Refreshes the JWT token using a valid refresh token.",
+          "tags": [
+            "Users"
+          ],
+          "parameters": [
+            {
+              "name": "X-API-KEY",
+              "in": "header",
+              "description": "Chave de autenticação da API",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refresh_token": {
+                      "type": "string",
+                      "description": "The refresh token"
+                    }
+                  },
+                  "required": [
+                    "refresh_token"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Token refreshed successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "description": "User's email"
+                      },
+                      "token": {
+                        "type": "string",
+                        "description": "New JWT token"
+                      },
+                      "refresh_token": {
+                        "type": "string",
+                        "description": "New refresh token"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Invalid or expired refresh token",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "description": "Error message"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
     },
     "/me": {
       "get": {
