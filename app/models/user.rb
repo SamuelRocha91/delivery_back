@@ -6,7 +6,9 @@ class User < ApplicationRecord
   validates :role, presence: true
   before_discard :anonymize_email
   has_many :addresses, as: :addressable, dependent: :destroy
-
+  has_one :address, dependent: :destroy 
+  accepts_nested_attributes_for :address
+  
   enum :role, [:admin, :seller, :buyer, :developer]
 
   devise :database_authenticatable, :registerable,
