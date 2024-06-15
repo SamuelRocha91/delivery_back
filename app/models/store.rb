@@ -9,6 +9,7 @@ class Store < ApplicationRecord
   after_undiscard :undiscard_associated_products
   enum :category, [:bar,
   :depósito, :lanchonete, :loja, :mercado, :restaurante]
+  has_many :addresses, as: :addressable, dependent: :destroy
 
   private
 
