@@ -11,21 +11,38 @@ class ProductsController < ApplicationController
       page = params.fetch(:page, 1)
       if buyer?
         offset = (12 * (page.to_i - 1))
-        @products = Product.kept.includes(image_attachment: :blob).where(store_id: params[:store_id]).order(:title)
+        @products = Product.kept.includes(image_attachment: :blob).where(store_id: params[:store_id])
         @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
         @products = @products.where(category: params[:category]) if params[:category].present?
+
+        if params[:order_by] == 'title'
+          @products = @products.order(title: :asc)
+        elsif params[:order_by] == 'price'
+          @products = @products.order(price: :asc)
+        else
+          @products = @products.order(:title)
+        end
+
         @products = @products.page(page).offset(offset)
       else
         offset = (5 * (page.to_i - 1))
         @products = @store.products.kept.includes(image_attachment: :blob)
         @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
         @products = @products.where(category: params[:category]) if params[:category].present?
+        if params[:order_by] == 'title'
+          @products = @products.order(title: :asc)
+        elsif params[:order_by] == 'price'
+          @products = @products.order(price: :asc)
+        else
+          @products = @products.order(:title)
+        end
         @products = @products.page(page).per(5).offset(offset)
-      end      
+        end      
     else
-      @product =  @store.products
+      @products = @store.products.includes(image_attachment: :blob)
     end
   end
+
 
   def new
     @product = @store.products.new

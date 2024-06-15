@@ -65,3 +65,5 @@ gem "eventmachine", "~> 1.2"
 gem 'simplecov', require: false
 
 gem 'letter_opener'
+
+gem 'geocoder'

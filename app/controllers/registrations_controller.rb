@@ -94,16 +94,16 @@ class RegistrationsController < ApplicationController
 
   private
 
-  def user_params
+   def user_params
     params
-      .required(:user)
-      .permit(:email, :password, :password_confirmation)
+      .require(:user)
+      .permit(:email, :password, :password_confirmation, address_attributes: [:street, :number, :neighborhood, :city, :state, :postal_code])
   end
 
   def user_params_update
     params
-      .required(:user)
-      .permit(:email, :role)
+      .require(:user)
+      .permit(:email, :role, address_attributes: [:street, :number, :neighborhood, :city, :state, :postal_code])
   end
 
   def sign_in_params
@@ -113,11 +113,19 @@ class RegistrationsController < ApplicationController
   end
 
   def sign_up_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :role)
+    params.require(:user).permit(:email, :password, :password_confirmation, :role, address_attributes: [:street, :number, :neighborhood, :city, :state, :postal_code])
   end
 
   def not_authorized(e)
     render json: {message: "Nope!"}, status: 401
   end
 
+  def distance_between_addresses
+    address1 = Address.find(params[:address1_id])
+    address2 = Address.find(params[:address2_id])
+
+    distance = address1.distance_to(address2)
+
+    render json: { distance: distance }
+  end
 end

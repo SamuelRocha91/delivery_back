@@ -2,14 +2,7 @@ FactoryBot.define do
   factory :store do
     name { Faker::Company.name }
     user
-    cep { Faker::Address.zip_code }
-    city { Faker::Address.city }
-    state { Faker::Address.state_abbr }
-    category { rand(1..5) } 
     cnpj { Faker::Company.brazilian_company_number }
-    address { Faker::Address.street_address }
-    neighborhood { Faker::Address.community }
-    number_address { Faker::Address.building_number }
     description { Faker::Lorem.paragraph }
     is_open { [true, false].sample } 
     color_theme { Faker::Color.hex_color }
