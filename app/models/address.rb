@@ -1,12 +1,12 @@
 class Address < ApplicationRecord
   belongs_to :addressable, polymorphic: true
 
-  geocoded_by :full_street_address
+  geocoded_by :address
 
   after_validation :geocode
 
-  def full_street_address
-    "#{street}, #{number}, #{city}, #{state}, #{postal_code}"
+  def address
+    [street, city, state, country].compact.join(', ')
   end
 
   def distance_to(other_address)
