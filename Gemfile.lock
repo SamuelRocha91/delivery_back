@@ -91,6 +91,7 @@ GEM
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
     crass (1.0.6)
+    csv (3.3.0)
     date (3.3.4)
     debug (1.9.2)
       irb (~> 1.10)
@@ -120,6 +121,9 @@ GEM
     faraday-net_http (3.1.0)
       net-http
     ffi (1.16.3)
+    geocoder (1.8.3)
+      base64 (>= 0.1.0)
+      csv (>= 3.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.4)
@@ -362,6 +366,7 @@ DEPENDENCIES
   factory_bot_rails (~> 6.0)
   faker
   faraday (~> 2.9)
+  geocoder
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
