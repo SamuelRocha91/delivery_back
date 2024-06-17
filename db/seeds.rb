@@ -4,7 +4,6 @@ def random_date(start_date, end_date)
   Time.at((end_date.to_f - start_date.to_f) * rand + start_date.to_f)
 end
 
-# Criação de usuários
 
 User.find_or_create_by!(email: "admin@example.com") do |user|
   user.password = "123456"
@@ -34,7 +33,6 @@ end
   Store.find_or_create_by!(name: store_name, user: user)
 end
 
-# Criação de produtos
 
 orange_curry_products = [
   "Massaman Curry",

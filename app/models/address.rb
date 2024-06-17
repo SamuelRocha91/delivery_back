@@ -6,6 +6,7 @@ class Address < ApplicationRecord
   after_validation :geocode
 
   def address
+    country = 'Brazil'
     [street, city, state, country].compact.join(', ')
   end
 
