@@ -3,28 +3,8 @@ require 'csv'
 class AnalysisController < ApplicationController
   def anacor
     store_id = params[:store_id]
-    thirty_days_ago = 30.days.ago
 
-    sales_data = ActiveRecord::Base.connection.execute(
-      ActiveRecord::Base.sanitize_sql_array(["
-        SELECT 
-          p.title AS product,
-          strftime('%w', o.created_at) AS day_of_week,
-          COUNT(*) AS sales_count
-        FROM 
-          orders o
-        JOIN 
-          order_items oi ON o.id = oi.order_id
-        JOIN 
-          products p ON oi.product_id = p.id
-        WHERE 
-          o.store_id = ? AND o.created_at >= ?
-        GROUP BY 
-          p.title, day_of_week
-        ORDER BY 
-          p.title, day_of_week;", store_id, thirty_days_ago])
-    )
-
+    sales_data = Analysis.anacor(store_id)
     products = sales_data.map { |row| row['product'] }.uniq
     days_of_week = (0..6).to_a.map { |d| Date::DAYNAMES[d.to_i] }
 
@@ -40,6 +20,27 @@ class AnalysisController < ApplicationController
     R.assign 'days_of_week', days_of_week
     R.assign 'contingency_table', contingency_table.flatten
 
+    graph_process
+
+    coord_df = CSV.read('/tmp/coord_df.csv', headers: true)
+
+    result = coord_df.map { |row| { product: row['Product'], coordinates: { Dim1: row['Dim1'], Dim2: row['Dim2'] } } }
+
+    render json: { result: result, plot_image: '/tmp/anacor_plot.png' }
+  end
+
+
+   def monthly_analysis
+    store_id = params[:store_id]
+
+    sales_data = Analysis.monthly_analysis(store_id)
+    @average_sales_per_day = sales_data.map { |row| [Date::DAYNAMES[row['day_of_week'].to_i], row['average_daily_sales']] }.to_h
+    render json: { result: @average_sales_per_day}
+  end
+
+  private
+
+  def graph_process
     R.eval <<-EOF
       library(FactoMineR)
       library(ggplot2)
@@ -76,12 +77,7 @@ class AnalysisController < ApplicationController
       # Salvando as coordenadas em um arquivo CSV
       write.csv(coord_df, '/tmp/coord_df.csv', row.names = FALSE)
     EOF
-
-    coord_df = CSV.read('/tmp/coord_df.csv', headers: true)
-
-    result = coord_df.map { |row| { product: row['Product'], coordinates: { Dim1: row['Dim1'], Dim2: row['Dim2'] } } }
-
-    render json: { result: result, plot_image: '/tmp/anacor_plot.png' }
   end
+
 end
 
