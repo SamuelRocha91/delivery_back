@@ -41,6 +41,7 @@ end
 group :development do
   gem "web-console"
   gem "bullet"
+  gem 'rinruby', '~> 2.0.3'
 end
 
 
@@ -67,3 +68,5 @@ gem 'simplecov', require: false
 gem 'letter_opener'
 
 gem 'geocoder'
+
+gem 'matrix'

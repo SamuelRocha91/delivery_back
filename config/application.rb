@@ -38,7 +38,6 @@ module DeliveryBack
     config.active_job.queue_adapter = :sidekiq
     config.payment = config_for(:payment)
     config.cache_store = :redis_store, 'redis://localhost:6379/0/cache'
-
     # Don't generate system test files.
     config.generators.system_tests = nil
   end
