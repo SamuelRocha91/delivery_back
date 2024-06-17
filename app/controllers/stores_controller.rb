@@ -139,9 +139,9 @@ class StoresController < ApplicationController
     address_attributes = [:street, :number, :neighborhood, :city, :state, :postal_code]
 
     if current_user.admin?
-      required.permit(:name, :user_id, :avatar, :description, :category, :cnpj, :is_open, :color_theme, addresses_attributes: address_attributes)
+      required.permit(:name, :user_id, :avatar, :description, :category, :cnpj, :is_open, :color_theme, address_attributes: address_attributes)
     else
-      required.permit(:name, :avatar, :description, :category, :cnpj, :is_open, :color_theme, addresses_attributes: address_attributes)
+      required.permit(:name, :avatar, :description, :category, :cnpj, :is_open, :color_theme, address_attributes: address_attributes)
     end
   end
 
