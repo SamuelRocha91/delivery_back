@@ -21,6 +21,8 @@ class Analysis < ApplicationRecord
       p.title, day_of_week;", store_id, thirty_days_ago])
     )
   end
+
+  
   def self.monthly_analysis(store_id)
     one_months_ago = 1.month.ago
     ActiveRecord::Base.connection.execute(

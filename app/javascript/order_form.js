@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const updateProductOptions = () => {
         const storeId = storeSelect.value;
 
-        fetch(`/stores/${storeId}/products.json`)
+        fetch(`/stores/${storeId}/items.json`)
           .then(response => response.json())
           .then(data => {
             const productOptions = data.map(product => `<option value="${product.id}" data-price="${product.price}">${product.title}</option>`).join('');

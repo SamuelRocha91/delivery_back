@@ -1,6 +1,6 @@
 class StoresController < ApplicationController
   include ActionController::Live
-  before_action :authenticate!, except: %i[ listing products ]
+  before_action :authenticate!, except: %i[ listing items ]
   before_action :set_store, only: %i[ show edit update destroy ]
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
@@ -113,7 +113,7 @@ class StoresController < ApplicationController
     end
   end
 
-  def products
+  def items
     @store = Store.find(params[:id])
     @product = @store.products
     respond_to do |format|

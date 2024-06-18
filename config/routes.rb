@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   post 'refresh', to: 'registrations#refresh'
 
   resources :stores do
-    get 'products', on: :member
+    get 'items', on: :member
     resources :products, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
       collection do
         get 'listing', to: "products#listing_within_token"

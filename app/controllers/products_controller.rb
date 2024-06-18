@@ -36,9 +36,12 @@ class ProductsController < ApplicationController
         else
           @products = @products.order(:title)
         end
-        @products = @products.page(page).per(5).offset(offset)
-        end      
+
+        @products = @products.page(page).offset(offset)
+
+      end      
     else
+
       @products = @store.products.includes(image_attachment: :blob)
     end
   end
