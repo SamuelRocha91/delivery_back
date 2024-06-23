@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   skip_forgery_protection
   before_action :authenticate!
   before_action :set_locale!
-  before_action  :only_buyers!, except: [:show, :accept, :cancel, :start_progress, :ready_for_delivery, :start_delivery, :deliver], if: :json_request?
+  before_action  :only_buyers!, except: [:index, :show, :accept, :cancel, :start_progress, :ready_for_delivery, :start_delivery, :deliver], if: :json_request?
   before_action :set_order, only: [:pay, :show, :accept, :cancel, :start_progress, :ready_for_delivery, :start_delivery, :deliver]
   rescue_from User::InvalidToken, with: :not_authorized
 
@@ -16,8 +16,11 @@ class OrdersController < ApplicationController
     elsif request.format.json?
       page = params.fetch(:page, 1)
       offset = (10 * (page.to_i - 1))
-      @orders = Order.where(store_id: params[store_id])
-      @orders = @orders.where(created_at: params[:created_at]) if params[:created_at].present?
+      @orders = Order.where(store_id: params[:store_id]).includes(:order_items)
+      if params[:created_at].present?
+        date = Date.parse(params[:created_at])
+        @orders = @orders.where('created_at >= ?', date)
+      end
       if params[:status].present?
         @orders = @orders.where(state: params[:status])
       else
