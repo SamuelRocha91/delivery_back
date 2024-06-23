@@ -26,12 +26,16 @@ class AnalysisController < ApplicationController
     Rails.logger.info "contingency_table: #{contingency_table}"
 
     graph_process
+    public_path = Rails.root.join('public', 'anacor_plot.png')
+    FileUtils.mv('/tmp/anacor_plot.png', public_path)
 
+    # Lendo os dados de volta do R
+    coord_df = CSV.read('/tmp/coord_df.csv', headers: true)
     coord_df = CSV.read('/tmp/coord_df.csv', headers: true)
 
     result = coord_df.map { |row| { product: row['Product'], coordinates: { Dim1: row['Dim1'], Dim2: row['Dim2'] } } }
 
-    render json: { result: result, plot_image: '/tmp/anacor_plot.png' }
+    render json: { result: result, plot_image: '/anacor_plot.png' }
   end
 
 
@@ -69,7 +73,7 @@ class AnalysisController < ApplicationController
       # Gerando o heatmap
       p <- ggplot(data = melt(table_matrix), aes(x = Var2, y = Var1, fill = value)) +
         geom_tile() +
-        scale_fill_gradient(low = "yellow", high = "red") +
+        scale_fill_gradient(low = "white", high = "blue") +
         labs(title = "Heatmap de Vendas por Produto e Dia da Semana",
              x = "Dia da Semana",
              y = "Produto",

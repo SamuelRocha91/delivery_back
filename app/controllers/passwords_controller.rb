@@ -1,7 +1,6 @@
 class PasswordsController < Devise::PasswordsController
   respond_to :json, :html
 
-  # POST /users/password
   def create
     self.resource = resource_class.find_or_initialize_with_errors(reset_password_keys, resource_params, :not_found)
     if resource.persisted?
@@ -28,6 +27,6 @@ class PasswordsController < Devise::PasswordsController
   end
 
   def reset_password_keys
-    [:email] # Lista dos atributos necessários para resetar a senha
+    [:email]
   end
 end

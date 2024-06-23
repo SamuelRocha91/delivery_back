@@ -8,11 +8,22 @@ class OrdersController < ApplicationController
   rescue_from User::InvalidToken, with: :not_authorized
 
   def index
-    if request.format.json?
+    if request.format.json? && current_user.buyer?
       page = params.fetch(:page, 1)
       offset = (12 * (page.to_i - 1))
       @orders = Order.where(buyer: current_user).where(state: [:canceled, :delivered, :payment_failed])
-      @orders = @orders.page(page).offset(offset)  
+      @orders = @orders.page(page).offset(offset)
+    elsif request.format.json?
+      page = params.fetch(:page, 1)
+      offset = (10 * (page.to_i - 1))
+      @orders = Order.where(store_id: params[store_id])
+      @orders = @orders.where(created_at: params[:created_at]) if params[:created_at].present?
+      if params[:status].present?
+        @orders = @orders.where(state: params[:status])
+      else
+        @orders = @orders.where(state: [:canceled, :in_delivery, :delivered])
+      end
+      @orders = @orders.page(page).offset(offset)
     else
       @orders = Order.all
       @orders = @orders.where(state: params[:state]) if params[:state].present?
@@ -29,7 +40,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-  
+
     if json_request?  
       @order = Order.new(order_params)
       @order.buyer = current_user
