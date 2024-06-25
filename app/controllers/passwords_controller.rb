@@ -10,12 +10,10 @@ class PasswordsController < Devise::PasswordsController
     respond_with(resource, location: after_sending_reset_password_instructions_path_for(resource_name))
   end
 
-  # GET /users/password/new
   def new
     super
   end
 
-  # POST /users/password/reset
   def update
     super
   end
