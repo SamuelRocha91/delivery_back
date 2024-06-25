@@ -9,7 +9,9 @@ class RegistrationsController < ApplicationController
 
   def me
     if request.format == Mime[:json]
-      render json:  {"email": current_user[:email], "id": current_user[:id] }
+      @user = User.find(current_user[:id])
+      @user = @user.as_json(include: :address)
+      render json: @user
     else 
       @user = User.find(params[:id])
     end
@@ -21,11 +23,20 @@ class RegistrationsController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params_update)
-      redirect_to users_path, notice: 'User was successfully updated.'
+    if request.format == Mime[:json]
+      if @user.update(user_params_update)
+        render json: { message: "User successfully updated." }, status: :ok
+      else
+        render json: { message: "User not was successfully updated." }, status: :unprocessable_entity
+      end
     else
-      render edit_registration_path, notice: 'User not was successfully updated.'
+      if @user.update(user_params_update)
+        redirect_to users_path, notice: 'User was successfully updated.'
+      else
+        render edit_registration_path, notice: 'User not was successfully updated.'
+      end
     end
+    
   end
 
   def sign_in
@@ -101,9 +112,7 @@ class RegistrationsController < ApplicationController
   end
 
   def user_params_update
-    params
-      .require(:user)
-      .permit(:email, :role, address_attributes: [:street, :number, :neighborhood, :city, :state, :postal_code])
+      params.require(:user).permit(:email, :role, address_attributes: [:street, :number, :neighborhood, :city, :state, :postal_code])
   end
 
   def sign_in_params

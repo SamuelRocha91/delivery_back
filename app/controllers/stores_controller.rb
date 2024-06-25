@@ -12,6 +12,8 @@ class StoresController < ApplicationController
         @stores = Store.kept.includes(avatar_attachment: :blob).order(:name)
         @stores = @stores.where('LOWER(name) LIKE ?', "%#{params[:name].downcase}%") if params[:name].present?
         @stores = @stores.where(category: params[:category]) if params[:category].present?
+        @current_address = User.find(current_user.id).addresses.first
+        puts @current_address
         @stores = @stores.page(page)
       else
         @stores = Store.kept.where(user: current_user).includes(avatar_attachment: :blob)
