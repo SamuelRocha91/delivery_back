@@ -6,27 +6,36 @@ class AnalysisController < ApplicationController
 
     sales_data = Analysis.anacor(store_id)
     products = sales_data.map { |row| row['product'] }.uniq
+    Rails.logger.info "products: #{products}"
+
     days_of_week = (0..6).to_a.map { |d| Date::DAYNAMES[d.to_i] }
+    Rails.logger.info "days_of_week: #{days_of_week}"
 
     contingency_table = Array.new(products.length) { Array.new(days_of_week.length, 0) }
-
+    Rails.logger.info "contingency_table: #{contingency_table}"
     sales_data.each do |row|
       product_index = products.index(row['product'])
       day_index = row['day_of_week'].to_i
       contingency_table[product_index][day_index] = row['sales_count'].to_i
     end
+    Rails.logger.info "sales_data: #{sales_data}"
 
     R.assign 'products', products
     R.assign 'days_of_week', days_of_week
     R.assign 'contingency_table', contingency_table.flatten
+    Rails.logger.info "contingency_table: #{contingency_table}"
 
     graph_process
+    public_path = Rails.root.join('public', 'anacor_plot.png')
+    FileUtils.mv('/tmp/anacor_plot.png', public_path)
 
+    # Lendo os dados de volta do R
+    coord_df = CSV.read('/tmp/coord_df.csv', headers: true)
     coord_df = CSV.read('/tmp/coord_df.csv', headers: true)
 
     result = coord_df.map { |row| { product: row['Product'], coordinates: { Dim1: row['Dim1'], Dim2: row['Dim2'] } } }
 
-    render json: { result: result, plot_image: '/tmp/anacor_plot.png' }
+    render json: { result: result, plot_image: '/anacor_plot.png' }
   end
 
 
@@ -64,7 +73,7 @@ class AnalysisController < ApplicationController
       # Gerando o heatmap
       p <- ggplot(data = melt(table_matrix), aes(x = Var2, y = Var1, fill = value)) +
         geom_tile() +
-        scale_fill_gradient(low = "yellow", high = "red") +
+        scale_fill_gradient(low = "white", high = "blue") +
         labs(title = "Heatmap de Vendas por Produto e Dia da Semana",
              x = "Dia da Semana",
              y = "Produto",

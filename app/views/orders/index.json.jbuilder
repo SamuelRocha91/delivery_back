@@ -13,6 +13,12 @@ json.result do
      end
     end 
   json.orders do 
-     json.array! @orders, :id, :state, :created_at
+    json.array! @orders do |order|
+      json.id order.id
+      json.state order.state
+      json.created_at order.created_at
+      total_value = order.order_items.sum { |item| item.price * item.amount }
+      json.total_value total_value
+    end
   end
 end

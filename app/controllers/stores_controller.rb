@@ -1,6 +1,6 @@
 class StoresController < ApplicationController
   include ActionController::Live
-  before_action :authenticate!, except: %i[ listing products ]
+  before_action :authenticate!, except: %i[ listing items ]
   before_action :set_store, only: %i[ show edit update destroy ]
   skip_forgery_protection 
   rescue_from User::InvalidToken, with: :not_authorized
@@ -9,9 +9,11 @@ class StoresController < ApplicationController
     if request.format == Mime[:json]
       if current_user.admin? || current_user.buyer?
         page = params.fetch(:page, 1)
-        @stores = Store.kept.includes(avatar_attachment: :blob).order(:name)
+        @stores = Store.kept.includes(:address, avatar_attachment: :blob).order(:name)
         @stores = @stores.where('LOWER(name) LIKE ?', "%#{params[:name].downcase}%") if params[:name].present?
         @stores = @stores.where(category: params[:category]) if params[:category].present?
+        @current_address = User.find(current_user.id).addresses.first
+        puts @current_address
         @stores = @stores.page(page)
       else
         @stores = Store.kept.where(user: current_user).includes(avatar_attachment: :blob)
@@ -113,7 +115,7 @@ class StoresController < ApplicationController
     end
   end
 
-  def products
+  def items
     @store = Store.find(params[:id])
     @product = @store.products
     respond_to do |format|
