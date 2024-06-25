@@ -15,7 +15,7 @@ json.result do
   json.stores do 
     json.array! @stores do |store|
       json.extract! store, :id, :name, :description, :cnpj, :is_open, :category, :color_theme
-      json.distance store.address.distance_to(@current_address) if @current_address
+      json.distance store.address.distance_to(@current_address).round(2) if @current_address
       if store.avatar.attached?
        json.avatar_url rails_blob_url(store.avatar, only_path: true)
       end
