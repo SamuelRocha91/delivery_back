@@ -9,7 +9,7 @@ class StoresController < ApplicationController
     if request.format == Mime[:json]
       if current_user.admin? || current_user.buyer?
         page = params.fetch(:page, 1)
-        @stores = Store.kept.includes(avatar_attachment: :blob).order(:name)
+        @stores = Store.kept.includes(:address, avatar_attachment: :blob).order(:name)
         @stores = @stores.where('LOWER(name) LIKE ?', "%#{params[:name].downcase}%") if params[:name].present?
         @stores = @stores.where(category: params[:category]) if params[:category].present?
         @current_address = User.find(current_user.id).addresses.first
