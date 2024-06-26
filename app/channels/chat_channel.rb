@@ -9,7 +9,7 @@ class ChatChannel < ApplicationCable::Channel
 
   def speak(data)
     message_data = {
-      user: 'desconhecido', 
+      user: data['email'], 
       message: data['message']
     }
      ActionCable.server.broadcast "chat_room#{params[:order_id]}", message_data
