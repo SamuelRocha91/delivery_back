@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
   include GlobalID::Identification
+  has_many :messages, dependent: :destroy
   belongs_to :buyer, class_name: "User"
   belongs_to :store
   has_many :order_items
