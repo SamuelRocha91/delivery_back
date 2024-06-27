@@ -1,6 +1,11 @@
 class ChatChannel < ApplicationCable::Channel
   def subscribed
     stream_from "chat_room#{params[:order_id]}" 
+    message = Message.where(order_id: params[:order_id])
+    puts message.inspect
+    if message
+      ActionCable.server.broadcast "chat_room#{params[:order_id]}", message
+    end
   end
 
   def unsubscribed
