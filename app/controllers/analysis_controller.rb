@@ -43,6 +43,24 @@ class AnalysisController < ApplicationController
     render json: { result: @average_sales_per_day}
   end
 
+  def total_orders
+    store_id = params[:store_id]
+    total_orders = Analysis.order_total(store_id)
+    render json: { result: total_orders }
+  end
+
+  def total_sales
+    store_id = params[:store_id]
+    total_sales = Analysis.total_sales(store_id)
+    render json: { result: total_sales }
+  end
+
+  def pending_orders
+    store_id = params[:store_id]
+    pending_orders = Analysis.pending_orders(store_id)
+    render json: { result: pending_orders }
+  end
+
   private
 
   def graph_process
