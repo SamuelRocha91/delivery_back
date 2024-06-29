@@ -51,4 +51,8 @@ class Analysis < ApplicationRecord
     OrderItem.where(order_id: Order.where(store_id: store_id)).sum('amount * price')
   end
 
+  def self.pending_orders(store_id)
+    Order.where(store_id: store_id).where.not(state: [:canceled, :delivered, :payment_failed, :created, :payment_pending]).count
+  end
+
 end
