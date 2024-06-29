@@ -1,6 +1,8 @@
 require 'csv'
 
 class AnalysisController < ApplicationController
+  before_action :authenticate!
+
   def anacor
     store_id = params[:store_id]
 
@@ -29,7 +31,6 @@ class AnalysisController < ApplicationController
     public_path = Rails.root.join('public', 'anacor_plot.png')
     FileUtils.mv('/tmp/anacor_plot.png', public_path)
 
-    # Lendo os dados de volta do R
     coord_df = CSV.read('/tmp/coord_df.csv', headers: true)
     coord_df = CSV.read('/tmp/coord_df.csv', headers: true)
 
