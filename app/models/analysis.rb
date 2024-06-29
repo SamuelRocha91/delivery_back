@@ -42,4 +42,9 @@ class Analysis < ApplicationRecord
           day_of_week;", store_id, one_months_ago])
     )
   end
+
+  def self.order_total(store_id)
+    Order.where(store_id: store_id).count
+  end
+
 end
