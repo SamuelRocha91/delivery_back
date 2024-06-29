@@ -47,4 +47,8 @@ class Analysis < ApplicationRecord
     Order.where(store_id: store_id).count
   end
 
+  def self.total_sales(store_id)
+    OrderItem.where(order_id: Order.where(store_id: store_id)).sum('amount * price')
+  end
+
 end
