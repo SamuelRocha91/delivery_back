@@ -52,7 +52,7 @@ Rails.application.routes.draw do
     end
     get 'orders/stream', to: 'orders#stream'  
     get 'orders/:id', to: 'orders#show', as: 'buyer_order'
-    get'orders/last-three', to: 'orders#last_three'
+    get 'orders/last-three', to: 'orders#last_three'
   end
 
   get 'orders/create', to: 'orders#new'
