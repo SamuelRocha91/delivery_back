@@ -9,6 +9,239 @@
     "https"
   ],
   "paths": {
+    "/analysis/anacor": {
+      "get": {
+        "summary": "Performs ANACOR analysis",
+        "tags": [
+          "Analysis"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "query",
+            "description": "Store ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ANACOR analysis performed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "product": {
+                            "type": "string"
+                          },
+                          "coordinates": {
+                            "type": "object",
+                            "properties": {
+                              "Dim1": {
+                                "type": "number"
+                              },
+                              "Dim2": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "plot_image": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "result": [
+                    {
+                      "product": "Product 1",
+                      "coordinates": {
+                        "Dim1": 0.1,
+                        "Dim2": 0.2
+                      }
+                    }
+                  ],
+                  "plot_image": "/anacor_plot.png"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analysis/monthly_analysis": {
+      "get": {
+        "summary": "Performs monthly analysis",
+        "tags": [
+          "Analysis"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "query",
+            "description": "Store ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Monthly analysis performed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "result": {
+                    "Sunday": 100,
+                    "Monday": 120,
+                    "Tuesday": 140
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analysis/total_orders": {
+      "get": {
+        "summary": "Gets total orders",
+        "tags": [
+          "Analysis"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "query",
+            "description": "Store ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Total orders retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "example": {
+                  "result": 150
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analysis/total_sales": {
+      "get": {
+        "summary": "Gets total sales",
+        "tags": [
+          "Analysis"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "query",
+            "description": "Store ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Total sales retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "example": {
+                  "result": 5000.75
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analysis/pending_orders": {
+      "get": {
+        "summary": "Gets pending orders",
+        "tags": [
+          "Analysis"
+        ],
+        "parameters": [
+          {
+            "name": "store_id",
+            "in": "query",
+            "description": "Store ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pending orders retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "example": {
+                  "result": 20
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/stores": {
       "get": {
         "summary": "List stores",
