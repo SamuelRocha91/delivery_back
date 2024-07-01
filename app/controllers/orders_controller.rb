@@ -64,6 +64,17 @@ class OrdersController < ApplicationController
     end
   end
 
+  def last_three
+    @orders = Order.joins(:order_items)
+               .where(buyer_id: current_user.id)
+               .where(state: :delivered)
+               .select('orders.*, order_items.product_id')
+               .distinct
+               .order(created_at: :desc)
+               .limit(3)
+    render json: @orders
+  end
+
   def stream
     response.headers["Content-Type"] = "text/event-stream"
     sse = SSE.new(response.stream, retry: 300, event: "waiting-orders")

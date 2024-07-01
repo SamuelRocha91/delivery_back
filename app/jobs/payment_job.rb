@@ -10,6 +10,9 @@ class PaymentJob < ApplicationJob
    else
      order.payment_failed!
    end
+  rescue Faraday::ConnectionFailed => e
+    order.payment_failed!
+    Rails.logger.error("Connection failed: #{e.message}")
  end
 
  private

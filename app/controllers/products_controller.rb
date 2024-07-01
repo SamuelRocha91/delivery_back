@@ -138,7 +138,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:title, :price, :description, :image, :category, :name, :product_available, :quantity_in_stock )
+    params.require(:product).permit(:title, :price, :description, :image, :category, :name, :product_available, :quantity_in_stock, :is_inventory_product )
   end
 
   def set_product

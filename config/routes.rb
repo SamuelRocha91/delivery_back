@@ -52,12 +52,20 @@ Rails.application.routes.draw do
     end
     get 'orders/stream', to: 'orders#stream'  
     get 'orders/:id', to: 'orders#show', as: 'buyer_order'
+    get 'orders/last-three', to: 'orders#last_three'
   end
 
   get 'orders/create', to: 'orders#new'
   get "listing", to: "products#listing"
-  get 'analysis/anacor', to: 'analysis#anacor'
-  get '/analysis/monthly_analysis', to: 'analysis#monthly_analysis'
+
+  scope :analysis do
+    get 'anacor', to: 'analysis#anacor'
+    get 'monthly_analysis', to: 'analysis#monthly_analysis'
+    get 'total_orders', to: 'analysis#total_orders'
+    get 'pending_orders', to: 'analysis#pending_orders'
+    get 'total_sales', to: 'analysis#total_sales'
+  end
+
 
   root to: "welcome#index"
   get "up", to: "rails/health#show", as: :rails_health_check

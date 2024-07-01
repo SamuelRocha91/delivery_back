@@ -1,35 +1,31 @@
 require 'csv'
 
 class AnalysisController < ApplicationController
+  before_action :authenticate!
+
   def anacor
     store_id = params[:store_id]
 
     sales_data = Analysis.anacor(store_id)
     products = sales_data.map { |row| row['product'] }.uniq
-    Rails.logger.info "products: #{products}"
 
     days_of_week = (0..6).to_a.map { |d| Date::DAYNAMES[d.to_i] }
-    Rails.logger.info "days_of_week: #{days_of_week}"
 
     contingency_table = Array.new(products.length) { Array.new(days_of_week.length, 0) }
-    Rails.logger.info "contingency_table: #{contingency_table}"
     sales_data.each do |row|
       product_index = products.index(row['product'])
       day_index = row['day_of_week'].to_i
       contingency_table[product_index][day_index] = row['sales_count'].to_i
     end
-    Rails.logger.info "sales_data: #{sales_data}"
 
     R.assign 'products', products
     R.assign 'days_of_week', days_of_week
     R.assign 'contingency_table', contingency_table.flatten
-    Rails.logger.info "contingency_table: #{contingency_table}"
 
     graph_process
     public_path = Rails.root.join('public', 'anacor_plot.png')
     FileUtils.mv('/tmp/anacor_plot.png', public_path)
 
-    # Lendo os dados de volta do R
     coord_df = CSV.read('/tmp/coord_df.csv', headers: true)
     coord_df = CSV.read('/tmp/coord_df.csv', headers: true)
 
@@ -45,6 +41,24 @@ class AnalysisController < ApplicationController
     sales_data = Analysis.monthly_analysis(store_id)
     @average_sales_per_day = sales_data.map { |row| [Date::DAYNAMES[row['day_of_week'].to_i], row['average_daily_sales']] }.to_h
     render json: { result: @average_sales_per_day}
+  end
+
+  def total_orders
+    store_id = params[:store_id]
+    total_orders = Analysis.order_total(store_id)
+    render json: { result: total_orders }
+  end
+
+  def total_sales
+    store_id = params[:store_id]
+    total_sales = Analysis.total_sales(store_id)
+    render json: { result: total_sales }
+  end
+
+  def pending_orders
+    store_id = params[:store_id]
+    pending_orders = Analysis.pending_orders(store_id)
+    render json: { result: pending_orders }
   end
 
   private
