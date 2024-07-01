@@ -108,11 +108,13 @@ class RegistrationsController < ApplicationController
    def user_params
     params
       .require(:user)
-      .permit(:email, :password, :password_confirmation, address_attributes: [:street, :number, :neighborhood, :city, :state, :postal_code])
+      .permit(:email, :password, :password_confirmation, 
+      address_attributes: [:street, :number, :neighborhood, :city, :state, :postal_code])
   end
 
   def user_params_update
-      params.require(:user).permit(:email, :role, address_attributes: [:street, :number, :neighborhood, :city, :state, :postal_code])
+      params.require(:user).permit(:email, :role, 
+      address_attributes: [:street, :number, :neighborhood, :city, :state, :postal_code])
   end
 
   def sign_in_params
@@ -122,7 +124,8 @@ class RegistrationsController < ApplicationController
   end
 
   def sign_up_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :role, address_attributes: [:street, :number, :neighborhood, :city, :state, :postal_code])
+    params.require(:user).permit(:email, :password, :password_confirmation, :role, 
+    address_attributes: [:street, :number, :neighborhood, :city, :state, :postal_code])
   end
 
   def not_authorized(e)

@@ -8,29 +8,17 @@ class OrdersController < ApplicationController
   rescue_from User::InvalidToken, with: :not_authorized
 
   def index
-    if request.format.json? && current_user.buyer?
-      page = params.fetch(:page, 1)
-      offset = (12 * (page.to_i - 1))
-      @orders = Order.where(buyer: current_user).where(state: [:canceled, :delivered, :payment_failed])
-      @orders = @orders.page(page).offset(offset)
-    elsif request.format.json?
-      page = params.fetch(:page, 1)
-      offset = (10 * (page.to_i - 1))
-      @orders = Order.where(store_id: params[:store_id]).includes(:order_items)
-      if params[:created_at].present?
-        date = Date.parse(params[:created_at])
-        @orders = @orders.where('created_at >= ?', date)
-      end
-      if params[:status].present?
-        @orders = @orders.where(state: params[:status])
+    page = params.fetch(:page, 1).to_i
+    if request.format.json?
+      if current_user.buyer?
+        offset = 12 * (page - 1)
+        @orders = fetch_buyer_orders(current_user, page, offset)
       else
-        @orders = @orders.where(state: [:canceled, :in_delivery, :delivered])
+        offset = 10 * (page - 1)
+        @orders = fetch_json_not_buyer(params[:store_id], params[:created_at], params[:status], page, offset)
       end
-      @orders = @orders.page(page).offset(offset)
     else
-      @orders = Order.all
-      @orders = @orders.where(state: params[:state]) if params[:state].present?
-      @orders = @orders.page(params[:page]).per(10)
+      @orders = fetch_all_orders(params[:state], params[:page])
     end
   end
 
@@ -43,7 +31,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-
     if json_request?  
       @order = Order.new(order_params)
       @order.buyer = current_user
@@ -53,7 +40,8 @@ class OrdersController < ApplicationController
         render json: {errors: @order.errors}, status: :unprocessable_entity
       end
     else 
-      @order = Order.new(store_id: order_params[:store_id], buyer_id: order_params[:buyer_id], order_items_attributes: [order_params[:order_items_attributes]])
+      @order = Order.new(store_id: order_params[:store_id], 
+        buyer_id: order_params[:buyer_id], order_items_attributes: [order_params[:order_items_attributes]])
       if @order.save
         flash[:notice] = "Pedido criado com sucesso"
         redirect_to orders_path
@@ -119,7 +107,8 @@ class OrdersController < ApplicationController
   end
 
   def pay
-    PaymentJob.perform_later(order: @order, value: payment_params[:value],number: payment_params[:number],valid: payment_params[:valid],cvv: payment_params[:cvv])
+    PaymentJob.perform_later(order: @order, value: payment_params[:value],
+      number: payment_params[:number],valid: payment_params[:valid],cvv: payment_params[:cvv])
     if json_request?
       render json: { message: 'Payment processing started' }, status: :ok
     else
@@ -249,6 +238,37 @@ class OrdersController < ApplicationController
 
   def set_order
     @order = Order.find(params[:id])
+  end
+
+  def fetch_buyer_orders(current_user, page, offset)
+    Order.where(buyer: current_user)
+                  .where(state: [:canceled, :delivered, :payment_failed])
+                  .page(page)
+                  .offset(offset)
+  end
+
+  def fetch_json_not_buyer(store_id, created_at, status, page, offset)
+    orders = Order.where(store_id: store_id)
+                  .includes(:order_items)
+
+    if created_at.present?
+      date = Date.parse(created_at)
+      orders = orders.where('created_at >= ?', date)
+    end
+
+    if status.present?
+      orders = orders.where(state: status)
+    else
+      orders = orders.where(state: [:canceled, :in_delivery, :delivered])
+    end
+
+    orders.page(page).offset(offset)
+  end
+
+  def fetch_all_orders(state, page)
+    orders = Order.all
+    orders = orders.where(state: state) if state.present?
+    orders.page(page).per(10)
   end
 
 end
