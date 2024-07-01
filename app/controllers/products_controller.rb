@@ -11,7 +11,9 @@ class ProductsController < ApplicationController
       page = params.fetch(:page, 1)
       if buyer?
         offset = (12 * (page.to_i - 1))
-        @products = Product.kept.includes(image_attachment: :blob).where(store_id: params[:store_id]).where('product_available = ? OR quantity_in_stock > ?', true, 0)
+        @products = Product.kept.includes(image_attachment: :blob)
+          .where(store_id: params[:store_id])
+          .where('product_available = ? OR quantity_in_stock > ?', true, 0)
         @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
         @products = @products.where(category: params[:category]) if params[:category].present?
 
@@ -71,7 +73,8 @@ class ProductsController < ApplicationController
   def listing_within_token
     page = params.fetch(:page, 1)
     offset = (12 * (page.to_i - 1))
-    @products = Product.kept.includes(image_attachment: :blob).where(store_id: params[:store_id]).order(:title)
+    @products = Product.kept.includes(image_attachment: :blob)
+      .where(store_id: params[:store_id]).order(:title)
     @products = @products.where('LOWER(title) LIKE ?', "%#{params[:name]}%") if params[:name].present?
     @products = @products.where(category: params[:category]) if params[:category].present?
     @products = @products.page(page).offset(offset)
@@ -138,15 +141,23 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:title, :price, :description, :image, :category, :name, :product_available, :quantity_in_stock, :is_inventory_product )
+    params.require(:product)
+      .permit(:title, :price, :description, :image, :category, 
+      :name, :product_available, :quantity_in_stock, :is_inventory_product )
   end
 
   def set_product
     @product =  @store.products.find_by(id: params[:id])
     if @product.nil?
       respond_to do |format|
-        format.html { redirect_to store_url(@store), alert: "Product not found or has been discarded." }
-        format.json { render json: { error: "Product not found or has been discarded" }, status: :not_found }
+        format.html { 
+          redirect_to store_url(@store), 
+          alert: "Product not found or has been discarded." 
+        }
+        format.json { 
+          render json: { error: "Product not found or has been discarded" },
+          status: :not_found 
+        }
       end
     end
   end
