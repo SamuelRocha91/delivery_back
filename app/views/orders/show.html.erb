@@ -37,6 +37,8 @@
 
   <% if @order.state == "payment_confirmed" %>
     <%= button_to "Aceitar Pedido", accept_store_order_path(store_id: @order.store_id, id: @order.id), method: :put %>
+  <% elsif @order.state == "created"%>
+    <%= link_to "Confirmar Pagamento", buyer_order_pay_path(id: @order.id), method: :get %>
   <% elsif @order.state == "accepted" %>
     <%= button_to "Iniciar Progresso", start_progress_store_order_path(store_id: @order.store_id, id: @order.id), method: :put %>
   <% elsif @order.state == "in_progress" %>
@@ -54,6 +56,4 @@
   <%= link_to "Voltar para página de pedidos", orders_path %>
 </div>
 
-  <% if @order.state == 'created' %>
-    <%= render 'payment', order: @order %>
-  <% end %>
+

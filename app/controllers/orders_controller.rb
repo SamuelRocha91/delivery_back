@@ -113,6 +113,11 @@ class OrdersController < ApplicationController
     end
   end
 
+  def show_pay
+    @order = Order.find(params[:id])
+    @nonce = request.content_security_policy_nonce
+  end
+
   def pay
     PaymentJob.perform_later(order: @order, value: payment_params[:value],number: payment_params[:number],valid: payment_params[:valid],cvv: payment_params[:cvv])
     if json_request?
