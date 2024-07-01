@@ -15,6 +15,7 @@
     <p class="user-info">Logado(a) como <strong><%= current_user.email %></strong></p>
     <% if current_user.developer? %>
       <%= link_to "Gerenciar Api-keys", credentials_path, class: "btn btn-primary" %>
+      <%= button_to "Sair", destroy_user_session_path, method: :delete %>
     <% end %> 
   <% else %>
     <h1>Bem vindo ao Delivery!</h1>

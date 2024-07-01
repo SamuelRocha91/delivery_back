@@ -66,12 +66,12 @@ class OrdersController < ApplicationController
 
   def last_three
     @orders = Order.joins(:order_items)
-               .where(buyer_id: current_user.id)
-               .where(state: :delivered)
-               .select('orders.*, order_items.product_id')
-               .distinct
-               .order(created_at: :desc)
-               .limit(3)
+      .where(buyer_id: current_user.id)
+      .where(state: :delivered)
+      .select('orders.*, order_items.product_id')
+      .distinct
+      .order(created_at: :desc)
+      .limit(3)
     render json: @orders
   end
 
