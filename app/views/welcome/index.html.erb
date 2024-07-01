@@ -2,17 +2,20 @@
   <p class="notice"><%= notice %></p>
  
   <% if current_user %>
-    
-    <div class="container-links-welcome">
-      <%= link_to "Usuários", users_path %>
-      <%= link_to "Lojas", stores_path %>
-      <%= link_to "Produtos", listing_path %>
-      <%= link_to "Gerenciar pedidos", orders_path %>
-      <%= button_to "Sair", destroy_user_session_path, method: :delete %>
-    </div>
-    
+    <% if current_user.admin? %>
+      <div class="container-links-welcome">
+        <%= link_to "Usuários", users_path %>
+        <%= link_to "Lojas", stores_path %>
+        <%= link_to "Produtos", listing_path %>
+        <%= link_to "Gerenciar pedidos", orders_path %>
+        <%= button_to "Sair", destroy_user_session_path, method: :delete %>
+      </div>
+    <%end%>
     <h1>Bem vindo ao Delivery!</h1>
     <p class="user-info">Logado(a) como <strong><%= current_user.email %></strong></p>
+    <% if current_user.developer? %>
+      <%= link_to "Gerenciar Api-keys", credentials_path, class: "btn btn-primary" %>
+    <% end %> 
   <% else %>
     <h1>Bem vindo ao Delivery!</h1>
     <div class="auth-links">
