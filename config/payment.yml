@@ -1,6 +1,6 @@
 development:
- host: http://localhost:3200
+  host: http://codesaga-paymenty-1:3000
 test:
- host: http://localhost:3200
+  host: http://paymenty:3200
 production:
  host: https://example.com/service/payment
