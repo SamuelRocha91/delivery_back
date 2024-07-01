@@ -49,7 +49,7 @@ Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
    git clone https://github.com/SamuelRocha91/consumy.git
    git clone https://github.com/SamuelRocha91/seller_application.git
    git clone https://github.com/SamuelRocha91/paymenty.git
-   git clone https://github.com/SamuelRocha91/delivery_app.git
+   git clone https://github.com/SamuelRocha91/delivery_back.git
    ```
 
 2. Baixe o arquivo `docker-compose.yml` para configurar os serviços Docker necessários e insira-o na pasta raiz onde os repositórios foram clonados:
