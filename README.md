@@ -1,7 +1,6 @@
-
 # Aplicação de Delivery
 
-Este repositório representa o backend em Rails para uma aplicação de delivery, além de uma interface de gerenciamento de dados dos usuários para users com as roles admin e developer.
+Este repositório representa o backend em Rails para uma aplicação de delivery, incluindo uma interface de gerenciamento de dados para usuários com as roles admin e developer.
 
 [![Em desenvolvimento](https://img.shields.io/badge/Status-Em%20desenvolvimento-yellow)](https://github.com/SamuelRocha91/delivery_app)
 
@@ -27,35 +26,63 @@ Este projeto aborda e utiliza os seguintes conceitos e gems:
 - **Manipulação de Imagens:** Manipulação de imagens com ferramentas específicas para processamento de mídias.
 - **WebSockets e SSE:** Implementação de comunicação em tempo real utilizando WebSockets e Server-Sent Events (SSE) para funcionalidades como chat ou atualizações em tempo real.
 - **Cálculo de distância:** Uso da gem geocoder para implementar o cálculo de distância em km do estabelecimento comercial para a residência do cliente.
+- **Threads:** Utilização de threads para melhorar a concorrência e o desempenho em operações paralelas.
 
 ## Setup do Projeto
 
-Para configurar e executar o projeto localmente, siga os passos abaixo:
+### Com Docker
 
-### Pré-requisitos
+Para executar este projeto utilizando Docker, siga os passos abaixo:
 
-Certifique-se de ter o Redis e o Sidekiq configurados e executando localmente para o correto funcionamento da aplicação.
-É necessário também ter o R instalado com os seguintes pacotes:
+#### Pré-requisitos
 
-- FactoMineR
-- ggplot2
-- reshape2
+Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
 
-Você pode instalar esses pacotes no R com os seguintes comandos:
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-```R
+#### Configuração
+
+1. Clone os repositórios relacionados:
+
+   ```
+   git clone https://github.com/SamuelRocha91/consumy.git
+   git clone https://github.com/SamuelRocha91/seller_application.git
+   git clone https://github.com/SamuelRocha91/paymenty.git
+   git clone https://github.com/SamuelRocha91/delivery_app.git
+   ```
+
+2. Baixe o arquivo `docker-compose.yml` para configurar os serviços Docker necessários e insira-o na pasta raiz onde os repositórios foram clonados:
+
+   - [Baixar docker-compose.yml](https://drive.google.com/file/d/1kzs-DJGCvYImBQAqr1GI-zwoNha_b8tA/view?usp=drive_link)
+
+3. Na raiz do projeto, onde está localizado o arquivo `docker-compose.yml`, execute o seguinte comando para construir e iniciar os serviços:
+
+   ```sh
+   docker-compose up --build
+   ```
+
+### Sem Docker
+
+Para configurar e executar o projeto localmente sem Docker, siga os passos abaixo:
+
+#### Pré-requisitos
+
+Certifique-se de ter o Redis e o Sidekiq configurados e executando localmente para o correto funcionamento da aplicação. Além disso, instale as dependências necessárias do R:
+
+```sh
 install.packages("FactoMineR")
 install.packages("ggplot2")
 install.packages("reshape2")
 ```
 
-### Instalação das Dependências
+#### Instalação das Dependências
 
 ```sh
 bundle install
 ```
 
-### Configurar o Banco de Dados
+#### Configurar o Banco de Dados
 
 Crie o banco de dados e execute as migrações:
 
@@ -64,7 +91,7 @@ rails db:create
 rails db:migrate
 ```
 
-### Iniciar o Servidor Local
+#### Iniciar o Servidor Local
 
 Para iniciar o servidor localmente:
 
@@ -72,7 +99,7 @@ Para iniciar o servidor localmente:
 rails server
 ```
 
-### Executar Testes
+#### Executar Testes
 
 Para executar os testes automatizados:
 
@@ -80,9 +107,9 @@ Para executar os testes automatizados:
 bundle exec rspec
 ```
 
-### Iniciar Redis e Sidekiq
+#### Iniciar Redis e Sidekiq
 
-Certifique-se de que o Redis está instalado e rodando. Você pode iniciar o Redis com o seguinte comando:
+Certifique-se de que o Redis está instalado e rodando. Inicie o Redis com o seguinte comando:
 
 ```sh
 redis-server
@@ -93,10 +120,6 @@ Em seguida, inicie o Sidekiq:
 ```sh
 bundle exec sidekiq
 ```
-
-### Docker
-
-Atualmente, a aplicação não possui suporte a Docker, mas há planos para incluir esta funcionalidade em breve.
 
 ---
 
