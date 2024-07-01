@@ -71,8 +71,6 @@ belly_king_products.each do |dish|
   )
 end
 
-products = Product.all
-
 30.times do
   store = Store.order("RANDOM()").first
   order = Order.create!(
