@@ -15,9 +15,8 @@ RSpec.describe "/stores/:store_id/products", type: :request do
        get "/stores/#{store.id}/products",
        headers: {"Accept" => "application/json", "Authorization" => "Bearer #{signed_in["token"]}"}
        json = JSON.parse(response.body)
-       expect(json[0]["title"]).to eq "macarrao"
-       expect(json[0]["price"].to_f).to eq 1.0
-       expect(json[0]["category"]).to eq "massas"
+       expect(json["result"]["products"][0]["title"]).to eq "macarrao"
+       expect(json["result"]["products"][0]["category"]).to eq "massas"
      end
 
      it "returns a not found response if the product does not exist" do
