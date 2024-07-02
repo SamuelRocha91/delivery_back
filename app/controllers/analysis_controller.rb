@@ -69,6 +69,10 @@ class AnalysisController < ApplicationController
   def pending_orders
     store_id = params[:store_id]
     pending_orders = Analysis.pending_orders(store_id)
+    if pending_orders.zero?
+      render json: { error: 'Store not found' }, status: :not_found
+      return
+    end
     render json: { result: pending_orders }
   end
 
