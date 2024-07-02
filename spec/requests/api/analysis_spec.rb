@@ -47,5 +47,24 @@ RSpec.describe "Analysis API", type: :request do
         end
     end
 
+    describe "get analysis/total_sales" do
+        it "returns a successful response with total sales" do
+            get "/analysis/total_sales?store_id=#{store.id}",
+            headers: {"Accept" => "application/json", "Authorization" => "Bearer #{signed_in["token"]}"}
+            json = JSON.parse(response.body)
+            expect(json).to include("result")
+            expect(response).to have_http_status(:success)
+            expect(json["result"]).to be_a(Float)
+        end
+        it "returns a not found response if the store does not exist" do
+            get "/analysis/total_sales?store_id=999",
+            headers: {"Accept" => "application/json", "Authorization" => "Bearer #{signed_in["token"]}"}
+            json = JSON.parse(response.body)
+            expect(json).to include("error")
+            expect(response).to have_http_status(:not_found)  
+        end
+    end
+
     
+
 end

@@ -59,6 +59,10 @@ class AnalysisController < ApplicationController
   def total_sales
     store_id = params[:store_id]
     total_sales = Analysis.total_sales(store_id)
+    if total_sales.zero?
+      render json: { error: 'Store not found' }, status: :not_found
+      return
+    end
     render json: { result: total_sales }
   end
 
