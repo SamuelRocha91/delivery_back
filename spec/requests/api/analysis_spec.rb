@@ -10,7 +10,6 @@ RSpec.describe "Analysis API", type: :request do
     let!(:order_item) { create(:order_item, order: order, product: create(:product, store: store)) }
     let(:payment) { create(:payment, order: order) }
 
-
     describe "get analysis/monthly_analysis" do
         it "returns a successful response with monthly analysis" do
             get "/analysis/monthly_analysis?store_id=#{store.id}",
@@ -83,5 +82,4 @@ RSpec.describe "Analysis API", type: :request do
         end
     end
     
-
 end
