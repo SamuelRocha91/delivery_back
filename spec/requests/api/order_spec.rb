@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Orders API", type: :request do
     let!(:buyer) { create(:user) }
-    let(:seller) {create(:user, :seller)}
+    let(:seller) { create(:user, :seller) }
     let!(:store) { create(:store, user: seller) }
     let!(:order) { create(:order, store: store) }
     let!(:order_item) { create(:order_item, order: order, product: create(:product, store: store)) }

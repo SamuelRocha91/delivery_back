@@ -13,7 +13,6 @@ class StoresController < ApplicationController
         @stores = @stores.where('LOWER(name) LIKE ?', "%#{params[:name].downcase}%") if params[:name].present?
         @stores = @stores.where(category: params[:category]) if params[:category].present?
         @current_address = User.find(current_user.id).addresses.first
-        puts @current_address
         @stores = @stores.page(page)
       else
         @stores = Store.kept.where(user: current_user).includes(avatar_attachment: :blob)
@@ -25,24 +24,31 @@ class StoresController < ApplicationController
 
   def new_order
     response.headers["Content-Type"] = "text/event-stream"
-    sse = SSE.new(response.stream, retry: 300, event: "waiting-orders")
-    begin
-      sse.write({ hello: "world!"}, event: "waiting-order")
-      EventMachine.run do
-        EventMachine::PeriodicTimer.new(3) do
+    response.headers["rack.hijack"] = proc do |stream|
+      Thread.new do
+        ActiveRecord::Base.connection_pool.remove ActiveRecord::Base.connection
+        start = Time.now
+        sse = SSE.new(stream, retry: 300, event: "waiting-orders")
+        sse.write({ hello: "world!"}, event: "waiting-order")
+        begin
           orders = Order.where.not(state: [:canceled, :delivered, :payment_failed, :created, :payment_pending])
-            if orders.any?
-              message = { time: Time.now, orders: orders } 
-              sse.write(message, event: "new orders")
-            else
-              sse.write({ message: "no orders" }, event: "no")
+          message = { time: Time.now, orders: orders }
+          loop do
+            time_passed = Time.now - start
+            sse.write(message, event: "new-orders")
+            if time_passed > 30
+              sse.write({ message: "timeout" }, event: "timeout")
+              break
             end
+            sleep 3
+          end
+        rescue Errno::EPIPE, IOError, ActionController::Live::ClientDisconnected
+          Rails.logger.info "Stream closed" 
+        ensure
+          sse.close
+          ActiveRecord::Base.connection.close 
         end
       end
-    rescue IOError, ActionController::Live::ClientDisconnected
-      sse.close
-    ensure
-      sse.close
     end
   end
 
@@ -141,9 +147,11 @@ class StoresController < ApplicationController
     address_attributes = [:street, :number, :neighborhood, :city, :state, :postal_code]
 
     if current_user.admin?
-      required.permit(:name, :user_id, :avatar, :description, :category, :cnpj, :is_open, :color_theme, address_attributes: address_attributes)
+      required.permit(:name, :user_id, :avatar, :description, :category, :cnpj, :is_open, :color_theme,
+       address_attributes: address_attributes)
     else
-      required.permit(:name, :avatar, :description, :category, :cnpj, :is_open, :color_theme, address_attributes: address_attributes)
+      required.permit(:name, :avatar, :description, :category, :cnpj, :is_open, :color_theme, 
+      address_attributes: address_attributes)
     end
   end
 

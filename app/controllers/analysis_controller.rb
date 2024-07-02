@@ -37,8 +37,11 @@ class AnalysisController < ApplicationController
 
    def monthly_analysis
     store_id = params[:store_id]
-
     sales_data = Analysis.monthly_analysis(store_id)
+    if sales_data.empty?
+      render json: { error: 'Store not found' }, status: :not_found
+      return
+    end
     @average_sales_per_day = sales_data.map { |row| [Date::DAYNAMES[row['day_of_week'].to_i], row['average_daily_sales']] }.to_h
     render json: { result: @average_sales_per_day}
   end
@@ -46,18 +49,30 @@ class AnalysisController < ApplicationController
   def total_orders
     store_id = params[:store_id]
     total_orders = Analysis.order_total(store_id)
+    if total_orders.zero?
+      render json: { error: 'Store not found' }, status: :not_found
+      return
+    end
     render json: { result: total_orders }
   end
 
   def total_sales
     store_id = params[:store_id]
     total_sales = Analysis.total_sales(store_id)
+    if total_sales.zero?
+      render json: { error: 'Store not found' }, status: :not_found
+      return
+    end
     render json: { result: total_sales }
   end
 
   def pending_orders
     store_id = params[:store_id]
     pending_orders = Analysis.pending_orders(store_id)
+    if pending_orders.zero?
+      render json: { error: 'Store not found' }, status: :not_found
+      return
+    end
     render json: { result: pending_orders }
   end
 
