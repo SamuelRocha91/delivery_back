@@ -26,25 +26,25 @@ class StoresController < ApplicationController
     response.headers["Content-Type"] = "text/event-stream"
     response.headers["rack.hijack"] = proc do |stream|
       Thread.new do
-        ActiveRecord::Base.connection_pool.remove ActiveRecord::Base.connection
-        start = Time.now
-        sse = SSE.new(stream, retry: 300, event: "waiting-orders")
-        begin
-          orders = Order.where.not(state: [:canceled, :delivered, :payment_failed, :created, :payment_pending])
-          message = { time: Time.now, orders: orders }
-          loop do
-            time_passed = Time.now - start
-            sse.write(message, event: "new orders")
-            if time_passed > 30
-              break
+        ActiveRecord::Base.connection_pool.with_connection do
+          start = Time.now
+          sse = SSE.new(stream, retry: 300, event: "waiting-orders")
+          begin
+            orders = Order.where(store_id: params[:store_id]).where.not(state: [:canceled, :delivered, :payment_failed, :created, :payment_pending])
+            message = { time: Time.now, orders: orders }
+            loop do
+              Rails.logger.info "Sending message: #{message.to_json}"
+              sse.write(message, event: "new orders")
+              time_passed = Time.now - start
+              break if time_passed > 30
+              sleep 3
             end
-            sleep 3
+          rescue Errno::EPIPE, IOError, ActionController::Live::ClientDisconnected => e
+            Rails.logger.info "Stream closed: #{e.message}"
+          ensure
+            sse.close
+            Rails.logger.info "SSE closed"
           end
-        rescue Errno::EPIPE, IOError, ActionController::Live::ClientDisconnected
-          Rails.logger.info "Stream closed" 
-        ensure
-          sse.close
-          ActiveRecord::Base.connection.close 
         end
       end
     end
