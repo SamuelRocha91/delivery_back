@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
 
   def index
     if request.format == Mime[:json]
-      page = params.fetch(:page, 1)
+      page = params.fetch(:page, 1).to_i
       offset = buyer? ? (12 * (page - 1)) : (5 * (page - 1))
       if buyer?
         @products = Product.kept.includes(image_attachment: :blob)

@@ -29,15 +29,13 @@ class StoresController < ApplicationController
         ActiveRecord::Base.connection_pool.remove ActiveRecord::Base.connection
         start = Time.now
         sse = SSE.new(stream, retry: 300, event: "waiting-orders")
-        sse.write({ hello: "world!"}, event: "waiting-order")
         begin
           orders = Order.where.not(state: [:canceled, :delivered, :payment_failed, :created, :payment_pending])
           message = { time: Time.now, orders: orders }
           loop do
             time_passed = Time.now - start
-            sse.write(message, event: "new-orders")
+            sse.write(message, event: "new orders")
             if time_passed > 30
-              sse.write({ message: "timeout" }, event: "timeout")
               break
             end
             sleep 3
@@ -50,6 +48,7 @@ class StoresController < ApplicationController
         end
       end
     end
+    head :ok
   end
 
   def listing
