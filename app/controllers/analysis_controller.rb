@@ -37,8 +37,11 @@ class AnalysisController < ApplicationController
 
    def monthly_analysis
     store_id = params[:store_id]
-
     sales_data = Analysis.monthly_analysis(store_id)
+    if sales_data.empty?
+      render json: { error: 'Store not found' }, status: :not_found
+      return
+    end
     @average_sales_per_day = sales_data.map { |row| [Date::DAYNAMES[row['day_of_week'].to_i], row['average_daily_sales']] }.to_h
     render json: { result: @average_sales_per_day}
   end

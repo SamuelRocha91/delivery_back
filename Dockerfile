@@ -28,6 +28,9 @@ RUN R -e "install.packages(c('FactoMineR', 'ggplot2', 'reshape2'), repos='https:
 # Copiar o restante do código da aplicação
 COPY . .
 
+RUN mkdir -p tmp/cache/assets/sprockets && \
+    chmod -R 755 tmp/cache/assets/sprockets
+    
 EXPOSE 3000
 # Remove o arquivo de PID do servidor, se existir, e inicia o servidor Rails
 CMD ["sh", "-c", "rm -f /app/tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"]
