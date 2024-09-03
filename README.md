@@ -2,7 +2,7 @@
 
 Este repositório representa o backend em Rails para uma aplicação de delivery, incluindo uma interface de gerenciamento de dados para usuários com as roles admin e developer.
 
-[![Em desenvolvimento](https://img.shields.io/badge/Status-Em%20desenvolvimento-yellow)](https://github.com/SamuelRocha91/delivery_app)
+![Ilustração de udo da interface do admin](./assets/admin.gif)
 
 ## Repositórios Relacionados
 
@@ -61,6 +61,18 @@ Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
    ```sh
    docker-compose up --build
    ```
+
+4. Ao entrar na aplicação back-end no navegador, clique em "RUN PENDING MIGRATES" para gerar as migrações
+
+5. É recomendável entrar no container da aplicação back-end e rodar as seeds:
+
+  ```sh
+   docker exec -it nomeDoContainerBackEnd /bin/sh 
+   rails db:seed
+   ```
+
+
+
 
 ### Sem Docker
 

@@ -65,9 +65,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_27_233922) do
   create_table "messages", force: :cascade do |t|
     t.string "user"
     t.text "message"
-    t.integer "order_id"
+    t.integer "order_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_messages_on_order_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -149,6 +150,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_27_233922) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "messages", "orders"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "stores"
