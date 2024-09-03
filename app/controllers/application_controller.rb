@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
   def only_buyers!
       if !buyer?
        render json: { message: "Not authorized" }, status: :unauthorized
-     end
+      end
   end
 
   def buyer?
