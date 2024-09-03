@@ -23,7 +23,7 @@ RUN R -e "install.packages('reshape2', repos='https://cran.rstudio.com/', depend
 COPY . .
 
 RUN mkdir -p tmp/cache/assets/sprockets && \
-    chmod -R 755 tmp/cache/assets/sprockets
+    chmod -R 755 tmp
     
 EXPOSE 3000
 

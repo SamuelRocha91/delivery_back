@@ -71,6 +71,11 @@ Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
    rails db:seed
    ```
 
+6. É necessário configurar as variáveis de ambiente num arquivo .env. Ex:
+
+  ```sh
+    JWT_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxx
+   ```
 
 
 

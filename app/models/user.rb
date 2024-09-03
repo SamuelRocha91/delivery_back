@@ -20,7 +20,7 @@ class User < ApplicationRecord
   end
 
   def self.token_for(user)
-    jwt_secret_key = Rails.application.credentials.jwt_secret_key
+    jwt_secret_key = ENV['JWT_SECRET_KEY']
     jwt_headers = {exp: 1.hour.from_now.to_i}
     payload = {
       id: user.id,
@@ -35,7 +35,7 @@ class User < ApplicationRecord
   end
 
   def self.from_token(token)
-    jwt_secret_key = Rails.application.credentials.jwt_secret_key
+    jwt_secret_key = ENV['JWT_SECRET_KEY']
     jwt_decode = (JWT.decode token, jwt_secret_key, true, { algorithm: 'HS256'})
       .first
       .with_indifferent_access

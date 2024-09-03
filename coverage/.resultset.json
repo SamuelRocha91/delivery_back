@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/models/user.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/models/user.rb": {
         "lines": [
           1,
           1,
@@ -69,32 +69,32 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/models/application_record.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/helpers/application_helper.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/helpers/products_helper.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/helpers/products_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/helpers/stores_helper.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/helpers/stores_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/channels/chat_channel.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/channels/chat_channel.rb": {
         "lines": [
           1,
           1,
@@ -121,7 +121,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/channels/application_cable/channel.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/channels/application_cable/channel.rb": {
         "lines": [
           1,
           1,
@@ -129,7 +129,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/jobs/payment_job.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/jobs/payment_job.rb": {
         "lines": [
           1,
           1,
@@ -167,7 +167,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/jobs/application_job.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/jobs/application_job.rb": {
         "lines": [
           1,
           null,
@@ -178,7 +178,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/models/credential.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/models/credential.rb": {
         "lines": [
           1,
           1,
@@ -191,7 +191,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/models/message.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/models/message.rb": {
         "lines": [
           1,
           1,
@@ -201,7 +201,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/models/order_item.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/models/order_item.rb": {
         "lines": [
           1,
           1,
@@ -222,7 +222,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/models/order.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/models/order.rb": {
         "lines": [
           1,
           1,
@@ -287,7 +287,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/models/product.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/models/product.rb": {
         "lines": [
           1,
           1,
@@ -312,7 +312,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/models/store.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/models/store.rb": {
         "lines": [
           1,
           1,
@@ -345,7 +345,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/controllers/stores_controller.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/controllers/stores_controller.rb": {
         "lines": [
           1,
           1,
@@ -378,7 +378,6 @@
           0,
           0,
           0,
-          0,
           null,
           0,
           0,
@@ -389,8 +388,6 @@
           0,
           0,
           null,
-          0,
-          null,
           null,
           0,
           null,
@@ -399,6 +396,8 @@
           null,
           null,
           null,
+          null,
+          0,
           null,
           null,
           1,
@@ -512,7 +511,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/controllers/application_controller.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/controllers/application_controller.rb": {
         "lines": [
           1,
           1,
@@ -591,7 +590,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/controllers/registrations_controller.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/controllers/registrations_controller.rb": {
         "lines": [
           1,
           1,
@@ -738,7 +737,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/models/refresh_token.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/models/refresh_token.rb": {
         "lines": [
           1,
           1,
@@ -753,7 +752,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/controllers/analysis_controller.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/controllers/analysis_controller.rb": {
         "lines": [
           1,
           null,
@@ -765,7 +764,6 @@
           null,
           0,
           0,
-          null,
           0,
           null,
           0,
@@ -776,16 +774,8 @@
           null,
           null,
           0,
-          0,
-          0,
           null,
           0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
           0,
           null,
           0,
@@ -837,14 +827,6 @@
           null,
           1,
           0,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
           null,
           null,
           null,
@@ -878,7 +860,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/models/analysis.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/models/analysis.rb": {
         "lines": [
           1,
           1,
@@ -940,7 +922,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/controllers/orders_controller.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/controllers/orders_controller.rb": {
         "lines": [
           1,
           1,
@@ -1218,7 +1200,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/controllers/products_controller.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/controllers/products_controller.rb": {
         "lines": [
           1,
           1,
@@ -1375,7 +1357,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/models/address.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/models/address.rb": {
         "lines": [
           1,
           1,
@@ -1402,7 +1384,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/controllers/welcome_controller.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/controllers/welcome_controller.rb": {
         "lines": [
           1,
           1,
@@ -1410,7 +1392,7 @@
           null
         ]
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/channels/application_cable/connection.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/channels/application_cable/connection.rb": {
         "lines": [
           0,
           0,
@@ -1420,7 +1402,7 @@
         "branches": {
         }
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/controllers/credentials_controller.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/controllers/credentials_controller.rb": {
         "lines": [
           0,
           0,
@@ -1483,7 +1465,7 @@
         "branches": {
         }
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/controllers/passwords_controller.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/controllers/passwords_controller.rb": {
         "lines": [
           0,
           0,
@@ -1519,7 +1501,7 @@
         "branches": {
         }
       },
-      "/home/samuel/projectsByOrganizations/codeSaga/delivery_back/app/mailers/application_mailer.rb": {
+      "/home/samuel/desafiosTecnicos/delivery_back/app/mailers/application_mailer.rb": {
         "lines": [
           0,
           0,
@@ -1530,6 +1512,6 @@
         }
       }
     },
-    "timestamp": 1719885849
+    "timestamp": 1725385911
   }
 }
