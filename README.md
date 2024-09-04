@@ -87,7 +87,9 @@ Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
    ```
 
 **OBS** As api_keys podem ser geradas dentro do container back-end através do console e depois colada no arquivo .env.
+
 **OBS** Outra forma é gerá-la através de um usuário com a role developer dentro da interface do backend e copiar e colar na aplicação devida.
+
  **OBS** Não esquecer de reiniciar os containers para as variáveis serem carregadas
 
 ![Exemplo de configuração](./assets/apikey.gif)
