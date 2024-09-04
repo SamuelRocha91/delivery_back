@@ -2,7 +2,8 @@
 
 Este repositório representa o backend em Rails para uma aplicação de delivery, incluindo uma interface de gerenciamento de dados para usuários com as roles admin e developer.
 
-![Ilustração de udo da interface do admin](./assets/admin.gif)
+![Ilustração de uso da interface do admin](./assets/admin.gif)
+
 
 ## Repositórios Relacionados
 
@@ -71,12 +72,27 @@ Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
    rails db:seed
    ```
 
-6. É necessário configurar as variáveis de ambiente num arquivo .env. Ex:
+6. É necessário configurar as variáveis de ambiente num arquivo .env dentro da aplicação delivery_back. Ex:
 
   ```sh
     JWT_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxx
    ```
 
+
+6. É necessário configurar as variáveis de ambiente num arquivo .env.development dentro da aplicação consumy e seller. Ex:
+
+  ```sh
+   VITE_BASE_URL=http://localhost:3000
+   VITE_X_API_KEY=Z34dqYJ8qBelcmcBfWNuHc5JB/w=
+   ```
+
+**OBS** As api_keys podem ser geradas dentro do container back-end através do console e depois colada no arquivo .env.
+
+**OBS** Outra forma é gerá-la através de um usuário com a role developer dentro da interface do backend e copiar e colar na aplicação devida.
+
+ **OBS** Não esquecer de reiniciar os containers para as variáveis serem carregadas
+
+![Exemplo de configuração](./assets/apikey.gif)
 
 
 ### Sem Docker
