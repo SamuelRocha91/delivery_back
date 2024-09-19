@@ -20,23 +20,47 @@ Este repositorio representa el backend en Rails para una aplicación de delivery
 - [Aplicación Vendedor](https://github.com/SamuelRocha91/seller_application) - Aplicación para el vendedor
 - [API Paymenty](https://github.com/SamuelRocha91/paymenty) - API de pagos
 
-### Conceptos y Gems Utilizadas
+### Conceptos y Gems Utilizados
 
 Este proyecto aborda y utiliza los siguientes conceptos y gems:
 
-- **Procesos en Segundo Plano:** Uso de Sidekiq para el procesamiento asíncrono de tareas (junto con Redis).
-- **Paginación:** Implementación de paginación para la lista de recursos (kaminari).
-- **Pruebas con RSpec y Shoulda Matchers:** Pruebas unitarias e integrales usando RSpec con Shoulda Matchers para simplificar las aserciones.
-- **Cobertura de Pruebas con SimpleCov:** Análisis de cobertura de código automatizado con SimpleCov.
-- **Eliminación Suave con Discard:** Implementación de eliminación suave (soft delete) utilizando la gem Discard para mantener registros en la base de datos sin eliminarlos físicamente.
-- **Anonimización de Datos:** Aplicación de técnicas para la anonimización de datos sensibles.
-- **API RESTful:** Desarrollo de una API RESTful para la comunicación entre el backend y el frontend.
-- **Swagger:** Documentación automática de la API con Swagger para facilitar su comprensión y uso.
-- **Docker:** Opción de contenedorización con Docker para facilitar el desarrollo y despliegue de la aplicación.
-- **Manipulación de Imágenes:** Manipulación de imágenes con herramientas específicas para el procesamiento de medios.
-- **WebSockets y SSE:** Implementación de comunicación en tiempo real utilizando WebSockets y Server-Sent Events (SSE) para funcionalidades como chat o actualizaciones en tiempo real.
-- **Cálculo de Distancia:** Uso de la gem geocoder para implementar el cálculo de distancia en km desde el establecimiento comercial hasta la residencia del cliente.
-- **Threads:** Uso de threads para mejorar la concurrencia y el rendimiento en operaciones paralelas.
+- **Procesos en segundo plano**: Uso de **Sidekiq** para el procesamiento asíncrono de tareas. **Redis** se utiliza como cola para estas tareas, asegurando que las operaciones de larga duración, como el envío de correos electrónicos o el procesamiento de datos, se gestionen fuera del ciclo principal de la aplicación, mejorando el rendimiento y la experiencia del usuario.
+
+- **Paginación**: Implementación de paginación para listar recursos utilizando la gem **Kaminari**, lo que facilita el manejo de grandes volúmenes de datos y permite dividir listas en páginas, mejorando la usabilidad y navegación de la aplicación.
+
+- **Pruebas con RSpec y Shoulda Matchers**: Uso de **RSpec** para escribir pruebas unitarias, de integración y funcionales. La gem **Shoulda Matchers** simplifica las afirmaciones, especialmente cuando se prueban las validaciones y asociaciones de ActiveRecord, permitiendo una sintaxis de pruebas más legible y eficiente.
+
+- **Cobertura de pruebas con SimpleCov**: Integración con la gem **SimpleCov** para realizar análisis automatizados de cobertura de código. Esto asegura que las áreas críticas de la aplicación estén cubiertas por pruebas, proporcionando informes claros sobre qué partes del código necesitan aún ser cubiertas.
+
+- **Eliminación suave con Discard**: Implementación de eliminación suave utilizando la gem **Discard**, lo que permite "eliminar" registros sin quitarlos físicamente de la base de datos. Esto posibilita la futura recuperación de datos y mantiene la integridad histórica.
+
+- **Bullet para la detección de consultas N+1**: La gem **Bullet** se utiliza para detectar y prevenir problemas de rendimiento como las **consultas N+1**. Bullet alerta al desarrollador cuando una consulta puede optimizarse, sugiriendo el uso de **carga ansiosa** (eager loading) para evitar múltiples consultas innecesarias a la base de datos, mejorando así la eficiencia de la aplicación.
+
+- **Anonimización de datos**: Aplicación de técnicas para anonimizar datos sensibles, garantizando el cumplimiento de las normativas de privacidad y seguridad, como la **LGPD** (Ley General de Protección de Datos). Se implementan técnicas como el enmascaramiento y hashing para proteger la información personal.
+
+- **API RESTful**: Desarrollo de una **API RESTful** que sigue principios de arquitectura de software, permitiendo una comunicación eficiente entre el backend y el frontend. La API está diseñada para ser escalable, modular y fácil de mantener.
+
+- **Swagger**: Documentación automática de la API usando la gem **Rswag** (basada en Swagger), que facilita la comprensión y uso de la API proporcionando una interfaz interactiva para probar rutas, endpoints, parámetros y respuestas directamente en el navegador.
+
+- **Docker**: Opción para la contenerización utilizando **Docker**, lo que simplifica el desarrollo, pruebas y despliegue de la aplicación en entornos controlados. Esto asegura que las dependencias y la infraestructura estén aisladas y puedan replicarse fácilmente en diferentes máquinas.
+
+- **Procesamiento de imágenes**: Uso de la gem **ImageProcessing** para la manipulación de imágenes, como el redimensionamiento y la compresión. Herramientas como **ruby-vips** se utilizan para optimizar el procesamiento de imágenes a gran escala, asegurando un alto rendimiento.
+
+- **WebSockets y SSE**: Implementación de comunicación en tiempo real utilizando **WebSockets** para características que requieren interactividad inmediata, como chats, notificaciones o actualizaciones en vivo. **Server-Sent Events (SSE)** también se usa para actualizaciones unidireccionales del servidor al cliente.
+
+- **Cálculo de distancia**: Uso de la gem **Geocoder** para calcular distancias entre el cliente y el establecimiento comercial, facilitando servicios basados en la ubicación. Los cálculos de distancia se realizan en kilómetros, asegurando precisión y eficiencia.
+
+- **Hilos**: Uso de **hilos** (threads) para mejorar la concurrencia y el rendimiento en operaciones paralelas, como el procesamiento de grandes cantidades de datos o la integración con servicios externos. Los hilos permiten que múltiples operaciones se ejecuten simultáneamente, optimizando el tiempo de respuesta de la aplicación.
+
+- **Gestión de sesiones y autenticación**: La autenticación de usuarios se gestiona con **Devise**, una gem muy utilizada en el ecosistema de Rails. También se proporciona soporte para autenticación con **JWT** (JSON Web Token), especialmente útil para la autenticación basada en tokens en una API.
+
+- **Control de CORS**: Uso de la gem **rack-cors** para gestionar los permisos de **Cross-Origin Resource Sharing (CORS)**, garantizando que la API pueda ser accedida de forma segura desde diferentes dominios.
+
+- **Máquinas de estado con State Machines-Activerecord**: Uso de la gem **state_machines-activerecord** para implementar **máquinas de estado** en los modelos de ActiveRecord. Esto permite un control detallado sobre las transiciones de estado, asegurando que ciertos procesos u objetos sigan flujos predefinidos, como cambios en los estados de pedidos, pagos o procesos automatizados.
+
+- **Faraday para consumo de API externas**: Integración con servicios externos utilizando la gem **Faraday**, una librería de cliente HTTP que permite realizar solicitudes HTTP/REST de forma flexible y eficiente. Esto facilita la comunicación con APIs de terceros, ofreciendo soporte para middleware, reintentos y manejo de errores.
+
+- **Automatización de tareas y DevOps**: La estructura de **DevOps** está respaldada por herramientas como **Sidekiq** y **Docker** para automatizar la integración continua, el despliegue y la monitorización de tareas en segundo plano.
 
 ## Configuración del Proyecto
 
