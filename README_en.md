@@ -1,14 +1,7 @@
-# Delivery Application
+# <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTchGHKMA3VyA1ySh2ITWb0CIm_cnhF1cGvlQ&s" alt="Full Stack Projects" width="52" height="40" /> Delivery Application <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTchGHKMA3VyA1ySh2ITWb0CIm_cnhF1cGvlQ&s" alt="Java Projects Logo" width="52" height="40" />
 
-<h2>🌐</h2>
-<ul>
-  <li><a href="https://github.com/SamuelRocha91/delivery_back" target="_blank">Português</a></li>
-  <li><a href="https://github.com/SamuelRocha91/delivery_back/blob/main/README_es.md" target="_blank">Español</a></li>
-  <li><a href="https://github.com/SamuelRocha91/delivery_back/blob/main/README_en.md" target="_blank">English</a></li>
-  <li><a href="https://github.com/SamuelRocha91/delivery_back/blob/main/README_ru.md" target="_blank">Русский</a></li>
-  <li><a href="https://github.com/SamuelRocha91/delivery_back/blob/main/README_ch.md" target="_blank">中文</a></li>
-  <li><a href="https://github.com/SamuelRocha91/delivery_back/blob/main/README_ar.md" target="_blank">العربية</a></li>
-</ul>
+
+## 🌐 [![Português](https://img.shields.io/badge/Português-green)](https://github.com/SamuelRocha91/delivery_back/blob/main/README.md) [![Español](https://img.shields.io/badge/Español-yellow)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_es.md) [![English](https://img.shields.io/badge/English-blue)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_en.md) [![Русский](https://img.shields.io/badge/Русский-lightgrey)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ru.md) [![中文](https://img.shields.io/badge/中文-red)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ch.md) [![العربية](https://img.shields.io/badge/العربية-orange)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ar.md)
 
 This repository represents the Rails backend for a delivery application, including a data management interface for users with admin and developer roles.
 
@@ -16,9 +9,9 @@ This repository represents the Rails backend for a delivery application, includi
 
 ## Related Repositories
 
-- [Consumy Application](https://github.com/SamuelRocha91/consumy) - Consumer application
-- [Seller Application](https://github.com/SamuelRocha91/seller_application) - Seller application
-- [Paymenty API](https://github.com/SamuelRocha91/paymenty) - Payment API
+- 🛒 [Consumy Application](https://github.com/SamuelRocha91/consumy) - Consumer application
+- 👨‍💼 [Seller Application](https://github.com/SamuelRocha91/seller_application) - Seller application
+- 💲 [Paymenty API](https://github.com/SamuelRocha91/paymenty) - Payment API
 
 ### Concepts and Gems Used
 
@@ -184,9 +177,7 @@ Then, start Sidekiq:
 ```sh
 bundle exec sidekiq
 ```
+## Other projects:
 
----
-
-This project was created as an evaluative requirement for the Quero Ser Dev 9th edition program by LWSA.
-
----
+- 📏 [React Precision Application](https://github.com/SamuelRocha91/precisionReactApplication/blob/main/README_en.md) - Interface for registering gas and water measurements
+- 🤖 [Node API](https://github.com/SamuelRocha91/apiMeasureWaterAndGas/blob/main/README_en.md) - API for measuring and registering consumption of water and gas
