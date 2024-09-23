@@ -1,14 +1,6 @@
-# 外卖应用
+# <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTchGHKMA3VyA1ySh2ITWb0CIm_cnhF1cGvlQ&s" alt="Full Stack Projects" width="52" height="40" /> 外卖应用 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTchGHKMA3VyA1ySh2ITWb0CIm_cnhF1cGvlQ&s" alt="Java Projects Logo" width="52" height="40" />
 
-<h2>🌐</h2>
-<ul>
-  <li><a href="https://github.com/SamuelRocha91/delivery_back" target="_blank">Português</a></li>
-  <li><a href="https://github.com/SamuelRocha91/delivery_back/blob/main/README_es.md" target="_blank">Español</a></li>
-  <li><a href="https://github.com/SamuelRocha91/delivery_back/blob/main/README_en.md" target="_blank">English</a></li>
-  <li><a href="https://github.com/SamuelRocha91/delivery_back/blob/main/README_ru.md" target="_blank">Русский</a></li>
-  <li><a href="https://github.com/SamuelRocha91/delivery_back/blob/main/README_ch.md" target="_blank">中文</a></li>
-  <li><a href="https://github.com/SamuelRocha91/delivery_back/blob/main/README_ar.md" target="_blank">العربية</a></li>
-</ul>
+## 🌐 [![Português](https://img.shields.io/badge/Português-green)](https://github.com/SamuelRocha91/delivery_back/blob/main/README.md) [![Español](https://img.shields.io/badge/Español-yellow)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_es.md) [![English](https://img.shields.io/badge/English-blue)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_en.md) [![Русский](https://img.shields.io/badge/Русский-lightgrey)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ru.md) [![中文](https://img.shields.io/badge/中文-red)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ch.md) [![العربية](https://img.shields.io/badge/العربية-orange)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ar.md)
 
 此存储库代表了一个用于外卖的Rails后端，包括一个用于管理数据的接口，适用于具有管理员和开发者角色的用户。
 
@@ -184,9 +176,6 @@ redis-server
 ```sh
 bundle exec sidekiq
 ```
-
----
-
-该项目作为 LWSA Quero Ser Dev 第9届计划的评估要求创建。
-
----
+## 其他项目
+- 📏 [React 精准应用程序](https://github.com/SamuelRocha91/precisionReactApplication/blob/main/README_ch.md) - 燃气和水的测量登记界面
+- 🤖 [Node API](https://github.com/SamuelRocha91/apiMeasureWaterAndGas/blob/main/README_ch.md) - 用于测量和登记水和燃气消耗的 API
