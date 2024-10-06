@@ -1,164 +1,184 @@
-# <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTchGHKMA3VyA1ySh2ITWb0CIm_cnhF1cGvlQ&s" alt="Full Stack Projects" width="52" height="40" /> تطبيق الت <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTchGHKMA3VyA1ySh2ITWb0CIm_cnhF1cGvlQ&s" alt="Java Projects Logo" width="52" height="40" />  
+# <img src="https://cdn-icons-png.flaticon.com/128/83/83522.png" alt="Java Projects Logo" width="42" height="30" /> تطبيق التوصيل  <img src="https://cdn-icons-png.flaticon.com/128/83/83522.png" alt="Java Projects Logo" width="42" height="30" />
 
+## 🌐 اللغات
+[![Português](https://img.shields.io/badge/Português-green)](https://github.com/SamuelRocha91/delivery_back/blob/main/README.md) 
+[![Español](https://img.shields.io/badge/Español-yellow)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_es.md) 
+[![English](https://img.shields.io/badge/English-blue)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_en.md) 
+[![Русский](https://img.shields.io/badge/Русский-lightgrey)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ru.md) 
+[![中文](https://img.shields.io/badge/中文-red)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ch.md) 
+[![العربية](https://img.shields.io/badge/العربية-orange)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ar.md)
 
+هذا المستودع هو الجزء الخلفي من تطبيق توصيل مبني على Rails، ويشمل واجهات لإدارة بيانات المستخدمين مع أدوار المدير والمطور.
 
-## 🌐 [![Português](https://img.shields.io/badge/Português-green)](https://github.com/SamuelRocha91/delivery_back/blob/main/README.md) [![Español](https://img.shields.io/badge/Español-yellow)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_es.md) [![English](https://img.shields.io/badge/English-blue)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_en.md) [![Русский](https://img.shields.io/badge/Русский-lightgrey)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ru.md) [![中文](https://img.shields.io/badge/中文-red)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ch.md) [![العربية](https://img.shields.io/badge/العربية-orange)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ar.md)
+![مثال على واجهة المدير](./assets/admin.gif)
 
-تمثل هذه المستودع الجزء الخلفي (Back-end) من تطبيق توصيل، بما في ذلك واجهة لإدارة البيانات للمستخدمين ذوي الأدوار (Admin و Developer).
+---
 
-![مثال على استخدام واجهة الإدارة](./assets/admin.gif)
+<details>
+  <summary><strong>🔗 مستودعات ذات صلة</strong></summary>
 
-## المستودعات ذات الصلة
+  - 🛒 [تطبيق المستهلك](https://github.com/SamuelRocha91/consumy/blob/main/README_ar.md) - تطبيق مخصص للمستهلكين
+  - 👨‍💼 [تطبيق البائع](https://github.com/SamuelRocha91/seller_application/blob/main/README_ar.md) - تطبيق مخصص للبائعين
+  - 💲 [API الدفع](https://github.com/SamuelRocha91/paymenty/blob/main/README_ar.md) - API للدفع
 
--  🛒[تطبيق Consumy](https://github.com/SamuelRocha91/consumy) - تطبيق المستهلك
--  👨‍💼[تطبيق Seller](https://github.com/SamuelRocha91/seller_application) - تطبيق البائع
-- 💲 [API Paymenty](https://github.com/SamuelRocha91/paymenty/) - API للدفع
+</details>
 
-### المفاهيم و Gems المستخدمة
+---
 
-يتناول هذا المشروع ويستخدم المفاهيم و Gems التالية:
+## <h2>📚 المفاهيم والمكتبات المستخدمة</h2>
 
-- **عمليات خلفية:** استخدام Sidekiq لمعالجة المهام بشكل غير متزامن (مع Redis).
-- **التصفح:** تنفيذ التصفح لقوائم الموارد (kaminari).
-- **اختبارات باستخدام RSpec و Shoulda Matchers:** اختبارات وحدات وتكامل باستخدام RSpec مع Shoulda Matchers لتبسيط التأكيدات.
-- **تغطية الاختبارات باستخدام SimpleCov:** تحليل تغطية الشيفرة بشكل آلي باستخدام SimpleCov.
-- **حذف ناعم باستخدام Discard:** تنفيذ حذف ناعم (soft delete) باستخدام Gem Discard للحفاظ على السجلات في قاعدة البيانات دون حذفها فعلياً.
-- **إخفاء البيانات:** تطبيق تقنيات إخفاء البيانات الحساسة.
-- **API RESTful:** تطوير API RESTful للتواصل بين الجزء الخلفي والواجهة الأمامية.
-- **Swagger:** توثيق API بشكل تلقائي باستخدام Swagger لتسهيل الفهم والاستخدام.
-- **Docker:** خيار استخدام Docker للحاويات لتسهيل تطوير ونشر التطبيق.
-- **معالجة الصور:** معالجة الصور باستخدام أدوات محددة لمعالجة الوسائط.
-- **WebSockets و SSE:** تنفيذ التواصل في الوقت الفعلي باستخدام WebSockets و Server-Sent Events (SSE) لوظائف مثل الدردشة أو التحديثات في الوقت الفعلي.
-- **حساب المسافة:** استخدام Gem geocoder لتنفيذ حساب المسافة بالكيلومترات من الموقع التجاري إلى منزل العميل.
-- **الخيوط (Threads):** استخدام الخيوط لتحسين التوازي والأداء في العمليات المتوازية.
+<details>
+  <summary><strong>🔍 انقر للتوسيع لمزيد من التفاصيل حول المكتبات والمفاهيم</strong></summary>
 
-## إعداد المشروع
+- **المعالجة الخلفية**: استخدام **Sidekiq** لمعالجة المهام غير المتزامنة. **Redis** تُستخدم كقائمة انتظار لتخزين هذه المهام.
+  
+- **التقسيم**: استخدام مكتبة **Kaminari** لتنفيذ تقسيم قائمة الموارد.
 
-### باستخدام Docker
+- **اختبارات RSpec وShoulda Matchers**: كتابة اختبارات وحدات واختبارات تكامل واختبارات وظيفية باستخدام **RSpec**.
 
-لتشغيل هذا المشروع باستخدام Docker، اتبع الخطوات التالية:
+- **تغطية الاختبارات باستخدام SimpleCov**: دمج مكتبة **SimpleCov** لتحليل تغطية الشيفرة.
 
-#### المتطلبات الأساسية
+- **الحذف الناعم باستخدام Discard**: تنفيذ الحذف الناعم باستخدام مكتبة **Discard**.
 
-تأكد من أنك قد قمت بتثبيت Docker و Docker Compose على جهازك.
+- **Bullet لكشف استعلامات N+1**: استخدام مكتبة **Bullet** لاكتشاف ومنع مشاكل الأداء مثل استعلامات **N+1**.
 
-- [Docker](https://docs.docker.com/get-docker/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
+- **إخفاء البيانات**: تطبيق طرق لإخفاء البيانات لحماية البيانات الحساسة والامتثال لقوانين حماية البيانات مثل **LGPD**.
 
-#### الإعداد
+- **API RESTful**: تطوير **RESTful API**، اتباع مبادئ الهندسة البرمجية لضمان التواصل الفعال بين الجزء الخلفي والجزء الأمامي.
 
-1. قم باستنساخ المستودعات ذات الصلة:
+- **Swagger**: استخدام مكتبة **Rswag** (المبنية على Swagger) لتوليد وثائق API تلقائيًا.
 
-   ```sh
-   git clone https://github.com/SamuelRocha91/consumy.git
-   git clone https://github.com/SamuelRocha91/seller_application.git
-   git clone https://github.com/SamuelRocha91/paymenty.git
-   git clone https://github.com/SamuelRocha91/delivery_back.git
-   ```
+- **Docker**: دعم استخدام **Docker** للتشغيل في حاويات، مما يسهل عملية التطوير والاختبار والنشر.
 
-2. قم بتنزيل ملف `docker-compose.yml` لتكوين خدمات Docker اللازمة وضعه في المجلد الجذر حيث تم استنساخ المستودعات:
+- **معالجة الصور**: استخدام مكتبة **ImageProcessing** لمعالجة الصور مثل تغيير الحجم والضغط.
 
-   - [تنزيل docker-compose.yml](https://drive.google.com/file/d/1kzs-DJGCvYImBQAqr1GI-zwoNha_b8tA/view?usp=drive_link)
+- **WebSockets وSSE**: استخدام **WebSockets** لتنفيذ الاتصال في الوقت الحقيقي.
 
-3. في الجذر الخاص بالمشروع، حيث يوجد ملف `docker-compose.yml`، قم بتنفيذ الأمر التالي لبناء وتشغيل الخدمات:
+- **حساب المسافة**: استخدام مكتبة **Geocoder** لحساب المسافة بين العملاء والأعمال.
 
-   ```sh
-   docker-compose up --build
-   ```
+- **التدفق**: استخدام **التدفق** لتحسين توازي الأداء عند تنفيذ العمليات المتوازية.
 
-4. عند الدخول إلى تطبيق الخلفية في المتصفح، انقر على "RUN PENDING MIGRATES" لإنشاء الترحيلات.
+- **إدارة الجلسات والتحقق من الهوية**: استخدام **Devise** للتحقق من هوية المستخدمين والتحقق من الهوية عبر **JWT**.
 
-5. يُنصح بدخول حاوية تطبيق الخلفية وتشغيل البيانات الأولية:
+- **إدارة CORS**: استخدام مكتبة **rack-cors** لإدارة أذونات **CORS**.
 
-   ```sh
-   docker exec -it اسمالحاوية /bin/sh 
-   rails db:seed
-   ```
+- **آلات الحالة باستخدام state machine**: استخدام مكتبة **state_machines-activerecord** لتنفيذ آلات الحالة في نماذج ActiveRecord.
 
-6. يلزم إعداد متغيرات البيئة في ملف `.env` داخل تطبيق `delivery_back`. مثال:
+- **Faraday للتفاعل مع واجهات API الخارجية**: استخدام مكتبة **Faraday** للاندماج مع الخدمات الخارجية.
 
-   ```sh
-   JWT_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxx
-   ```
+- **أتمتة المهام وDevOps**: دعم هيكل **DevOps** باستخدام أدوات مثل **Sidekiq** و**Docker**.
 
-7. يلزم إعداد متغيرات البيئة في ملف `.env.development` داخل تطبيقات `consumy` و `seller`. مثال:
+</details>
 
-   ```sh
-   VITE_BASE_URL=http://localhost:3000
-   VITE_X_API_KEY=Z34dqYJ8qBelcmcBfWNuHc5JB/w=
-   ```
+---
 
-**ملاحظة** يمكن إنشاء مفاتيح API داخل حاوية الخلفية عبر وحدة التحكم ثم لصقها في ملف `.env`.
+## <h2>⚙️ إعداد المشروع</h2>
 
-**ملاحظة** طريقة أخرى هي إنشاؤها عبر مستخدم لديه دور مطور داخل واجهة الخلفية ونسخها ولصقها في التطبيق المناسب.
+<details>
+  <summary><strong>🛠️ باستخدام Docker</strong></summary>
 
-**ملاحظة** لا تنسى إعادة تشغيل الحاويات لتحميل متغيرات البيئة.
+  ### المتطلبات الأساسية
 
-![مثال على الإعداد](./assets/apikey.gif)
+  - تأكد من تثبيت Docker وDocker Compose على جهاز الكمبيوتر الخاص بك.
+  - [Docker](https://docs.docker.com/get-docker/)
+  - [Docker Compose](https://docs.docker.com/compose/install/)
 
-### بدون Docker
+  ### الإعداد
 
-لتكوين وتشغيل المشروع محلياً بدون استخدام Docker، اتبع الخطوات التالية:
+  1. استنساخ المستودعات ذات الصلة:
 
-#### المتطلبات الأساسية
+     ```
+     git clone https://github.com/SamuelRocha91/consumy.git
+     git clone https://github.com/SamuelRocha91/seller_application.git
+     git clone https://github.com/SamuelRocha91/paymenty.git
+     git clone https://github.com/SamuelRocha91/delivery_back.git
+     ```
 
-تأكد من أنك قد قمت بتكوين وتشغيل Redis و Sidekiq محلياً. بالإضافة إلى ذلك، قم بتثبيت التبعيات اللازمة لـ R:
+  2. تحميل ملف `docker-compose.yml`:
 
-```sh
-install.packages("FactoMineR")
-install.packages("ggplot2")
-install.packages("reshape2")
-```
+     - [تحميل docker-compose.yml](https://drive.google.com/file/d/1kzs-DJGCvYImBQAqr1GI-zwoNha_b8tA/view?usp=drive_link)
 
-#### تثبيت التبعيات
+  3. تشغيل الأوامر التالية في دليل المشروع الجذري:
 
-```sh
-bundle install
-```
+     ```sh
+     docker-compose up --build
+     ```
 
-#### إعداد قاعدة البيانات
+  4. انقر على "تشغيل الهجرات المعلقة" في تطبيق الجزء الخلفي.
 
-قم بإنشاء قاعدة البيانات وتنفيذ الترحيلات:
+  5. ادخل حاوية الجزء الخلفي وقم بتشغيل البذور:
 
-```sh
-rails db:create
-rails db:migrate
-```
+     ```sh
+     docker exec -it backendContainerName /bin/sh 
+     rails db:seed
+     ```
 
-#### بدء الخادم المحلي
+  6. إعداد متغيرات البيئة:
 
-لتشغيل الخادم محلياً:
+     ```sh
+     JWT_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxx
+     ```
 
-```sh
-rails server
-```
+  7. أعد تشغيل الحاويات لتحميل المتغيرات.
 
-#### تشغيل الاختبارات
+</details>
 
-لتشغيل الاختبارات الآلية:
+<details>
+  <summary><strong>🛠️ بدون استخدام Docker</strong></summary>
 
-```sh
-bundle exec rspec
-```
+  ### المتطلبات الأساسية
 
-#### بدء Redis و Sidekiq
+  - تأكد من إعداد Redis وSidekiq وتشغيلهما على جهاز الكمبيوتر المحلي الخاص بك.
+  
+  - تثبيت تبعيات R:
 
-تأكد من أن Redis مثبت ويعمل. ابدأ Redis باستخدام الأمر التالي:
+     ```sh
+     install.packages("FactoMineR")
+     install.packages("ggplot2")
+     install.packages("reshape2")
+     ```
 
-```sh
-redis-server
-```
+  ### تثبيت التبعيات
 
-ثم ابدأ Sidekiq:
+  ```sh
+  bundle install
+  ```
 
-```sh
-bundle exec sidekiq
-```
+  ### إعداد قاعدة البيانات
 
-## مشاريع أخرى
+  إنشاء قاعدة بيانات وتشغيل الهجرات:
 
+  ```sh
+  rails db:create
+  rails db:migrate
+  ```
 
-ها هي قائمة المشاريع باللغة العربية:
+  ### بدء الخادم المحلي
 
-- 📏 [تطبيق الدقة React](https://github.com/SamuelRocha91/precisionReactApplication/blob/main/README_ar.md) - واجهة تسجيل قياسات الغاز والماء
-- 🤖 [واجهة برمجة التطبيقات Node](https://github.com/SamuelRocha91/apiMeasureWaterAndGas/blob/main/README_ar.md) - واجهة برمجة التطبيقات لقياس وتسجيل استهلاك الماء والغاز
+  ```sh
+  rails server
+  ```
+
+  ### تشغيل الاختبارات
+
+  ```sh
+  bundle exec rspec
+  ```
+
+  ### بدء Redis وSidekiq
+
+  ```sh
+  redis-server
+  bundle exec sidekiq
+  ```
+
+</details>
+
+---
+
+<details>
+  <summary><strong>📝 مشاريع أخرى</strong></summary>
+
+  - 📏 [تطبيق Precision (React)](https://github.com/SamuelRocha91/precisionReactApplication/blob/main/README_ar.md) - واجهة لتسجيل قياسات المياه والغاز
+  - 🤖 [API قياس](https://github.com/SamuelRocha91/apiMeasureWaterAndGas/blob/main/README_ar.md) - API لقياس وتسجيل الاستهلاك
+</details>
