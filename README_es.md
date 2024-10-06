@@ -1,183 +1,184 @@
-# <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTchGHKMA3VyA1ySh2ITWb0CIm_cnhF1cGvlQ&s" alt="Full Stack Projects" width="52" height="40" /> Aplicación de Delivery <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTchGHKMA3VyA1ySh2ITWb0CIm_cnhF1cGvlQ&s" alt="Java Projects Logo" width="52" height="40" />
+# <img src="https://cdn-icons-png.flaticon.com/128/83/83522.png" alt="Java Projects Logo" width="42" height="30" /> Aplicación de Entrega  <img src="https://cdn-icons-png.flaticon.com/128/83/83522.png" alt="Java Projects Logo" width="42" height="30" />
 
-## 🌐 [![Português](https://img.shields.io/badge/Português-green)](https://github.com/SamuelRocha91/delivery_back/blob/main/README.md) [![Español](https://img.shields.io/badge/Español-yellow)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_es.md) [![English](https://img.shields.io/badge/English-blue)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_en.md) [![Русский](https://img.shields.io/badge/Русский-lightgrey)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ru.md) [![中文](https://img.shields.io/badge/中文-red)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ch.md) [![العربية](https://img.shields.io/badge/العربية-orange)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ar.md)
+## 🌐 Idiomas
+[![Português](https://img.shields.io/badge/Português-green)](https://github.com/SamuelRocha91/delivery_back/blob/main/README.md) 
+[![Español](https://img.shields.io/badge/Español-yellow)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_es.md) 
+[![English](https://img.shields.io/badge/English-blue)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_en.md) 
+[![Русский](https://img.shields.io/badge/Русский-lightgrey)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ru.md) 
+[![中文](https://img.shields.io/badge/中文-red)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ch.md) 
+[![العربية](https://img.shields.io/badge/العربية-orange)](https://github.com/SamuelRocha91/delivery_back/blob/main/README_ar.md)
 
-Este repositorio representa el backend en Rails para una aplicación de delivery, incluyendo una interfaz de gestión de datos para usuarios con los roles de admin y developer.
+Este repositorio representa el backend en Rails para una aplicación de entrega, incluyendo una interfaz de gestión de datos para usuarios con roles de administrador y desarrollador.
 
-![Ilustración de uso de la interfaz del admin](./assets/admin.gif)
+![Ilustración del uso de la interfaz de administrador](./assets/admin.gif)
 
-## Repositorios Relacionados
+---
 
-- 🛒 [Aplicación Consumidor](https://github.com/SamuelRocha91/consumy) - Aplicación para el consumidor
-- 👨‍💼 [Aplicación Vendedor](https://github.com/SamuelRocha91/seller_application) - Aplicación para el vendedor
-- 💲 [API Paymenty](https://github.com/SamuelRocha91/paymenty) - API de pagos
+<details>
+  <summary><strong>🔗 Repositorios Relacionados</strong></summary>
 
-### Conceptos y Gems Utilizados
+  - 🛒 [Aplicación Consumy](https://github.com/SamuelRocha91/consumy/blob/main/README_es.md) - Aplicación para consumidores
+  - 👨‍💼 [Aplicación Vendedor](https://github.com/SamuelRocha91/seller_application/blob/main/README_es.md) - Aplicación para vendedores
+  - 💲 [API Paymenty](https://github.com/SamuelRocha91/paymenty/blob/main/README_es.md) - API de pagos
 
-Este proyecto aborda y utiliza los siguientes conceptos y gems:
+</details>
 
-- **Procesos en segundo plano**: Uso de **Sidekiq** para el procesamiento asíncrono de tareas. **Redis** se utiliza como cola para estas tareas, asegurando que las operaciones de larga duración, como el envío de correos electrónicos o el procesamiento de datos, se gestionen fuera del ciclo principal de la aplicación, mejorando el rendimiento y la experiencia del usuario.
+---
 
-- **Paginación**: Implementación de paginación para listar recursos utilizando la gem **Kaminari**, lo que facilita el manejo de grandes volúmenes de datos y permite dividir listas en páginas, mejorando la usabilidad y navegación de la aplicación.
+## <h2>📚 Conceptos y Gems Utilizadas</h2>
 
-- **Pruebas con RSpec y Shoulda Matchers**: Uso de **RSpec** para escribir pruebas unitarias, de integración y funcionales. La gem **Shoulda Matchers** simplifica las afirmaciones, especialmente cuando se prueban las validaciones y asociaciones de ActiveRecord, permitiendo una sintaxis de pruebas más legible y eficiente.
+<details>
+  <summary><strong>🔍 Haz clic para expandir los detalles de las Gems y Conceptos</strong></summary>
 
-- **Cobertura de pruebas con SimpleCov**: Integración con la gem **SimpleCov** para realizar análisis automatizados de cobertura de código. Esto asegura que las áreas críticas de la aplicación estén cubiertas por pruebas, proporcionando informes claros sobre qué partes del código necesitan aún ser cubiertas.
+- **Procesamiento en segundo plano**: Utilización de **Sidekiq** para el procesamiento de tareas asíncronas. **Redis** se utiliza como cola de almacenamiento para estas tareas.
+  
+- **Paginación**: Implementación de paginación para el listado de recursos utilizando la gem **Kaminari**.
 
-- **Eliminación suave con Discard**: Implementación de eliminación suave utilizando la gem **Discard**, lo que permite "eliminar" registros sin quitarlos físicamente de la base de datos. Esto posibilita la futura recuperación de datos y mantiene la integridad histórica.
+- **Pruebas con RSpec y Shoulda Matchers**: Utilización de **RSpec** para escribir pruebas unitarias, de integración y funcionales. 
 
-- **Bullet para la detección de consultas N+1**: La gem **Bullet** se utiliza para detectar y prevenir problemas de rendimiento como las **consultas N+1**. Bullet alerta al desarrollador cuando una consulta puede optimizarse, sugiriendo el uso de **carga ansiosa** (eager loading) para evitar múltiples consultas innecesarias a la base de datos, mejorando así la eficiencia de la aplicación.
+- **Cobertura de Pruebas con SimpleCov**: Integración con la gem **SimpleCov** para el análisis de cobertura de código.
 
-- **Anonimización de datos**: Aplicación de técnicas para anonimizar datos sensibles, garantizando el cumplimiento de las normativas de privacidad y seguridad, como la **LGPD** (Ley General de Protección de Datos). Se implementan técnicas como el enmascaramiento y hashing para proteger la información personal.
+- **Eliminación Suave con Discard**: Implementación de eliminación suave utilizando la gem **Discard**.
 
-- **API RESTful**: Desarrollo de una **API RESTful** que sigue principios de arquitectura de software, permitiendo una comunicación eficiente entre el backend y el frontend. La API está diseñada para ser escalable, modular y fácil de mantener.
+- **Bullet para Detección de Consultas N+1**: La gem **Bullet** se utiliza para detectar y prevenir problemas de rendimiento, como consultas **N+1**.
 
-- **Swagger**: Documentación automática de la API usando la gem **Rswag** (basada en Swagger), que facilita la comprensión y uso de la API proporcionando una interfaz interactiva para probar rutas, endpoints, parámetros y respuestas directamente en el navegador.
+- **Anonymización de Datos**: Aplicación de técnicas para anonimizar datos sensibles, asegurando el cumplimiento de regulaciones de privacidad y seguridad, como la **LGPD**.
 
-- **Docker**: Opción para la contenerización utilizando **Docker**, lo que simplifica el desarrollo, pruebas y despliegue de la aplicación en entornos controlados. Esto asegura que las dependencias y la infraestructura estén aisladas y puedan replicarse fácilmente en diferentes máquinas.
+- **API RESTful**: Desarrollo de una API **RESTful** que sigue principios de arquitectura de software para permitir una comunicación eficiente entre el backend y el frontend.
 
-- **Procesamiento de imágenes**: Uso de la gem **ImageProcessing** para la manipulación de imágenes, como el redimensionamiento y la compresión. Herramientas como **ruby-vips** se utilizan para optimizar el procesamiento de imágenes a gran escala, asegurando un alto rendimiento.
+- **Swagger**: Documentación automática de la API utilizando la gem **Rswag** (basada en Swagger).
 
-- **WebSockets y SSE**: Implementación de comunicación en tiempo real utilizando **WebSockets** para características que requieren interactividad inmediata, como chats, notificaciones o actualizaciones en vivo. **Server-Sent Events (SSE)** también se usa para actualizaciones unidireccionales del servidor al cliente.
+- **Docker**: Opción de contenedorización utilizando **Docker** para facilitar el desarrollo, las pruebas y el despliegue.
 
-- **Cálculo de distancia**: Uso de la gem **Geocoder** para calcular distancias entre el cliente y el establecimiento comercial, facilitando servicios basados en la ubicación. Los cálculos de distancia se realizan en kilómetros, asegurando precisión y eficiencia.
+- **Manipulación de Imágenes**: Utilización de la gem **ImageProcessing** para la manipulación de imágenes, como el redimensionamiento y la compresión.
 
-- **Hilos**: Uso de **hilos** (threads) para mejorar la concurrencia y el rendimiento en operaciones paralelas, como el procesamiento de grandes cantidades de datos o la integración con servicios externos. Los hilos permiten que múltiples operaciones se ejecuten simultáneamente, optimizando el tiempo de respuesta de la aplicación.
+- **WebSockets y SSE**: Implementación de comunicación en tiempo real utilizando **WebSockets**.
 
-- **Gestión de sesiones y autenticación**: La autenticación de usuarios se gestiona con **Devise**, una gem muy utilizada en el ecosistema de Rails. También se proporciona soporte para autenticación con **JWT** (JSON Web Token), especialmente útil para la autenticación basada en tokens en una API.
+- **Cálculo de Distancias**: Utilización de la gem **Geocoder** para implementar el cálculo de distancias entre el cliente y el establecimiento comercial.
 
-- **Control de CORS**: Uso de la gem **rack-cors** para gestionar los permisos de **Cross-Origin Resource Sharing (CORS)**, garantizando que la API pueda ser accedida de forma segura desde diferentes dominios.
+- **Hilos**: Uso de **hilos** para mejorar la concurrencia y el rendimiento de la aplicación en operaciones paralelas.
 
-- **Máquinas de estado con State Machines-Activerecord**: Uso de la gem **state_machines-activerecord** para implementar **máquinas de estado** en los modelos de ActiveRecord. Esto permite un control detallado sobre las transiciones de estado, asegurando que ciertos procesos u objetos sigan flujos predefinidos, como cambios en los estados de pedidos, pagos o procesos automatizados.
+- **Gestión de Sesiones y Autenticación**: Implementación de autenticación de usuarios con **Devise** y autenticación mediante **JWT**.
 
-- **Faraday para consumo de API externas**: Integración con servicios externos utilizando la gem **Faraday**, una librería de cliente HTTP que permite realizar solicitudes HTTP/REST de forma flexible y eficiente. Esto facilita la comunicación con APIs de terceros, ofreciendo soporte para middleware, reintentos y manejo de errores.
+- **Control de CORS**: Utilización de la gem **rack-cors** para gestionar permisos de **CORS**.
 
-- **Automatización de tareas y DevOps**: La estructura de **DevOps** está respaldada por herramientas como **Sidekiq** y **Docker** para automatizar la integración continua, el despliegue y la monitorización de tareas en segundo plano.
+- **Máquinas de Estados con State Machines**: Utilización de la gem **state_machines-activerecord** para implementar **máquinas de estados** en los modelos de ActiveRecord.
 
-## Configuración del Proyecto
+- **Faraday para Consumir APIs Externas**: Integración con servicios externos utilizando la gem **Faraday**.
 
-### Con Docker
+- **Automatización de Tareas y DevOps**: La estructura de **DevOps** está soportada por herramientas como **Sidekiq** y **Docker**.
 
-Para ejecutar este proyecto utilizando Docker, sigue los pasos a continuación:
+</details>
 
-#### Requisitos Previos
+---
 
-Asegúrate de tener Docker y Docker Compose instalados en tu máquina.
+## <h2>⚙️ Configuración del Proyecto</h2>
 
-- [Docker](https://docs.docker.com/get-docker/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
+<details>
+  <summary><strong>🛠️ Con Docker</strong></summary>
 
-#### Configuración
+  ### Requisitos Previos
 
-1. Clona los repositorios relacionados:
+  - Asegúrate de tener Docker y Docker Compose instalados en tu máquina.
+  - [Docker](https://docs.docker.com/get-docker/)
+  - [Docker Compose](https://docs.docker.com/compose/install/)
 
-   ```sh
-   git clone https://github.com/SamuelRocha91/consumy.git
-   git clone https://github.com/SamuelRocha91/seller_application.git
-   git clone https://github.com/SamuelRocha91/paymenty.git
-   git clone https://github.com/SamuelRocha91/delivery_back.git
-   ```
+  ### Configuración
 
-2. Descarga el archivo `docker-compose.yml` para configurar los servicios Docker necesarios y colócalo en la carpeta raíz donde se clonaron los repositorios:
+  1. Clona los repositorios relacionados:
 
-   - [Descargar docker-compose.yml](https://drive.google.com/file/d/1kzs-DJGCvYImBQAqr1GI-zwoNha_b8tA/view?usp=drive_link)
+     ```
+     git clone https://github.com/SamuelRocha91/consumy.git
+     git clone https://github.com/SamuelRocha91/seller_application.git
+     git clone https://github.com/SamuelRocha91/paymenty.git
+     git clone https://github.com/SamuelRocha91/delivery_back.git
+     ```
 
-3. En la raíz del proyecto, donde está ubicado el archivo `docker-compose.yml`, ejecuta el siguiente comando para construir e iniciar los servicios:
+  2. Descarga el archivo `docker-compose.yml`:
 
-   ```sh
-   docker-compose up --build
-   ```
+     - [Descargar docker-compose.yml](https://drive.google.com/file/d/1kzs-DJGCvYImBQAqr1GI-zwoNha_b8tA/view?usp=drive_link)
 
-4. Al acceder a la aplicación backend en el navegador, haz clic en "RUN PENDING MIGRATES" para generar las migraciones.
+  3. En la raíz del proyecto, ejecuta el siguiente comando:
 
-5. Se recomienda ingresar al contenedor de la aplicación backend y ejecutar las seeds:
+     ```sh
+     docker-compose up --build
+     ```
 
-   ```sh
-   docker exec -it nombreDelContenedorBackEnd /bin/sh 
-   rails db:seed
-   ```
+  4. Haz clic en "RUN PENDING MIGRATES" en la aplicación de backend.
 
-6. Es necesario configurar las variables de entorno en un archivo .env dentro de la aplicación delivery_back. Ejemplo:
+  5. Entra en el contenedor del backend y ejecuta las semillas:
 
-   ```sh
-   JWT_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxx
-   ```
+     ```sh
+     docker exec -it backendContainerName /bin/sh 
+     rails db:seed
+     ```
 
-7. Es necesario configurar las variables de entorno en un archivo .env.development dentro de las aplicaciones consumy y seller. Ejemplo:
+  6. Configura las variables de entorno:
 
-   ```sh
-   VITE_BASE_URL=http://localhost:3000
-   VITE_X_API_KEY=Z34dqYJ8qBelcmcBfWNuHc5JB/w=
-   ```
+     ```sh
+     JWT_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxx
+     ```
 
-**OBS** Las api_keys pueden generarse dentro del contenedor backend a través de la consola y luego pegarse en el archivo .env.
+  7. Reinicia los contenedores para que las variables se carguen.
 
-**OBS** Otra forma es generarlas a través de un usuario con el rol de developer dentro de la interfaz del backend y copiar y pegar en la aplicación correspondiente.
+</details>
 
-**OBS** No olvides reiniciar los contenedores para que las variables se carguen.
+<details>
+  <summary><strong>🛠️ Sin Docker</strong></summary>
 
-![Ejemplo de configuración](./assets/apikey.gif)
+  ### Requisitos Previos
 
-### Sin Docker
+  - Asegúrate de tener Redis y Sidekiq configurados y funcionando localmente.
+  
+  - Instala las dependencias de R:
 
-Para configurar y ejecutar el proyecto localmente sin Docker, sigue los pasos a continuación:
+     ```sh
+     install.packages("FactoMineR")
+     install.packages("ggplot2")
+     install.packages("reshape2")
+     ```
 
-#### Requisitos Previos
+  ### Instala las Dependencias
 
-Asegúrate de tener Redis y Sidekiq configurados y en funcionamiento localmente para el correcto funcionamiento de la aplicación. Además, instala las dependencias necesarias de R:
+  ```sh
+  bundle install
+  ```
 
-```sh
-install.packages("FactoMineR")
-install.packages("ggplot2")
-install.packages("reshape2")
-```
+  ### Configura la Base de Datos
 
-#### Instalación de Dependencias
+  Crea la base de datos y ejecuta migraciones:
 
-```sh
-bundle install
-```
+  ```sh
+  rails db:create
+  rails db:migrate
+  ```
 
-#### Configurar la Base de Datos
+  ### Inicia el Servidor Local
 
-Crea la base de datos y ejecuta las migraciones:
+  ```sh
+  rails server
+  ```
 
-```sh
-rails db:create
-rails db:migrate
-```
+  ### Ejecuta Pruebas
 
-#### Iniciar el Servidor Local
+  ```sh
+  bundle exec rspec
+  ```
 
-Para iniciar el servidor localmente:
+  ### Inicia Redis y Sidekiq
 
-```sh
-rails server
-```
+  ```sh
+  redis-server
+  bundle exec sidekiq
+  ```
 
-#### Ejecutar Pruebas
+</details>
 
-Para ejecutar las pruebas automatizadas:
+---
 
-```sh
-bundle exec rspec
-```
+<details>
+  <summary><strong>📝 Otros Proyectos</strong></summary>
 
-#### Iniciar Redis y Sidekiq
-
-Asegúrate de que Redis esté instalado y funcionando. Inicia Redis con el siguiente comando:
-
-```sh
-redis-server
-```
-
-Luego, inicia Sidekiq:
-
-```sh
-bundle exec sidekiq
-```
-
-## Otros Proyectos
-
-- 📏 [Aplicación de Precisión en React](https://github.com/SamuelRocha91/precisionReactApplication/blob/main/README_es.md) - Interfaz para registrar mediciones de gas y agua
-- 🤖 [API de Node](https://github.com/SamuelRocha91/apiMeasureWaterAndGas/blob/main/README_es.md) - API para medir y registrar el consumo de agua y gas
+  - 📏 [Aplicación de Precisión en React](https://github.com/SamuelRocha91/precisionReactApplication/blob/main/README_es.md) - Interfaz de registro para mediciones de gas y agua
+  - 🤖 [API Node](https://github.com/SamuelRocha91/apiMeasureWaterAndGas/blob/main/README_es.md) - API para medir y registrar consumo
+</details>
